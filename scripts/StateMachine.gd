@@ -14,7 +14,7 @@ func _input(event):
 	pass
 
 func transition_to(state_name: String):
-	active_state.exit()
+	await active_state.exit()
 	
 	active_state = get_node(state_name)
 	

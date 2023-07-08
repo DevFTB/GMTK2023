@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://kbthggvh3r0n"]
+[gd_scene load_steps=6 format=3 uid="uid://kbthggvh3r0n"]
 
 [ext_resource type="Script" path="res://entities/players/player_gui/PlayerGUI.gd" id="1_ycgvh"]
 [ext_resource type="Texture2D" uid="uid://by624p0om6rf4" path="res://entities/players/player_gui/healthbar_empty.png" id="2_noaqh"]
 [ext_resource type="Texture2D" uid="uid://j6ty3wplwt8o" path="res://entities/players/player_gui/healthbar_full.png" id="3_p36wt"]
+[ext_resource type="Texture2D" uid="uid://dcvne14fdao10" path="res://entities/players/player_gui/speech_bubble_large.png" id="4_c5njw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xjb4x"]
+line_spacing = 0.0
+font_size = 8
+font_color = Color(0, 0, 0, 1)
 
 [node name="PlayerGUI" type="Control"]
 layout_mode = 3
@@ -10,7 +16,7 @@ anchors_preset = 0
 script = ExtResource("1_ycgvh")
 
 [node name="HealthBarHolder" type="Node2D" parent="."]
-position = Vector2(-8, -12)
+position = Vector2(-8, -20)
 scale = Vector2(0.5, 0.5)
 
 [node name="HealthBar" type="TextureProgressBar" parent="HealthBarHolder"]
@@ -19,3 +25,23 @@ offset_bottom = 34.0
 value = 50.0
 texture_under = ExtResource("2_noaqh")
 texture_progress = ExtResource("3_p36wt")
+
+[node name="SpeechBubble" type="Sprite2D" parent="."]
+visible = false
+z_index = 2
+position = Vector2(31, -33)
+texture = ExtResource("4_c5njw")
+
+[node name="Speech" type="Label" parent="SpeechBubble"]
+offset_left = -22.0
+offset_top = -22.0
+offset_right = 24.0
+offset_bottom = 11.0
+label_settings = SubResource("LabelSettings_xjb4x")
+autowrap_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="SpeechBubble"]
+one_shot = true
+
+[connection signal="timeout" from="SpeechBubble/Timer" to="." method="_on_timer_timeout"]

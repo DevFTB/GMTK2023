@@ -1,4 +1,3 @@
-# todo make player scene inherit from player scene.
 extends CharacterBody2D
 
 @export var max_health: int = 10
@@ -66,8 +65,10 @@ func move(loc, delta):
 		if slowed:
 			vel_vec *= slow_factor
 		velocity = speed * vel_vec
-		# TODO: sometimes you can drag players around as the boss, maybe should fix lol
 		move_and_slide()
+	
+func speak(text):
+	$PlayerGUI.display_speech(text)
 
 func do_action(action: Node2D, target):
 	if not stunned:

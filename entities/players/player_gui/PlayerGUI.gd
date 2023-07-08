@@ -13,3 +13,13 @@ func _process(delta):
 func health_changed(new_health, difference):
 	var max_health = get_parent().max_health
 	$HealthBarHolder.get_node("HealthBar").value = round((float(new_health)/max_health) * 100)
+	
+func display_speech(text, time=2):
+	$SpeechBubble.visible = true
+	var speech_timer = $SpeechBubble.get_node("Timer")
+	$SpeechBubble.get_node("Speech").text = text
+	speech_timer.start(time)
+
+
+func _on_timer_timeout():
+	$SpeechBubble.visible = false
