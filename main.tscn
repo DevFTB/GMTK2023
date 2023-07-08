@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=10 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
@@ -7,6 +7,11 @@
 [ext_resource type="Script" path="res://level/beat/BeatGUI.gd" id="4_xxwnv"]
 [ext_resource type="AudioStream" uid="uid://3yh8shsiwy0q" path="res://level/Raving Energy.mp3" id="5_8wnvk"]
 [ext_resource type="Texture2D" uid="uid://bj2c08let7yd5" path="res://level/beat/beat_ball.png" id="5_svrfq"]
+[ext_resource type="Script" path="res://TimeGradientColourRect.gd" id="7_0ugbx"]
+
+[sub_resource type="Gradient" id="Gradient_6ieoh"]
+offsets = PackedFloat32Array(0, 0.274074, 0.648148, 0.996296)
+colors = PackedColorArray(0.603922, 0.172549, 0.827451, 1, 0.824238, 0.221158, 0.219652, 1, 0.980307, 0.480217, 0.252419, 1, 0.603922, 0.172549, 0.827451, 1)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
@@ -56,7 +61,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect2" type="ColorRect" parent="GUI/BeatGUI/Bar"]
+[node name="BackgroundColourRect" type="ColorRect" parent="GUI/BeatGUI/Bar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,7 +70,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.254902, 0.0313726, 0.364706, 1)
 
-[node name="ColorRect" type="ColorRect" parent="GUI/BeatGUI/Bar"]
+[node name="ForegroundColourRect" type="ColorRect" parent="GUI/BeatGUI/Bar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -76,7 +81,10 @@ offset_right = -8.0
 offset_bottom = -4.5
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.602479, 0.170596, 0.826816, 1)
+color = Color(0.603922, 0.172549, 0.827451, 1)
+script = ExtResource("7_0ugbx")
+color_gradient = SubResource("Gradient_6ieoh")
+gradient_cycle_time = 0.3
 
 [node name="Ball" type="Control" parent="GUI/BeatGUI"]
 layout_mode = 1
