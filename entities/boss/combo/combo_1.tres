@@ -1,6 +1,14 @@
-[gd_resource type="Resource" script_class="Combo" load_steps=2 format=3 uid="uid://ddhkk175dkckf"]
+[gd_resource type="Resource" script_class="Combo" load_steps=4 format=3 uid="uid://ddhkk175dkckf"]
 
 [ext_resource type="Script" path="res://entities/boss/combo/Combo.gd" id="1_ca1f4"]
+[ext_resource type="Resource" uid="uid://ba5jrspjog6gs" path="res://entities/boss/action/boss_action_swipe.tres" id="1_mymka"]
+[ext_resource type="Resource" uid="uid://c8dyby4o78s43" path="res://entities/boss/action/boss_action_charge_bash.tres" id="2_g5xwo"]
 
 [resource]
 script = ExtResource("1_ca1f4")
+actions = {
+0: ExtResource("1_mymka"),
+1: ExtResource("1_mymka"),
+2: ExtResource("2_g5xwo")
+}
+amount_of_slots = 3

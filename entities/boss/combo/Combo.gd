@@ -19,3 +19,18 @@ func unset_action(index: int) -> void:
 		actions.erase(index)
 
 
+func generate_beat_action_map():
+	var new_beat_action_map = {}
+	var total_beats = 0
+	for i in range(amount_of_slots ):
+		var action = actions[i]
+		total_beats += action.amount_of_beats
+
+		new_beat_action_map[total_beats] = 0
+		if action.is_hold_action:
+			new_beat_action_map[total_beats + action.amount_of_beats] = 1
+		total_beats += action.amount_of_cooldown_beats
+
+	
+	return new_beat_action_map
+pass

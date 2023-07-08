@@ -6,3 +6,5 @@
 script = ExtResource("1_v1xax")
 action_name = "Swipe"
 amount_of_beats = 2
+amount_of_cooldown_beats = 2
+is_hold_action = false
