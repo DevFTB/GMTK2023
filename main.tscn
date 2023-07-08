@@ -33,24 +33,7 @@ stream = ExtResource("5_8wnvk")
 [node name="Boss" parent="." instance=ExtResource("3_jivh4")]
 motion_mode = 1
 
-[node name="PlayerController" type="Node" parent="."]
-script = ExtResource("9_6id7j")
-
-[node name="Archer" parent="PlayerController" instance=ExtResource("11_l085o")]
-position = Vector2(545, 218)
-
-[node name="Fighter" parent="PlayerController" instance=ExtResource("12_kagx0")]
-position = Vector2(486, 313)
-
-[node name="Tank" parent="PlayerController" instance=ExtResource("13_wiqs4")]
-position = Vector2(429, 408)
-
-[node name="Healer" parent="PlayerController" instance=ExtResource("10_0bbld")]
-position = Vector2(601, 359)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="GUI" type="Control" parent="CanvasLayer"]
+[node name="GUI" type="Control" parent="."]
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -59,7 +42,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BeatGUI" type="Control" parent="CanvasLayer/GUI" node_paths=PackedStringArray("boss", "beat_manager")]
+[node name="BeatGUI" type="Control" parent="GUI" node_paths=PackedStringArray("boss", "beat_manager")]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -70,10 +53,10 @@ offset_right = 114.5
 offset_bottom = 86.0
 grow_horizontal = 2
 script = ExtResource("4_xxwnv")
-boss = NodePath("../../../Boss")
-beat_manager = NodePath("../../../BeatManager")
+boss = NodePath("../../Boss")
+beat_manager = NodePath("../../BeatManager")
 
-[node name="Bar" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
+[node name="Bar" type="Control" parent="GUI/BeatGUI"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 1
 anchors_preset = 14
@@ -83,7 +66,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BackgroundColourRect" type="ColorRect" parent="CanvasLayer/GUI/BeatGUI/Bar"]
+[node name="BackgroundColourRect" type="ColorRect" parent="GUI/BeatGUI/Bar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -92,7 +75,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.254902, 0.0313726, 0.364706, 1)
 
-[node name="ForegroundColourRect" type="ColorRect" parent="CanvasLayer/GUI/BeatGUI/Bar"]
+[node name="ForegroundColourRect" type="ColorRect" parent="GUI/BeatGUI/Bar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -108,7 +91,7 @@ script = ExtResource("7_0ugbx")
 color_gradient = SubResource("Gradient_6ieoh")
 gradient_cycle_time = 0.3
 
-[node name="Ball" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
+[node name="Ball" type="Control" parent="GUI/BeatGUI"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -118,7 +101,7 @@ offset_right = 40.0
 offset_bottom = 20.0
 grow_vertical = 2
 
-[node name="ColorRect" type="TextureRect" parent="CanvasLayer/GUI/BeatGUI/Ball"]
+[node name="ColorRect" type="TextureRect" parent="GUI/BeatGUI/Ball"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -133,13 +116,13 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_svrfq")
 
-[node name="LeftBeatLabel" type="Label" parent="CanvasLayer/GUI/BeatGUI"]
+[node name="LeftBeatLabel" type="Label" parent="GUI/BeatGUI"]
 layout_mode = 0
 offset_top = 65.0
 offset_right = 40.0
 offset_bottom = 88.0
 
-[node name="RightBeatLabel" type="Label" parent="CanvasLayer/GUI/BeatGUI"]
+[node name="RightBeatLabel" type="Label" parent="GUI/BeatGUI"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -152,3 +135,18 @@ offset_right = -1.0
 offset_bottom = 47.5
 grow_horizontal = 0
 grow_vertical = 2
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("9_6id7j")
+
+[node name="Archer" parent="PlayerController" instance=ExtResource("11_l085o")]
+position = Vector2(545, 218)
+
+[node name="Fighter" parent="PlayerController" instance=ExtResource("12_kagx0")]
+position = Vector2(486, 313)
+
+[node name="Tank" parent="PlayerController" instance=ExtResource("13_wiqs4")]
+position = Vector2(429, 408)
+
+[node name="Healer" parent="PlayerController" instance=ExtResource("10_0bbld")]
+position = Vector2(601, 359)

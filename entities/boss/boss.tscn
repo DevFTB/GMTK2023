@@ -10,26 +10,21 @@
 [ext_resource type="Script" path="res://entities/boss/state/Collapsed.gd" id="8_mgixy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pc1ul"]
-radius = 37.0
-height = 80.0
+radius = 55.0
+height = 110.0
 
 [node name="Boss" type="CharacterBody2D" groups=["boss"]]
 position = Vector2(320, 223)
 script = ExtResource("1_ag2a5")
-movement_speed = 70
 combos = Array[Resource("res://entities/boss/combo/Combo.gd")]([ExtResource("2_vvgcd"), ExtResource("3_3n8fb")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_pc1ul")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("1_mm22x")
-animation = &"swipe"
-frame = 6
-frame_progress = 1.0
 
 [node name="BossStateMachine" type="Node" parent="."]
 script = ExtResource("5_6cn3x")
@@ -48,7 +43,6 @@ wait_time = 3.0
 one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-ignore_rotation = false
 zoom = Vector2(2, 2)
 
 [connection signal="timeout" from="BossStateMachine/Collapsed/CollapseTimer" to="BossStateMachine/Collapsed" method="_on_timer_timeout"]

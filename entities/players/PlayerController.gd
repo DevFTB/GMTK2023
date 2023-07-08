@@ -41,11 +41,14 @@ func _process(delta):
 		
 	elif phase =="Get behind me!":
 		# todo: move towards, but not quite on boss
-		# todo: continually swap places by changing player_loc_ordering so that tank is closest and fighter is second closest
+		
 		
 		var avg_player_loc = players.map(func(p): return p.global_position).reduce(func(a, b): return a + b, Vector2(0, 0))/players.size()
-#		print("avg player loc: " + str(avg_player_loc))
-		group_move(get_loc_dist_from(avg_player_loc, boss.global_position, 32), delta)
+		
+		# TODO: continually swap places by changing player_loc_ordering so that tank is closest and fighter is second closest
+#		player_loc_ordering
+		
+		group_move(get_loc_dist_from(avg_player_loc, boss.global_position, 80), delta)
 		
 	else:
 		for player in players:
@@ -154,7 +157,7 @@ func move_player_handler(player, delta):
 #	player.global_position += Vector2(rng.randf_range(-player.speed, player.speed), rng.randf_range(-player.speed, player.speed))
 	match get_player_class(player):
 		"Tank", "Fighter":
-			player.move(get_loc_dist_from(player.global_position, boss.global_position, 32), delta)
+			player.move(get_loc_dist_from(player.global_position, boss.global_position, 64), delta)
 		"Archer":
 			player.move(get_loc_dist_from(player.global_position, boss.global_position, 256), delta)
 		"Healer":
@@ -164,3 +167,20 @@ func move_player_handler(player, delta):
 # todo: can pick themself - is this an issue?
 func get_most_damaged_player():
 	return get_players().reduce(func(min, player): return player if player.health < min.health else min)
+	
+# ok this is like fully repeated and not great but i cbf
+# this is the most scuffed function ever
+#func set_get_behind_me_player_loc_ordering(target_loc):
+#	var dist_to_boss = func(loc): return (loc - boss.global_position()).length()
+#	var player_target_locs = []
+#	var player_num_ordering = player_loc_ordering.size()
+#	var closest_indices_to_boss = []
+#	for i in range(player_num_ordering):
+#		closest_indices_to_boss.append(i)
+#		player_target_locs.append(target_loc + 16 * Vector2.from_angle(i * 2 * PI / player_num_ordering))
+#
+#	closest_indices_to_boss.sort_custom(func(a, b): return dist_to_boss(player_target_locs[a]) < dist_to_boss(player_target_locs[b]))
+#
+#	for d in 
+#	var out = []
+#	return 
