@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cphxorrjm5k7a"]
 
-[ext_resource type="PackedScene" uid="uid://jc15k6rexkl2" path="res://entities/players/player.tscn" id="1_qncys"]
+[ext_resource type="PackedScene" uid="uid://jc15k6rexkl2" path="res://entities/players/Player.tscn" id="1_qncys"]
 [ext_resource type="PackedScene" uid="uid://bdbpgb2uscom2" path="res://entities/players/actions/melee_attack/melee_attack.tscn" id="3_y0xmv"]
 
 [node name="Fighter" instance=ExtResource("1_qncys")]

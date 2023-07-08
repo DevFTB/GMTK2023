@@ -53,17 +53,17 @@ func _process(delta):
 	
 	# action
 	for player in players:
-		for action in get_actions(player):
-			match action.name:
-				"Heal":
-					if action.off_cooldown():
-						# todo: can pick themself. is this an issue
-						var players_in_range = players.filter(func(p): return action.in_range(p))
-						if players_in_range.size() > 0:
-							action.do(players_in_range.reduce(func(min, p): return p if player.health < min.health else min))
-				"MeleeAttack", "RangedAttack":
-					if action.off_cooldown() and action.in_range(boss):
-						action.do(boss)
+			for action in get_actions(player):
+				match action.name:
+					"Heal":
+						if action.off_cooldown():
+							# todo: can pick themself. is this an issue
+							var players_in_range = players.filter(func(p): return action.in_range(p))
+							if players_in_range.size() > 0:
+								player.do_action(action, players_in_range.reduce(func(min, p): return p if player.health < min.health else min))
+					"MeleeAttack", "RangedAttack":
+						if action.off_cooldown() and action.in_range(boss):
+							player.do_action(action, boss)
 		
 
 func get_players():
@@ -92,6 +92,7 @@ func manage_phase():
 	
 	var player_classes = get_player_classes().values()
 	if phase == "Normal":
+		# TODO: add extra condition for heal phase
 		if player_classes.has("Healer") and heal_phase_allowed_timer == 0:
 			set_phase("Heal")
 		elif player_classes.has("Tank") and get_behind_me_phase_allowed_timer == 0:
