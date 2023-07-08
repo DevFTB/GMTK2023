@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bbwdxumxmypyu"]
+
+[ext_resource type="Script" path="res://entities/players/actions/heal/Heal.gd" id="1_csw3p"]
+[ext_resource type="PackedScene" uid="uid://byepyr00rxho8" path="res://entities/players/actions/heal/heal_animation.tscn" id="2_5hnb3"]
+[ext_resource type="Texture2D" uid="uid://wrtmdetpj8vl" path="res://entities/players/actions/heal/heal_animation.png" id="2_fwq3h"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pd6yk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_fwq3h")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="Heal" type="Node2D"]
+scale = Vector2(0.2, 0.2)
+script = ExtResource("1_csw3p")
+heal_animation_scene = ExtResource("2_5hnb3")
+
+[node name="ActionAnimation" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_pd6yk")
+
+[connection signal="animation_finished" from="ActionAnimation" to="." method="_on_action_animation_animation_finished"]

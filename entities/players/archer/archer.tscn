@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://bcvehonbmcs7y"]
+
+[ext_resource type="PackedScene" uid="uid://jc15k6rexkl2" path="res://entities/players/player.tscn" id="1_4e156"]
+[ext_resource type="Texture2D" uid="uid://cjgfrmcfwelcy" path="res://entities/players/archer/ranger.png" id="2_qxn1c"]
+[ext_resource type="PackedScene" uid="uid://dofl382smqwi8" path="res://entities/players/actions/ranged_attack/ranged_attack.tscn" id="3_veti1"]
+
+[node name="Archer" instance=ExtResource("1_4e156")]
+player_class = "Archer"
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_qxn1c")
+
+[node name="RangedAttack" parent="Actions" index="0" instance=ExtResource("3_veti1")]
+action_range = 600
+cooldown = 3

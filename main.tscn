@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=15 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
@@ -8,6 +8,11 @@
 [ext_resource type="AudioStream" uid="uid://3yh8shsiwy0q" path="res://level/Raving Energy.mp3" id="5_8wnvk"]
 [ext_resource type="Texture2D" uid="uid://bj2c08let7yd5" path="res://level/beat/beat_ball.png" id="5_svrfq"]
 [ext_resource type="Script" path="res://TimeGradientColourRect.gd" id="7_0ugbx"]
+[ext_resource type="Script" path="res://entities/players/PlayerController.gd" id="9_6id7j"]
+[ext_resource type="PackedScene" uid="uid://b5rfpsbs4b8sw" path="res://entities/players/healer/healer.tscn" id="10_0bbld"]
+[ext_resource type="PackedScene" uid="uid://bcvehonbmcs7y" path="res://entities/players/archer/archer.tscn" id="11_l085o"]
+[ext_resource type="PackedScene" uid="uid://cphxorrjm5k7a" path="res://entities/players/fighter/fighter.tscn" id="12_kagx0"]
+[ext_resource type="PackedScene" uid="uid://cva63yioyjyr3" path="res://entities/players/tank/tank.tscn" id="13_wiqs4"]
 
 [sub_resource type="Gradient" id="Gradient_6ieoh"]
 offsets = PackedFloat32Array(0, 0.274074, 0.648148, 0.996296)
@@ -23,7 +28,7 @@ bpm = 122
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="BeatManager"]
 stream = ExtResource("5_8wnvk")
 
-[node name="World" parent="." instance=ExtResource("2_p3sjh")]
+[node name="World" parent="." groups=["world"] instance=ExtResource("2_p3sjh")]
 
 [node name="Boss" parent="." instance=ExtResource("3_jivh4")]
 motion_mode = 1
@@ -130,3 +135,18 @@ offset_right = -1.0
 offset_bottom = 47.5
 grow_horizontal = 0
 grow_vertical = 2
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("9_6id7j")
+
+[node name="Archer" parent="PlayerController" instance=ExtResource("11_l085o")]
+position = Vector2(545, 218)
+
+[node name="Fighter" parent="PlayerController" instance=ExtResource("12_kagx0")]
+position = Vector2(486, 313)
+
+[node name="Tank" parent="PlayerController" instance=ExtResource("13_wiqs4")]
+position = Vector2(429, 408)
+
+[node name="Healer" parent="PlayerController" instance=ExtResource("10_0bbld")]
+position = Vector2(601, 359)
