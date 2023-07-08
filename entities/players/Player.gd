@@ -31,10 +31,15 @@ func heal(heal: int):
 	print(name + " healed for  " + str(heal))
 
 func move(loc, delta):
-	if (loc - global_position).length() <= speed * delta:
-		global_position = loc
-	else:
-		global_position += speed * delta * (loc -  global_position).normalized()
+	var loc_diff = loc - global_position
+	var vel_vec = loc_diff if loc_diff.length() < 1 else loc_diff.normalized()
+	velocity = speed * vel_vec
+	move_and_slide()
+	
+#	if (loc - global_position).length() <= speed * delta:
+#		global_position = loc
+#	else:
+#		global_position += speed * delta * (loc -  global_position).normalized()
 	
 func die():
 	pass
