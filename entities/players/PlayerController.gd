@@ -37,7 +37,7 @@ func _process(delta):
 	var players = get_players()
 	# move
 	if phase == "Heal":
-		group_move(group_loc)
+		group_move(group_loc, delta)
 		
 	elif phase =="Get behind me!":
 		# todo: move towards, but not quite on boss
@@ -45,21 +45,24 @@ func _process(delta):
 		
 		var avg_player_loc = players.map(func(p): return p.global_position).reduce(func(a, b): return a + b, Vector2(0, 0))/players.size()
 #		print("avg player loc: " + str(avg_player_loc))
-		group_move(get_loc_dist_from(avg_player_loc, boss.global_position, 32))
+		group_move(get_loc_dist_from(avg_player_loc, boss.global_position, 32), delta)
 		
 	else:
-		for player in get_players():
-			move_player_handler(player)
+		for player in players:
+			move_player_handler(player, delta)
 	
 	# action
-	for player in get_players():
+	for player in players:
 		for action in get_actions(player):
 			match action.name:
 				"MeleeAttack", "RangedAttack":
 					if action.off_cooldown() and action.in_range(boss):
 						action.do(boss)
 				"Heal":
-					pass
+					# todo: can pick themself. is this an issue
+					var players_in_range = players.filter(func(p): action.in_range(p))
+					if players_in_range.size() > 0:
+						action.do(players_in_range.reduce(func(min, p): return p if player.health < min.health else min))
 		
 
 func get_players():
@@ -119,7 +122,7 @@ func get_actions(player):
 	
 # move to clump as a group - target loc to move to, and theyll move to a circle around
 # it in playerorder
-func group_move(target_loc):
+func group_move(target_loc, delta):
 	var player_target_locs = []
 	var player_num_ordering = player_loc_ordering.size()
 	for i in range(player_num_ordering):
@@ -129,7 +132,7 @@ func group_move(target_loc):
 		var player = player_loc_ordering[i]
 		# if players die, ordering will remain the same from last set, but with missing person in circle
 		if player:
-			move_player(player, player_target_locs[i])
+			move_player(player, player_target_locs[i], delta)
 			
 # gets location dist distance from to, on the line from from to to
 # may have to change it to use boss eclipse lter
@@ -138,22 +141,23 @@ func get_loc_dist_from(from: Vector2, to: Vector2, dist):
 
 # each player moves individually - normal mode
 # todo: reduce clumping
-func move_player_handler(player):
+func move_player_handler(player, delta):
 #	player.global_position += Vector2(rng.randf_range(-player.speed, player.speed), rng.randf_range(-player.speed, player.speed))
 	match get_player_class(player):
 		"Tank", "Fighter":
-			move_player(player, get_loc_dist_from(player.global_position, boss.global_position, 32))
+			move_player(player, get_loc_dist_from(player.global_position, boss.global_position, 32), delta)
 		"Archer":
-			move_player(player, get_loc_dist_from(player.global_position, boss.global_position, 256))
+			move_player(player, get_loc_dist_from(player.global_position, boss.global_position, 256), delta)
 		"Healer":
-			move_player(player, get_loc_dist_from(player.global_position, get_most_damaged_player().global_position, 16))
+			move_player(player, get_loc_dist_from(player.global_position, get_most_damaged_player().global_position, 16), delta)
 		
 	
-func move_player(player, loc):
-	if (loc - player.global_position).length() <= player.speed:
+func move_player(player, loc, delta):
+	if (loc - player.global_position).length() <= player.speed * delta:
 		player.global_position = loc
 	else:
-		player.global_position += player.speed *  (loc -  player.global_position).normalized()
-	
+		player.global_position += player.speed * delta * (loc -  player.global_position).normalized()
+		
+# todo: can pick themself - is this an issue?
 func get_most_damaged_player():
 	return get_players().reduce(func(min, player): return player if player.health < min.health else min)

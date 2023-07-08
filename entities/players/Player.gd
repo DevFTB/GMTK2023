@@ -1,7 +1,7 @@
-extends Node
+extends Node2D
 
-@export var max_health: int
-@export var speed: int
+@export var max_health: int = 10
+@export var speed: int = 60
 @export var player_class = ""
 var health: int
 
@@ -19,6 +19,11 @@ func take_damage(damage: int):
 	$PlayerGUI.health_changed(health, -damage)
 	if health <= 0:
 		die()
+	
+func heal(heal: int):
+	health = min(max_health, heal + health)
+	$PlayerGUI.health_changed(health, heal)
+	print(name + " healed for  " + str(heal))
 	
 	
 func die():

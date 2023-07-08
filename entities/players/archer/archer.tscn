@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://wt2guthukmnr"]
+
+[ext_resource type="Script" path="res://entities/players/Player.gd" id="1_qcvhm"]
+[ext_resource type="Texture2D" uid="uid://cjgfrmcfwelcy" path="res://entities/players/archer/ranger.png" id="2_qxn1c"]
+[ext_resource type="PackedScene" uid="uid://dofl382smqwi8" path="res://entities/players/actions/ranged_attack/ranged_attack.tscn" id="3_veti1"]
+[ext_resource type="PackedScene" uid="uid://kbthggvh3r0n" path="res://entities/players/player_gui/player_gui.tscn" id="4_w7a5i"]
+
+[node name="Archer" type="Node2D"]
+script = ExtResource("1_qcvhm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_qxn1c")
+
+[node name="Actions" type="Node2D" parent="."]
+
+[node name="RangedAttack" parent="Actions" instance=ExtResource("3_veti1")]
+action_range = 400
+cooldown = 1
+
+[node name="PlayerGUI" parent="." instance=ExtResource("4_w7a5i")]

@@ -1,0 +1,64 @@
+[gd_scene load_steps=10 format=3 uid="uid://bbwdxumxmypyu"]
+
+[ext_resource type="Script" path="res://entities/players/actions/heal/Heal.gd" id="1_csw3p"]
+[ext_resource type="Texture2D" uid="uid://dknn5dvo4ff6c" path="res://entities/players/actions/melee_attack/cleave.png" id="2_kl833"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0kgjk"]
+atlas = ExtResource("2_kl833")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_770oy"]
+atlas = ExtResource("2_kl833")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2f40"]
+atlas = ExtResource("2_kl833")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcqjt"]
+atlas = ExtResource("2_kl833")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3e6q"]
+atlas = ExtResource("2_kl833")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nd6jo"]
+atlas = ExtResource("2_kl833")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7kxwy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0kgjk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_770oy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2f40")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcqjt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3e6q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nd6jo")
+}],
+"loop": false,
+"name": &"default",
+"speed": 18.0
+}]
+
+[node name="Heal" type="Node2D"]
+scale = Vector2(0.2, 0.2)
+script = ExtResource("1_csw3p")
+
+[node name="ActionAnimation" type="AnimatedSprite2D" parent="."]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_7kxwy")
+
+[connection signal="animation_finished" from="ActionAnimation" to="." method="_on_action_animation_animation_finished"]
