@@ -39,16 +39,13 @@ func _on_beat(beat_number):
 	_update_gui()
 
 func set_text(text: String):
-	if is_going_right():
-		rbl.text = text
-	else:
-		lbl.text = text
+	pass
 var combo : ComboLifecycle
 
 func _on_combo_started(clc: ComboLifecycle):
 	self.combo = clc
 
-	clc.failed.connect(clear_text)
+	clc.failed.connect(fail)
 	clc.completed.connect(clear_text)
 	clc.action_hit.connect(_on_hit_action)
 	set_alc(clc.active_action)
@@ -93,8 +90,14 @@ func _update_gui():
 		else:
 			set_text("")
 	
+func fail():
+	clear_text()
+	$LeftWarner.clear()
+	$RightWarner.clear()
+	$AnimationPlayer.play("fail_shake")
+	
+	pass
+	
 func clear_text():
 	alc = null
 	fg_color_rect.active = false
-	lbl.text = ""
-	rbl.text = ""

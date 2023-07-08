@@ -1,5 +1,9 @@
 extends Control
 
+@export var hold_texture: Texture2D
+@export var press_texture: Texture2D
+
+
 var beat = 0
 
 var velocity = Vector2.RIGHT
@@ -17,7 +21,7 @@ func set_input(beat:int, is_press, is_hold):
 	print("warner set, b", beat, is_press, is_hold)
 	self.beat = beat
 	$TypeLabel.text = ("Press"  if not is_hold else "Hold") if is_press else "Release"
-	$ColorRect.color = Color.ORANGE_RED if is_hold else Color.WEB_PURPLE
+	$TextureRect.texture = hold_texture if is_hold else press_texture
 	
 func update_gui_for_beat(current_beat: int):
 	$BeatLabel.text = str(beat - current_beat)

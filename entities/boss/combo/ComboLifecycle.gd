@@ -89,19 +89,18 @@ class HoldActionLifecycle:
 	func rhythm_hit(strength: float, pressed: bool = true):
 		print(action.action_name, " recieved ", "press" if  pressed else "release", " with stregnth ", strength)
 		if not success_hit:
-			if strength == 0:
+			if is_equal_approx(0, strength):
 				failed.emit()
-				
-			if pressed and not has_started:
-				press_strength = strength
-				has_started = true
-				started.emit()
-				
+			elif pressed and not has_started:
+					press_strength = strength
+					has_started = true
+					started.emit()
+					
 			elif not pressed and not success_hit:
-				execute(press_strength * strength)
-				success_hit = true
-				hit.emit(press_strength * strength)
-				
+					execute(press_strength * strength)
+					success_hit = true
+					hit.emit(press_strength * strength)
+					
 	func next_player_beat() -> int:
 		if not has_started:
 			return start_beat

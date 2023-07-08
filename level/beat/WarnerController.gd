@@ -37,3 +37,7 @@ func _on_beat(beat):
 	for child in $Spawn.get_children():
 		child.update_gui_for_beat(beat)
 	pass
+
+func clear():
+	for c in $Spawn.get_children():
+		c.queue_free()
