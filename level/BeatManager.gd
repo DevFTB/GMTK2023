@@ -56,6 +56,7 @@ func _input(event):
 		var keys = beat_subscriptions.keys()
 		if keys.size() > 0:
 			keys.sort()
+			print(keys)
 			_target_beat = keys[0]
 		
 	if event.is_action_pressed("activate_combo_1"):
@@ -80,7 +81,7 @@ func subscribe_to_beats(beats : Array[int], cb: Callable) -> void:
 			beat_subscriptions[actual_beat] = [cb]
 		print("subscribed to beat: ", actual_beat)
 	
-	_target_beat = beats[0]
+	_target_beat = beats[0] + current_beat
 	pass
 
 func get_sync_amount(target_beat: int):

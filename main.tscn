@@ -1,24 +1,119 @@
-[gd_scene load_steps=6 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=8 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
 [ext_resource type="PackedScene" uid="uid://psu755d5488q" path="res://entities/boss/boss.tscn" id="3_jivh4"]
 [ext_resource type="Script" path="res://level/BeatManager.gd" id="4_w0ul8"]
+[ext_resource type="Script" path="res://level/beat/BeatGUI.gd" id="4_xxwnv"]
 [ext_resource type="AudioStream" uid="uid://3yh8shsiwy0q" path="res://level/Raving Energy.mp3" id="5_8wnvk"]
+[ext_resource type="Texture2D" uid="uid://bj2c08let7yd5" path="res://level/beat/beat_ball.png" id="5_svrfq"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
-
-[node name="GUI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="World" parent="." instance=ExtResource("2_p3sjh")]
 
 [node name="Boss" parent="." instance=ExtResource("3_jivh4")]
 motion_mode = 1
+
+[node name="GUI" type="Control" parent="."]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BeatGUI" type="Control" parent="GUI" node_paths=PackedStringArray("beat_manager")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -114.5
+offset_top = 9.0
+offset_right = 114.5
+offset_bottom = 86.0
+grow_horizontal = 2
+script = ExtResource("4_xxwnv")
+beat_manager = NodePath("../../BeatManager")
+
+[node name="Bar" type="Control" parent="GUI/BeatGUI"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="GUI/BeatGUI/Bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.254902, 0.0313726, 0.364706, 1)
+
+[node name="ColorRect" type="ColorRect" parent="GUI/BeatGUI/Bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 3.5
+offset_right = -8.0
+offset_bottom = -4.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.602479, 0.170596, 0.826816, 1)
+
+[node name="Ball" type="Control" parent="GUI/BeatGUI"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="ColorRect" type="TextureRect" parent="GUI/BeatGUI/Ball"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.0
+offset_top = -39.0
+offset_right = 39.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_svrfq")
+
+[node name="LeftBeatLabel" type="Label" parent="GUI/BeatGUI"]
+layout_mode = 0
+offset_top = 65.0
+offset_right = 40.0
+offset_bottom = 88.0
+
+[node name="RightBeatLabel" type="Label" parent="GUI/BeatGUI"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -41.0
+offset_top = 24.5
+offset_right = -1.0
+offset_bottom = 47.5
+grow_horizontal = 0
+grow_vertical = 2
 
 [node name="BeatManager" type="Node" parent="."]
 script = ExtResource("4_w0ul8")
