@@ -12,6 +12,8 @@ var phase_timer
 var group_loc
 var player_loc_ordering
 
+var boss
+
 var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
@@ -21,6 +23,7 @@ func _ready():
 	phase_timer = 0
 	heal_phase_allowed_timer = heal_phase_min_interval
 	get_behind_me_phase_allowed_timer = get_behind_me_phase_min_interval
+	boss = get_node("../Boss")
 
 
 
@@ -31,17 +34,22 @@ func _process(delta):
 	heal_phase_allowed_timer = max(0, heal_phase_allowed_timer - delta)
 	get_behind_me_phase_allowed_timer = max(0, get_behind_me_phase_allowed_timer - delta)
 	
+	var players = get_players()
 	# move
 	if phase == "Heal":
 		group_move(group_loc)
 		
 	elif phase =="Get behind me!":
 		# todo: move towards, but not quite on boss
-		group_move(Vector2(400, 400))
+		# todo: continually swap places by changing player_loc_ordering so that tank is closest and fighter is second closest
+		
+		var avg_player_loc = players.map(func(p): return p.position).reduce(func(a, b): return a + b, Vector2(0, 0))/players.size()
+#		print("avg player loc: " + str(avg_player_loc))
+		group_move(get_loc_dist_from(avg_player_loc, boss.position, 32))
 		
 	else:
 		for player in get_players():
-			move_player(player)
+			move_player_handler(player)
 	
 	# action
 #	for player in get_players():
@@ -60,7 +68,7 @@ func set_phase(inp_phase):
 			heal_phase_allowed_timer = heal_phase_min_interval
 			phase_timer = heal_phase_length
 			player_loc_ordering = get_players()
-			group_loc = Vector2(rng.randf_range(-500, 500), rng.randf_range(-500, 500))
+			group_loc = Vector2(rng.randf_range(100, 600), rng.randf_range(100, 600))
 		"Get behind me!":
 			get_behind_me_phase_allowed_timer = get_behind_me_phase_min_interval
 			phase_timer = get_behind_me_phase_length
@@ -83,6 +91,7 @@ func manage_phase():
 		
 
 # tank and fighter have same actions for now so cant determine based on that atm
+# will leave it as a function incase we want to do it that way later
 func get_player_class(player):
 #	match get_actions(player):
 #		[""]
@@ -113,11 +122,31 @@ func group_move(target_loc):
 		var player = player_loc_ordering[i]
 		# if players die, ordering will remain the same from last set, but with missing person in circle
 		if player:
-			if (player_target_locs[i] -  player.position).length() <= player.speed:
-				player.position = player_target_locs[i]
-			else:
-				player.position += player.speed *  (player_target_locs[i] -  player.position).normalized()
+			move_player(player, player_target_locs[i])
+			
+# gets location dist distance from to, on the line from from to to
+# may have to change it to use boss eclipse lter
+func get_loc_dist_from(from: Vector2, to: Vector2, dist):
+	return to + ((from - to).normalized() * dist)
 
 # each player moves individually - normal mode
-func move_player(player):
-	player.position += Vector2(rng.randf_range(-player.speed, player.speed), rng.randf_range(-player.speed, player.speed))
+# todo: reduce clumping
+func move_player_handler(player):
+#	player.position += Vector2(rng.randf_range(-player.speed, player.speed), rng.randf_range(-player.speed, player.speed))
+	match get_player_class(player):
+		"Tank", "Fighter":
+			move_player(player, get_loc_dist_from(player.position, boss.position, 32))
+		"Archer":
+			move_player(player, get_loc_dist_from(player.position, boss.position, 256))
+		"Healer":
+			move_player(player, get_loc_dist_from(player.position, get_most_damaged_player().position, 16))
+		
+	
+func move_player(player, loc):
+	if (loc - player.position).length() <= player.speed:
+		player.position = loc
+	else:
+		player.position += player.speed *  (loc -  player.position).normalized()
+	
+func get_most_damaged_player():
+	return get_players().reduce(func(min, player): return player if player.health < min.health else min)

@@ -19,7 +19,6 @@ offset_bottom = 40.0
 
 [node name="PlayerController" type="Node" parent="."]
 script = ExtResource("3_ughe5")
-get_behind_me_phase_min_interval = 0
 
 [node name="Player" parent="PlayerController" instance=ExtResource("4_bm2xl")]
 position = Vector2(350, 287)
