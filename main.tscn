@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://c462kyojwtkwy"]
+
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
+[ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_y2mx8")
+
+[node name="GUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="World" parent="." instance=ExtResource("2_p3sjh")]
