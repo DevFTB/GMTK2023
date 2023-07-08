@@ -44,7 +44,7 @@ func _process(delta):
 		
 		# TODO: continually swap places by changing player_loc_ordering so that tank is closest and fighter is second closest
 		
-		group_move(get_loc_dist_from(avg_player_loc, boss.global_position, 80), delta)
+		group_move(get_loc_dist_from(avg_player_loc, boss.global_position, 100), delta)
 		
 	else:
 		for player in players:
@@ -151,7 +151,7 @@ func move_player_handler(player, delta):
 #	player.global_position += Vector2(rng.randf_range(-player.speed, player.speed), rng.randf_range(-player.speed, player.speed))
 	match get_player_class(player):
 		"Tank", "Fighter":
-			player.move(get_loc_dist_from(player.global_position, boss.global_position, 64), delta)
+			player.move(get_loc_dist_from(player.global_position, boss.global_position, 80), delta)
 		"Archer":
 			player.move(get_loc_dist_from(player.global_position, boss.global_position, 256), delta)
 		"Healer":

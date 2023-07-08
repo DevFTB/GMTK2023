@@ -12,5 +12,4 @@ player_class = "Tank"
 texture = ExtResource("2_er3yj")
 
 [node name="MeleeAttack" parent="Actions" index="0" instance=ExtResource("2_a8bkk")]
-action_range = 64
 cooldown = 10

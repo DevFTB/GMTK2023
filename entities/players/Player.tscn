@@ -25,6 +25,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+scale = Vector2(2, 2)
 script = ExtResource("1_l1dva")
 player_class = "Fighter"
 
