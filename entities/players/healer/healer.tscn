@@ -1,20 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://dp73h0waakyap"]
+[gd_scene load_steps=4 format=3 uid="uid://b5rfpsbs4b8sw"]
 
-[ext_resource type="Script" path="res://entities/players/Player.gd" id="1_i4wew"]
+[ext_resource type="PackedScene" uid="uid://jc15k6rexkl2" path="res://entities/players/player.tscn" id="1_leno5"]
 [ext_resource type="Texture2D" uid="uid://78a38wewcgf1" path="res://entities/players/healer/healer.png" id="2_bcbny"]
 [ext_resource type="PackedScene" uid="uid://bbwdxumxmypyu" path="res://entities/players/actions/heal/heal.tscn" id="3_vuia8"]
-[ext_resource type="PackedScene" uid="uid://kbthggvh3r0n" path="res://entities/players/player_gui/player_gui.tscn" id="4_c6p5q"]
 
-[node name="Healer" type="Node2D"]
-script = ExtResource("1_i4wew")
+[node name="Healer" instance=ExtResource("1_leno5")]
 player_class = "Healer"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("2_bcbny")
 
-[node name="Actions" type="Node2D" parent="."]
-
-[node name="Heal" parent="Actions" instance=ExtResource("3_vuia8")]
-cooldown = 1
-
-[node name="PlayerGUI" parent="." instance=ExtResource("4_c6p5q")]
+[node name="Heal" parent="Actions" index="0" instance=ExtResource("3_vuia8")]
+action_range = 64
+cooldown = 5

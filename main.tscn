@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://drbvn64cw72v0"]
+[gd_scene load_steps=9 format=3 uid="uid://drbvn64cw72v0"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
 [ext_resource type="PackedScene" uid="uid://psu755d5488q" path="res://entities/boss/boss.tscn" id="3_jivh4"]
 [ext_resource type="Script" path="res://entities/PlayerController.gd" id="4_ucgwb"]
-[ext_resource type="PackedScene" uid="uid://blm81pb4htcul" path="res://entities/players/fighter/fighter.tscn" id="5_kdhpy"]
-[ext_resource type="PackedScene" uid="uid://wt2guthukmnr" path="res://entities/players/archer/archer.tscn" id="6_7wb2i"]
-[ext_resource type="PackedScene" uid="uid://dp73h0waakyap" path="res://entities/players/healer/healer.tscn" id="8_et0w7"]
+[ext_resource type="PackedScene" uid="uid://cphxorrjm5k7a" path="res://entities/players/fighter/fighter.tscn" id="5_kdhpy"]
+[ext_resource type="PackedScene" uid="uid://bcvehonbmcs7y" path="res://entities/players/archer/archer.tscn" id="6_7wb2i"]
+[ext_resource type="PackedScene" uid="uid://b5rfpsbs4b8sw" path="res://entities/players/healer/healer.tscn" id="8_et0w7"]
+[ext_resource type="PackedScene" uid="uid://cva63yioyjyr3" path="res://entities/players/tank/tank.tscn" id="8_j4ekj"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
@@ -25,18 +26,17 @@ motion_mode = 1
 [node name="PlayerController" type="Node" parent="."]
 script = ExtResource("4_ucgwb")
 
-[node name="Fighter" parent="PlayerController" instance=ExtResource("5_kdhpy")]
-position = Vector2(207, 156)
-
-[node name="Tank" parent="PlayerController" instance=ExtResource("5_kdhpy")]
-position = Vector2(274, 128)
-player_class = "Tank"
-
 [node name="Archer" parent="PlayerController" instance=ExtResource("6_7wb2i")]
-position = Vector2(257, 64)
+position = Vector2(248, 99)
+
+[node name="Fighter" parent="PlayerController" instance=ExtResource("5_kdhpy")]
+position = Vector2(456, 62)
 
 [node name="Healer" parent="PlayerController" instance=ExtResource("8_et0w7")]
-position = Vector2(325, 104)
+position = Vector2(380, 106)
+
+[node name="Tank" parent="PlayerController" instance=ExtResource("8_j4ekj")]
+position = Vector2(326, 36)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 visible = false
