@@ -8,3 +8,6 @@ action_name = "Charge Bash"
 amount_of_beats = 4
 amount_of_cooldown_beats = 2
 is_hold_action = true
+starting_animation = "charge_activate"
+sustain_animation = "charge_sustain"
+hit_animation = "charge_hit"

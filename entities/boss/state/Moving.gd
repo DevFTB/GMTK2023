@@ -1,5 +1,8 @@
 extends "res://entities/boss/BossState.gd"
 
+func enter():
+	animator.play("moving")
+
 func process_input(event: InputEvent):
 	if event is InputEventKey:
 		var axis = Input.get_vector("move_left", "move_right", "move_up", "move_down")
