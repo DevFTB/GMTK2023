@@ -13,3 +13,13 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func take_damage(damage: int):
+	health -= damage
+	$PlayerGUI.health_changed(health, -damage)
+	if health <= 0:
+		die()
+	
+	
+func die():
+	pass

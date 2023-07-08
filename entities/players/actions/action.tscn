@@ -1,3 +1,8 @@
-[gd_scene format=3 uid="uid://bar4g6l2i8px8"]
+[gd_scene load_steps=2 format=3 uid="uid://dwsutbtyccdhp"]
+
+[ext_resource type="Script" path="res://entities/players/actions/Action.gd" id="1_xyesx"]
 
 [node name="Action" type="Node2D"]
+script = ExtResource("1_xyesx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

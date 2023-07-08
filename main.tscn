@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://drbvn64cw72v0"]
+[gd_scene load_steps=7 format=3 uid="uid://drbvn64cw72v0"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
 [ext_resource type="PackedScene" uid="uid://psu755d5488q" path="res://entities/boss/boss.tscn" id="3_jivh4"]
 [ext_resource type="Script" path="res://entities/players/PlayerController.gd" id="3_ughe5"]
 [ext_resource type="PackedScene" uid="uid://4nht58qpg6hv" path="res://entities/players/player.tscn" id="4_bm2xl"]
+[ext_resource type="PackedScene" uid="uid://blm81pb4htcul" path="res://entities/players/fighter/fighter.tscn" id="5_kdhpy"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
@@ -19,12 +20,6 @@ offset_bottom = 40.0
 
 [node name="PlayerController" type="Node" parent="."]
 script = ExtResource("3_ughe5")
-
-[node name="Player" parent="PlayerController" instance=ExtResource("4_bm2xl")]
-position = Vector2(350, 287)
-max_health = 10
-speed = 1
-player_class = "Fighter"
 
 [node name="Player2" parent="PlayerController" instance=ExtResource("4_bm2xl")]
 position = Vector2(268, 258)
@@ -43,6 +38,12 @@ position = Vector2(253, 211)
 max_health = 10
 speed = 1
 player_class = "Healer"
+
+[node name="Fighter" parent="PlayerController" instance=ExtResource("5_kdhpy")]
+position = Vector2(207, 156)
+max_health = 10
+speed = 1
+player_class = "Fighter"
 
 [node name="Boss" parent="." instance=ExtResource("3_jivh4")]
 motion_mode = 1

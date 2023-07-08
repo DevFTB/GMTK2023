@@ -43,18 +43,23 @@ func _process(delta):
 		# todo: move towards, but not quite on boss
 		# todo: continually swap places by changing player_loc_ordering so that tank is closest and fighter is second closest
 		
-		var avg_player_loc = players.map(func(p): return p.position).reduce(func(a, b): return a + b, Vector2(0, 0))/players.size()
+		var avg_player_loc = players.map(func(p): return p.global_position).reduce(func(a, b): return a + b, Vector2(0, 0))/players.size()
 #		print("avg player loc: " + str(avg_player_loc))
-		group_move(get_loc_dist_from(avg_player_loc, boss.position, 32))
+		group_move(get_loc_dist_from(avg_player_loc, boss.global_position, 32))
 		
 	else:
 		for player in get_players():
 			move_player_handler(player)
 	
 	# action
-#	for player in get_players():
-#		for action in get_actions(player):
-#			action.do()
+	for player in get_players():
+		for action in get_actions(player):
+			match action.name:
+				"MeleeAttack", "RangedAttack":
+					if action.off_cooldown() and action.in_range(boss):
+						action.do(boss)
+				"Heal":
+					pass
 		
 
 func get_players():
@@ -104,11 +109,13 @@ func get_player_classes():
 	return classes
 	
 func get_actions(player):
-	return player.get_node("Action").get_children()
+	if player.get_node_or_null("Actions") == null:
+		return []
+	return player.get_node("Actions").get_children()
 	
-func has_action(player, action):
-	# todo check that node is truthy lol
-	return true if player.get_node("Action").get_node_or_null(action) else false
+#func has_action(player, action):
+#	# todo check that node is truthy lol
+#	return true if player.get_node("Action").get_node_or_null(action) else false
 	
 # move to clump as a group - target loc to move to, and theyll move to a circle around
 # it in playerorder
@@ -132,21 +139,21 @@ func get_loc_dist_from(from: Vector2, to: Vector2, dist):
 # each player moves individually - normal mode
 # todo: reduce clumping
 func move_player_handler(player):
-#	player.position += Vector2(rng.randf_range(-player.speed, player.speed), rng.randf_range(-player.speed, player.speed))
+#	player.global_position += Vector2(rng.randf_range(-player.speed, player.speed), rng.randf_range(-player.speed, player.speed))
 	match get_player_class(player):
 		"Tank", "Fighter":
-			move_player(player, get_loc_dist_from(player.position, boss.position, 32))
+			move_player(player, get_loc_dist_from(player.global_position, boss.global_position, 32))
 		"Archer":
-			move_player(player, get_loc_dist_from(player.position, boss.position, 256))
+			move_player(player, get_loc_dist_from(player.global_position, boss.global_position, 256))
 		"Healer":
-			move_player(player, get_loc_dist_from(player.position, get_most_damaged_player().position, 16))
+			move_player(player, get_loc_dist_from(player.global_position, get_most_damaged_player().global_position, 16))
 		
 	
 func move_player(player, loc):
-	if (loc - player.position).length() <= player.speed:
-		player.position = loc
+	if (loc - player.global_position).length() <= player.speed:
+		player.global_position = loc
 	else:
-		player.position += player.speed *  (loc -  player.position).normalized()
+		player.global_position += player.speed *  (loc -  player.global_position).normalized()
 	
 func get_most_damaged_player():
 	return get_players().reduce(func(min, player): return player if player.health < min.health else min)
