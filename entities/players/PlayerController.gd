@@ -46,7 +46,6 @@ func _process(delta):
 		var avg_player_loc = players.map(func(p): return p.global_position).reduce(func(a, b): return a + b, Vector2(0, 0))/players.size()
 		
 		# TODO: continually swap places by changing player_loc_ordering so that tank is closest and fighter is second closest
-#		player_loc_ordering
 		
 		group_move(get_loc_dist_from(avg_player_loc, boss.global_position, 80), delta)
 		
@@ -168,10 +167,11 @@ func move_player_handler(player, delta):
 func get_most_damaged_player():
 	return get_players().reduce(func(min, player): return player if player.health < min.health else min)
 	
-# ok this is like fully repeated and not great but i cbf
-# this is the most scuffed function ever
+## ok this is like fully repeated and not great but i cbf
+## this is the most scuffed function ever
 #func set_get_behind_me_player_loc_ordering(target_loc):
-#	var dist_to_boss = func(loc): return (loc - boss.global_position()).length()
+#	var players = get_players()
+#	var player_classes = get_player_classes().values()
 #	var player_target_locs = []
 #	var player_num_ordering = player_loc_ordering.size()
 #	var closest_indices_to_boss = []
@@ -181,6 +181,10 @@ func get_most_damaged_player():
 #
 #	closest_indices_to_boss.sort_custom(func(a, b): return dist_to_boss(player_target_locs[a]) < dist_to_boss(player_target_locs[b]))
 #
-#	for d in 
-#	var out = []
-#	return 
+#	var class_closeness_priority_idx = []
+#	if player_classes.has("Tank"):
+#		class_closeness_priority.append(players.find())
+#	return
+#
+#func dist_to_boss(loc):
+#	return (loc - boss.global_position()).length()
