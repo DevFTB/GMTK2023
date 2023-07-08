@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://TimeGradientColourRect.gd" id="7_0ugbx"]
 [ext_resource type="Script" path="res://entities/players/PlayerController.gd" id="9_6id7j"]
 [ext_resource type="PackedScene" uid="uid://b5rfpsbs4b8sw" path="res://entities/players/healer/healer.tscn" id="10_0bbld"]
-[ext_resource type="PackedScene" uid="uid://bcvehonbmcs7y" path="res://entities/players/archer/archer.tscn" id="11_l085o"]
+[ext_resource type="PackedScene" uid="uid://c8gsduht2b0tl" path="res://entities/players/archer/archer.tscn" id="11_l085o"]
 [ext_resource type="PackedScene" uid="uid://cphxorrjm5k7a" path="res://entities/players/fighter/fighter.tscn" id="12_kagx0"]
 [ext_resource type="PackedScene" uid="uid://cva63yioyjyr3" path="res://entities/players/tank/tank.tscn" id="13_wiqs4"]
 

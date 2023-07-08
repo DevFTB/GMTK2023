@@ -1,6 +1,5 @@
 # todo make player scene inherit from player scene.
-
-extends Node2D
+extends CharacterBody2D
 
 @export var max_health: int = 10
 @export var speed: int = 60
