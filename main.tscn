@@ -1,10 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://drbvn64cw72v0"]
+[gd_scene load_steps=6 format=3 uid="uid://drbvn64cw72v0"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
+[ext_resource type="PackedScene" uid="uid://psu755d5488q" path="res://entities/boss/boss.tscn" id="3_jivh4"]
 [ext_resource type="Script" path="res://entities/players/PlayerController.gd" id="3_ughe5"]
 [ext_resource type="PackedScene" uid="uid://4nht58qpg6hv" path="res://entities/players/player.tscn" id="4_bm2xl"]
-[ext_resource type="PackedScene" uid="uid://psu755d5488q" path="res://entities/boss/boss.tscn" id="3_jivh4"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
