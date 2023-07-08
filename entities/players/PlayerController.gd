@@ -40,9 +40,6 @@ func _process(delta):
 		group_move(group_loc, delta)
 		
 	elif phase =="Get behind me!":
-		# todo: move towards, but not quite on boss
-		
-		
 		var avg_player_loc = players.map(func(p): return p.global_position).reduce(func(a, b): return a + b, Vector2(0, 0))/players.size()
 		
 		# TODO: continually swap places by changing player_loc_ordering so that tank is closest and fighter is second closest
@@ -59,7 +56,6 @@ func _process(delta):
 				match action.name:
 					"Heal":
 						if action.off_cooldown():
-							# todo: can pick themself. is this an issue
 							var players_in_range = players.filter(func(p): return action.in_range(p))
 							if players_in_range.size() > 0:
 								# slightly hacky way to get healer to do mass heal during the group heal time
@@ -151,7 +147,6 @@ func get_loc_dist_from(from: Vector2, to: Vector2, dist):
 	return to + ((from - to).normalized() * dist)
 
 # each player moves individually - normal mode
-# todo: reduce clumping
 func move_player_handler(player, delta):
 #	player.global_position += Vector2(rng.randf_range(-player.speed, player.speed), rng.randf_range(-player.speed, player.speed))
 	match get_player_class(player):

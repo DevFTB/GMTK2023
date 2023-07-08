@@ -65,7 +65,6 @@ func move(loc, delta):
 		if slowed:
 			vel_vec *= slow_factor
 		velocity = speed * vel_vec
-		# TODO: sometimes you can drag players around as the boss, maybe should fix lol
 		move_and_slide()
 
 func do_action(action: Node2D, target):
