@@ -6,6 +6,39 @@ var phase
 @export var heal_phase_length = 10
 @export var get_behind_me_phase_length = 10
 
+var normal_phase_speeches = [
+	"Back to your positions",
+	"Split!",
+	"Run!!",
+	"Retreat!",
+	"Grouping down"
+]
+var phase_speeches = {
+	"Normal": {
+		"Fighter": normal_phase_speeches,
+		"Healer": normal_phase_speeches,
+		"Tank": normal_phase_speeches,
+		"Archer": normal_phase_speeches
+	},
+	"Heal": {
+		"Healer": [
+			"Group up for healing!",
+			"Healy time!",
+			"Take your medicine!",
+			"Somebody call for the doctor?"
+		]
+	},
+	"Get behind me!": {
+		"Tank": [
+			"Get behind me!",
+			"Strength in numbers!",
+			"Group up!",
+			"REEEEEEEEE!!",
+			"Form up!"
+		]
+	}
+}
+
 var heal_phase_allowed_timer
 var get_behind_me_phase_allowed_timer
 var phase_timer
@@ -60,7 +93,7 @@ func _process(delta):
 							if players_in_range.size() > 0:
 								# slightly hacky way to get healer to do mass heal during the group heal time
 								# will start group healing once they have reached their target location (check is also hacky)
-								if phase == "Heal" and (player.global_position - group_loc).length() < 32:
+								if phase == "Heal" and (player.global_position - group_loc).length() < 48:
 									for p_heal in players_in_range:
 										player.do_action(action, p_heal)
 								else:
@@ -90,9 +123,18 @@ func set_phase(inp_phase):
 	
 	phase = inp_phase
 	print("New phase: " + phase)
+
+func do_phase_speech(phase):
+	var players = get_players()
+	var valid_speakers = players.filter(func(p): return phase_speeches[phase].has(get_player_class(p)))
+	if valid_speakers.size() > 0:
+		var speaker = valid_speakers.pick_random()
+		speaker.speak(phase_speeches[phase][get_player_class(speaker)].pick_random())
 	
 func manage_phase():
+	var swapped_normal = false
 	if phase_timer == 0 and phase != "Normal":
+		swapped_normal = true
 		set_phase("Normal")
 	
 	var player_classes = get_player_classes().values()
@@ -101,8 +143,15 @@ func manage_phase():
 		var team_health_prop = float(players.map(func(p): return p.health).reduce(func(a, b): return a + b, 0))/players.map(func(p): return p.max_health).reduce(func(a, b): return a + b, 0)
 		if player_classes.has("Healer") and heal_phase_allowed_timer == 0 and team_health_prop <= 0.4:
 			set_phase("Heal")
+			do_phase_speech("Heal")
 		elif player_classes.has("Tank") and get_behind_me_phase_allowed_timer == 0:
 			set_phase("Get behind me!")
+			do_phase_speech("Get behind me!")
+	
+	# need this statement as otherwise two dialogues will pop up at the same time
+	# when switching back to normal then instantly to another phase
+	if swapped_normal and phase == "Normal":
+		do_phase_speech("Normal")
 		
 		
 
@@ -155,7 +204,7 @@ func move_player_handler(player, delta):
 		"Archer":
 			player.move(get_loc_dist_from(player.global_position, boss.global_position, 256), delta)
 		"Healer":
-			player.move(get_loc_dist_from(player.global_position, get_most_damaged_player().global_position, 16), delta)
+			player.move(get_loc_dist_from(player.global_position, get_most_damaged_player().global_position, 64), delta)
 		
 		
 # todo: can pick themself - is this an issue?

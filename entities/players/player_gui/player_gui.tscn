@@ -27,15 +27,21 @@ texture_under = ExtResource("2_noaqh")
 texture_progress = ExtResource("3_p36wt")
 
 [node name="SpeechBubble" type="Sprite2D" parent="."]
+visible = false
+z_index = 2
 position = Vector2(31, -33)
 texture = ExtResource("4_c5njw")
 
-[node name="Text" type="Label" parent="SpeechBubble"]
+[node name="Speech" type="Label" parent="SpeechBubble"]
 offset_left = -22.0
 offset_top = -22.0
 offset_right = 24.0
 offset_bottom = 11.0
-text = "sdfsddfsfsfeef"
 label_settings = SubResource("LabelSettings_xjb4x")
 autowrap_mode = 3
 metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="SpeechBubble"]
+one_shot = true
+
+[connection signal="timeout" from="SpeechBubble/Timer" to="." method="_on_timer_timeout"]

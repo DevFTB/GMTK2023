@@ -66,6 +66,9 @@ func move(loc, delta):
 			vel_vec *= slow_factor
 		velocity = speed * vel_vec
 		move_and_slide()
+	
+func speak(text):
+	$PlayerGUI.display_speech(text)
 
 func do_action(action: Node2D, target):
 	if not stunned:
