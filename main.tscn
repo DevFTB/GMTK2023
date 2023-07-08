@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=5 format=3 uid="uid://drbvn64cw72v0"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
+[ext_resource type="Script" path="res://entities/players/PlayerController.gd" id="3_ughe5"]
+[ext_resource type="PackedScene" uid="uid://4nht58qpg6hv" path="res://entities/players/player.tscn" id="4_bm2xl"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
@@ -13,3 +15,31 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="World" parent="." instance=ExtResource("2_p3sjh")]
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("3_ughe5")
+get_behind_me_phase_min_interval = 0
+
+[node name="Player" parent="PlayerController" instance=ExtResource("4_bm2xl")]
+position = Vector2(350, 287)
+max_health = 10
+speed = 1
+player_class = "Fighter"
+
+[node name="Player2" parent="PlayerController" instance=ExtResource("4_bm2xl")]
+position = Vector2(268, 258)
+max_health = 10
+speed = 1
+player_class = "Tank"
+
+[node name="Player3" parent="PlayerController" instance=ExtResource("4_bm2xl")]
+position = Vector2(225, 257)
+max_health = 10
+speed = 1
+player_class = "Archer"
+
+[node name="Player4" parent="PlayerController" instance=ExtResource("4_bm2xl")]
+position = Vector2(253, 211)
+max_health = 10
+speed = 1
+player_class = "Healer"

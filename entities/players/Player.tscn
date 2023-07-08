@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://v8uj1o1xmls8"]
+[gd_scene load_steps=3 format=3 uid="uid://4nht58qpg6hv"]
 
 [ext_resource type="Texture2D" uid="uid://csxynyfjfd4jh" path="res://entities/players/fighter/fighter.png" id="1_asw2x"]
+[ext_resource type="Script" path="res://entities/players/Player.gd" id="1_p78lw"]
 
 [node name="Player" type="Node2D"]
+script = ExtResource("1_p78lw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_asw2x")

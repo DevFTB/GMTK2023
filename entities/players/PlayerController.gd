@@ -16,8 +16,11 @@ var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	phase = "Normal"
+	set_phase("Normal")
 	player_loc_ordering = get_players()
+	phase_timer = 0
+	heal_phase_allowed_timer = heal_phase_min_interval
+	get_behind_me_phase_allowed_timer = get_behind_me_phase_min_interval
 
 
 
@@ -25,6 +28,8 @@ func _ready():
 func _process(delta):
 	manage_phase()
 	phase_timer = max(0, phase_timer - delta)
+	heal_phase_allowed_timer = max(0, heal_phase_allowed_timer - delta)
+	get_behind_me_phase_allowed_timer = max(0, get_behind_me_phase_allowed_timer - delta)
 	
 	# move
 	if phase == "Heal":
@@ -32,16 +37,16 @@ func _process(delta):
 		
 	elif phase =="Get behind me!":
 		# todo: move towards, but not quite on boss
-		group_move(Vector2(0, 0))
+		group_move(Vector2(400, 400))
 		
 	else:
 		for player in get_players():
 			move_player(player)
 	
 	# action
-	for player in get_players():
-		for action in get_actions(player):
-			action.do()
+#	for player in get_players():
+#		for action in get_actions(player):
+#			action.do()
 		
 
 func get_players():
@@ -65,7 +70,7 @@ func set_phase(inp_phase):
 	print("New phase: " + phase)
 	
 func manage_phase():
-	if phase_timer == 0:
+	if phase_timer == 0 and phase != "Normal":
 		set_phase("Normal")
 	
 	var player_classes = get_player_classes().values()
@@ -102,16 +107,16 @@ func group_move(target_loc):
 	var player_target_locs = []
 	var player_num_ordering = player_loc_ordering.size()
 	for i in range(player_num_ordering):
-		player_target_locs.append(target_loc + 32 * Vector2.from_angle(i * 2 * PI / player_num_ordering))
+		player_target_locs.append(target_loc + 16 * Vector2.from_angle(i * 2 * PI / player_num_ordering))
 	
 	for i in range(player_loc_ordering.size()):
 		var player = player_loc_ordering[i]
 		# if players die, ordering will remain the same from last set, but with missing person in circle
 		if player:
-			if (player_target_locs[i] -  player.position).length <= player.speed:
+			if (player_target_locs[i] -  player.position).length() <= player.speed:
 				player.position = player_target_locs[i]
 			else:
-				player.position += player.speed *  (player_target_locs[i] -  player.position).normalized
+				player.position += player.speed *  (player_target_locs[i] -  player.position).normalized()
 
 # each player moves individually - normal mode
 func move_player(player):
