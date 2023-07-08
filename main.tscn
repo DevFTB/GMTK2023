@@ -18,7 +18,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="World" parent="." instance=ExtResource("2_p3sjh")]
+[node name="World" parent="." groups=["world"] instance=ExtResource("2_p3sjh")]
 
 [node name="Boss" parent="." instance=ExtResource("3_jivh4")]
 motion_mode = 1
@@ -39,7 +39,6 @@ position = Vector2(380, 106)
 position = Vector2(326, 36)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-visible = false
 anchor_mode = 0
 enabled = false
-zoom = Vector2(2, 2)
+zoom = Vector2(1.5, 1.5)

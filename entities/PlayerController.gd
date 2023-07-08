@@ -133,7 +133,7 @@ func group_move(target_loc, delta):
 		var player = player_loc_ordering[i]
 		# if players die, ordering will remain the same from last set, but with missing person in circle
 		if player:
-			move_player(player, player_target_locs[i], delta)
+			player.move(player_target_locs[i], delta)
 			
 # gets location dist distance from to, on the line from from to to
 # may have to change it to use boss eclipse lter
@@ -146,18 +146,12 @@ func move_player_handler(player, delta):
 #	player.global_position += Vector2(rng.randf_range(-player.speed, player.speed), rng.randf_range(-player.speed, player.speed))
 	match get_player_class(player):
 		"Tank", "Fighter":
-			move_player(player, get_loc_dist_from(player.global_position, boss.global_position, 32), delta)
+			player.move(get_loc_dist_from(player.global_position, boss.global_position, 32), delta)
 		"Archer":
-			move_player(player, get_loc_dist_from(player.global_position, boss.global_position, 256), delta)
+			player.move(get_loc_dist_from(player.global_position, boss.global_position, 256), delta)
 		"Healer":
-			move_player(player, get_loc_dist_from(player.global_position, get_most_damaged_player().global_position, 16), delta)
+			player.move(get_loc_dist_from(player.global_position, get_most_damaged_player().global_position, 16), delta)
 		
-	
-func move_player(player, loc, delta):
-	if (loc - player.global_position).length() <= player.speed * delta:
-		player.global_position = loc
-	else:
-		player.global_position += player.speed * delta * (loc -  player.global_position).normalized()
 		
 # todo: can pick themself - is this an issue?
 func get_most_damaged_player():

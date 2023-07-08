@@ -7,6 +7,9 @@ extends Node2D
 @export var player_class = ""
 var health: int
 
+var slowed = false
+var stunned = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	health = max_health
@@ -27,7 +30,12 @@ func heal(heal: int):
 #	health = heal + health
 	$PlayerGUI.health_changed(health, heal)
 	print(name + " healed for  " + str(heal))
-	
+
+func move(loc, delta):
+	if (loc - global_position).length() <= speed * delta:
+		global_position = loc
+	else:
+		global_position += speed * delta * (loc -  global_position).normalized()
 	
 func die():
 	pass
