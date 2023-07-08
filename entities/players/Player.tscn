@@ -7,8 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c7g506auv6mpi" path="res://entities/players/condition_sprites/slowed.png" id="5_hlcli"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lpubb"]
-radius = 5.0
-height = 14.0
+height = 28.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qf50w"]
 animations = [{
@@ -25,7 +24,6 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-scale = Vector2(2, 2)
 script = ExtResource("1_l1dva")
 player_class = "Fighter"
 
@@ -33,15 +31,18 @@ player_class = "Fighter"
 shape = SubResource("CapsuleShape2D_lpubb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
 texture = ExtResource("2_2lh5h")
 
 [node name="Actions" type="Node2D" parent="."]
+scale = Vector2(2, 2)
 
 [node name="PlayerGUI" parent="." instance=ExtResource("4_svkkc")]
 
 [node name="StatusEffect" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2(0, -16)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_qf50w")
 
 [node name="StunTimer" type="Timer" parent="StatusEffect"]
