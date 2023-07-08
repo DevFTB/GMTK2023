@@ -43,4 +43,7 @@ script = ExtResource("8_mgixy")
 wait_time = 3.0
 one_shot = true
 
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
 [connection signal="timeout" from="BossStateMachine/Collapsed/CollapseTimer" to="BossStateMachine/Collapsed" method="_on_timer_timeout"]
