@@ -1,0 +1,65 @@
+[gd_scene load_steps=11 format=3 uid="uid://dofl382smqwi8"]
+
+[ext_resource type="Script" path="res://entities/players/actions/ranged_attack/RangedAttack.gd" id="1_1f0qs"]
+[ext_resource type="PackedScene" uid="uid://dmrck064st8x3" path="res://entities/players/actions/ranged_attack/arrow/arrow.tscn" id="2_4vggp"]
+[ext_resource type="Texture2D" uid="uid://dknn5dvo4ff6c" path="res://entities/players/actions/melee_attack/cleave.png" id="2_s0ahf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0kgjk"]
+atlas = ExtResource("2_s0ahf")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_770oy"]
+atlas = ExtResource("2_s0ahf")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2f40"]
+atlas = ExtResource("2_s0ahf")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcqjt"]
+atlas = ExtResource("2_s0ahf")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3e6q"]
+atlas = ExtResource("2_s0ahf")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nd6jo"]
+atlas = ExtResource("2_s0ahf")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7kxwy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0kgjk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_770oy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2f40")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcqjt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3e6q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nd6jo")
+}],
+"loop": false,
+"name": &"default",
+"speed": 18.0
+}]
+
+[node name="RangedAttack" type="Node2D"]
+scale = Vector2(0.2, 0.2)
+script = ExtResource("1_1f0qs")
+arrow_scene = ExtResource("2_4vggp")
+
+[node name="ActionAnimation" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_7kxwy")
