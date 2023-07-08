@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
 @export var movement_speed = 200
+@export var combos : Array[Combo] = []
+
 var movement_dir = Vector2.ZERO
 
-var combos : Array[Combo] = []
+
 var active_combo : Node2D
 
 func _process(delta):
