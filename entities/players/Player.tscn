@@ -1,12 +1,28 @@
-[gd_scene load_steps=5 format=3 uid="uid://jc15k6rexkl2"]
+[gd_scene load_steps=8 format=3 uid="uid://jc15k6rexkl2"]
 
 [ext_resource type="Script" path="res://entities/players/Player.gd" id="1_l1dva"]
 [ext_resource type="Texture2D" uid="uid://csxynyfjfd4jh" path="res://entities/players/fighter/fighter.png" id="2_2lh5h"]
+[ext_resource type="Texture2D" uid="uid://ikmxpy4gagtm" path="res://entities/players/condition_sprites/stun.png" id="4_3v406"]
 [ext_resource type="PackedScene" uid="uid://kbthggvh3r0n" path="res://entities/players/player_gui/player_gui.tscn" id="4_svkkc"]
+[ext_resource type="Texture2D" uid="uid://c7g506auv6mpi" path="res://entities/players/condition_sprites/slowed.png" id="5_hlcli"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lpubb"]
 radius = 5.0
 height = 14.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qf50w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_3v406")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hlcli")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_l1dva")
@@ -21,3 +37,17 @@ texture = ExtResource("2_2lh5h")
 [node name="Actions" type="Node2D" parent="."]
 
 [node name="PlayerGUI" parent="." instance=ExtResource("4_svkkc")]
+
+[node name="StatusEffect" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(0, -16)
+sprite_frames = SubResource("SpriteFrames_qf50w")
+
+[node name="StunTimer" type="Timer" parent="StatusEffect"]
+one_shot = true
+
+[node name="SlowTimer" type="Timer" parent="StatusEffect"]
+one_shot = true
+
+[connection signal="timeout" from="StatusEffect/StunTimer" to="." method="_on_stun_timer_timeout"]
+[connection signal="timeout" from="StatusEffect/SlowTimer" to="." method="_on_slow_timer_timeout"]
