@@ -1,3 +1,5 @@
+# todo make player scene inherit from player scene.
+
 extends Node2D
 
 @export var max_health: int = 10
@@ -22,6 +24,7 @@ func take_damage(damage: int):
 	
 func heal(heal: int):
 	health = min(max_health, heal + health)
+#	health = heal + health
 	$PlayerGUI.health_changed(health, heal)
 	print(name + " healed for  " + str(heal))
 	

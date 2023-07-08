@@ -55,14 +55,15 @@ func _process(delta):
 	for player in players:
 		for action in get_actions(player):
 			match action.name:
+				"Heal":
+					if action.off_cooldown():
+						# todo: can pick themself. is this an issue
+						var players_in_range = players.filter(func(p): return action.in_range(p))
+						if players_in_range.size() > 0:
+							action.do(players_in_range.reduce(func(min, p): return p if player.health < min.health else min))
 				"MeleeAttack", "RangedAttack":
 					if action.off_cooldown() and action.in_range(boss):
 						action.do(boss)
-				"Heal":
-					# todo: can pick themself. is this an issue
-					var players_in_range = players.filter(func(p): action.in_range(p))
-					if players_in_range.size() > 0:
-						action.do(players_in_range.reduce(func(min, p): return p if player.health < min.health else min))
 		
 
 func get_players():
