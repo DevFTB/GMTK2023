@@ -1,4 +1,7 @@
 extends CharacterBody2D
+class_name Boss
+
+signal started_combo(lc: ComboLifecycle)
 
 @export var movement_speed = 200
 @export var combos : Array[Combo] = []
@@ -6,8 +9,6 @@ extends CharacterBody2D
 
 var health
 var movement_dir = Vector2.ZERO
-
-
 var active_combo : Node2D
 
 func _ready():
@@ -17,17 +18,17 @@ func _process(delta):
 	velocity = movement_dir * movement_speed
 	move_and_slide()
 
-func _input(event):
-	if event is InputEventKey:
-		var axis = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-		movement_dir = axis
-		
-		if event.is_action_pressed("activate_combo_1"):
-			activate_combo(0)
-		if event.is_action_pressed("activate_combo_2"):
-			activate_combo(1)
-
 func activate_combo(index: int) -> void:
+	var combo = combos[index]
+	
+	var lifecycle = ComboLifecycle.new()
+	lifecycle.combo = combo
+	
+	active_combo = lifecycle
+	
+	add_child(lifecycle)
+	
+	started_combo.emit(lifecycle)
 	pass
 
 func take_damage(damage: int):

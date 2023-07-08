@@ -1,44 +1,132 @@
-[gd_scene load_steps=9 format=3 uid="uid://drbvn64cw72v0"]
+[gd_scene load_steps=10 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
-[ext_resource type="PackedScene" uid="uid://psu755d5488q" path="res://entities/boss/boss.tscn" id="3_jivh4"]
-[ext_resource type="Script" path="res://entities/PlayerController.gd" id="4_ucgwb"]
-[ext_resource type="PackedScene" uid="uid://cphxorrjm5k7a" path="res://entities/players/fighter/fighter.tscn" id="5_kdhpy"]
-[ext_resource type="PackedScene" uid="uid://bcvehonbmcs7y" path="res://entities/players/archer/archer.tscn" id="6_7wb2i"]
-[ext_resource type="PackedScene" uid="uid://b5rfpsbs4b8sw" path="res://entities/players/healer/healer.tscn" id="8_et0w7"]
-[ext_resource type="PackedScene" uid="uid://cva63yioyjyr3" path="res://entities/players/tank/tank.tscn" id="8_j4ekj"]
+[ext_resource type="PackedScene" uid="uid://c7q25yyup7fu8" path="res://entities/boss/boss.tscn" id="3_jivh4"]
+[ext_resource type="Script" path="res://level/BeatManager.gd" id="4_w0ul8"]
+[ext_resource type="Script" path="res://level/beat/BeatGUI.gd" id="4_xxwnv"]
+[ext_resource type="AudioStream" uid="uid://3yh8shsiwy0q" path="res://level/Raving Energy.mp3" id="5_8wnvk"]
+[ext_resource type="Texture2D" uid="uid://bj2c08let7yd5" path="res://level/beat/beat_ball.png" id="5_svrfq"]
+[ext_resource type="Script" path="res://TimeGradientColourRect.gd" id="7_0ugbx"]
+
+[sub_resource type="Gradient" id="Gradient_6ieoh"]
+offsets = PackedFloat32Array(0, 0.274074, 0.648148, 0.996296)
+colors = PackedColorArray(0.603922, 0.172549, 0.827451, 1, 0.824238, 0.221158, 0.219652, 1, 0.980307, 0.480217, 0.252419, 1, 0.603922, 0.172549, 0.827451, 1)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
 
-[node name="GUI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="BeatManager" type="Node" parent="." groups=["beat_manager"]]
+script = ExtResource("4_w0ul8")
+bpm = 122
 
-[node name="World" parent="." groups=["world"] instance=ExtResource("2_p3sjh")]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="BeatManager"]
+stream = ExtResource("5_8wnvk")
+
+[node name="World" parent="." instance=ExtResource("2_p3sjh")]
 
 [node name="Boss" parent="." instance=ExtResource("3_jivh4")]
 motion_mode = 1
 
-[node name="PlayerController" type="Node" parent="."]
-script = ExtResource("4_ucgwb")
+[node name="GUI" type="Control" parent="."]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Archer" parent="PlayerController" instance=ExtResource("6_7wb2i")]
-position = Vector2(248, 99)
+[node name="BeatGUI" type="Control" parent="GUI" node_paths=PackedStringArray("boss", "beat_manager")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -114.5
+offset_top = 9.0
+offset_right = 114.5
+offset_bottom = 86.0
+grow_horizontal = 2
+script = ExtResource("4_xxwnv")
+boss = NodePath("../../Boss")
+beat_manager = NodePath("../../BeatManager")
 
-[node name="Fighter" parent="PlayerController" instance=ExtResource("5_kdhpy")]
-position = Vector2(456, 62)
+[node name="Bar" type="Control" parent="GUI/BeatGUI"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Healer" parent="PlayerController" instance=ExtResource("8_et0w7")]
-position = Vector2(380, 106)
+[node name="BackgroundColourRect" type="ColorRect" parent="GUI/BeatGUI/Bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.254902, 0.0313726, 0.364706, 1)
 
-[node name="Tank" parent="PlayerController" instance=ExtResource("8_j4ekj")]
-position = Vector2(326, 36)
+[node name="ForegroundColourRect" type="ColorRect" parent="GUI/BeatGUI/Bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 3.5
+offset_right = -8.0
+offset_bottom = -4.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.603922, 0.172549, 0.827451, 1)
+script = ExtResource("7_0ugbx")
+color_gradient = SubResource("Gradient_6ieoh")
+gradient_cycle_time = 0.3
 
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
-enabled = false
-zoom = Vector2(1.5, 1.5)
+[node name="Ball" type="Control" parent="GUI/BeatGUI"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="ColorRect" type="TextureRect" parent="GUI/BeatGUI/Ball"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.0
+offset_top = -39.0
+offset_right = 39.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_svrfq")
+
+[node name="LeftBeatLabel" type="Label" parent="GUI/BeatGUI"]
+layout_mode = 0
+offset_top = 65.0
+offset_right = 40.0
+offset_bottom = 88.0
+
+[node name="RightBeatLabel" type="Label" parent="GUI/BeatGUI"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -41.0
+offset_top = 24.5
+offset_right = -1.0
+offset_bottom = 47.5
+grow_horizontal = 0
+grow_vertical = 2

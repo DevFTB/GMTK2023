@@ -5,4 +5,6 @@
 [resource]
 script = ExtResource("1_u55ih")
 action_name = "Charge Bash"
-amount_of_beats = 8
+amount_of_beats = 4
+amount_of_cooldown_beats = 2
+is_hold_action = true
