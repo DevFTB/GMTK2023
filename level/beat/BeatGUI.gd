@@ -50,18 +50,20 @@ func _on_combo_started(clc: ComboLifecycle):
 	clc.action_hit.connect(_on_hit_action)
 	set_alc(clc.active_action)
 	
-func _on_hit_action(action):
+func _on_hit_action(action: BossAction, strength: float):
 	if not combo.action_queue.is_empty():
 		set_alc(combo.action_queue.front())
 		print(alc.action.action_name, " giss")
+	$Control/HitLabel.display_hit_text(strength)
 	
 func set_alc(new_alc):
 	alc = new_alc
 	if alc != null:
 		if alc.action.is_hold_action:
 			alc.started.connect(func(): fg_color_rect.active = true)
-			alc.hit.connect(func(): fg_color_rect.active = false)
+			alc.hit.connect(func(x): fg_color_rect.active = false)
 	_update_gui()
+	
 func _update_gui():
 	var lbl_text = ""
 	var rbl_text = ""

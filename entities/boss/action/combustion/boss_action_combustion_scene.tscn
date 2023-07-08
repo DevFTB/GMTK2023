@@ -1,48 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgpctasn4e2ax"]
+[gd_scene load_steps=3 format=3 uid="uid://bgpctasn4e2ax"]
 
 [ext_resource type="Script" path="res://entities/boss/action/BossActionInstance.gd" id="1_cycn1"]
-[ext_resource type="Script" path="res://entities/boss/action/swipe/DamageComponent.gd" id="2_1d5ui"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_x308v"]
-radius = 60.208
+[ext_resource type="PackedScene" uid="uid://bdytxksyet4m" path="res://entities/boss/action/combustion/goo_splash.tscn" id="2_syjul"]
 
 [node name="BossActionSwipe" type="Node2D"]
 script = ExtResource("1_cycn1")
+duration = 4.0
 
 [node name="Hitboxes" type="Node2D" parent="."]
 
-[node name="Hitbox" type="Area2D" parent="Hitboxes"]
-script = ExtResource("2_1d5ui")
+[node name="Hitbox" parent="Hitboxes" instance=ExtResource("2_syjul")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/Hitbox"]
-position = Vector2(-103, 73)
-shape = SubResource("CircleShape2D_x308v")
+[node name="Hitbox2" parent="Hitboxes" instance=ExtResource("2_syjul")]
+position = Vector2(103, -47)
 
-[node name="Hitbox2" type="Area2D" parent="Hitboxes"]
-position = Vector2(-51, -174)
-script = ExtResource("2_1d5ui")
+[node name="Hitbox3" parent="Hitboxes" instance=ExtResource("2_syjul")]
+position = Vector2(82, 62)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/Hitbox2"]
-position = Vector2(-103, 73)
-shape = SubResource("CircleShape2D_x308v")
+[node name="Hitbox4" parent="Hitboxes" instance=ExtResource("2_syjul")]
+position = Vector2(-118, 5)
 
-[node name="Hitbox3" type="Area2D" parent="Hitboxes"]
-position = Vector2(197, -213)
-script = ExtResource("2_1d5ui")
+[node name="Hitbox5" parent="Hitboxes" instance=ExtResource("2_syjul")]
+position = Vector2(-2, -107)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/Hitbox3"]
-position = Vector2(-103, 73)
-shape = SubResource("CircleShape2D_x308v")
-
-[node name="Hitbox4" type="Area2D" parent="Hitboxes"]
-position = Vector2(257, 11)
-script = ExtResource("2_1d5ui")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/Hitbox4"]
-position = Vector2(-103, 73)
-shape = SubResource("CircleShape2D_x308v")
-
-[connection signal="body_entered" from="Hitboxes/Hitbox" to="Hitboxes/Hitbox" method="_on_body_entered"]
-[connection signal="body_entered" from="Hitboxes/Hitbox2" to="Hitboxes/Hitbox2" method="_on_body_entered"]
-[connection signal="body_entered" from="Hitboxes/Hitbox3" to="Hitboxes/Hitbox3" method="_on_body_entered"]
-[connection signal="body_entered" from="Hitboxes/Hitbox4" to="Hitboxes/Hitbox4" method="_on_body_entered"]
+[node name="Hitbox6" parent="Hitboxes" instance=ExtResource("2_syjul")]
+position = Vector2(-22, 116)

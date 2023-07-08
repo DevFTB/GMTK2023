@@ -4,7 +4,7 @@ class_name ComboLifecycle
 class ActionLifecycle:
 	signal started
 	signal completed
-	signal hit
+	signal hit(strength: float)
 	signal failed
 	
 	var parent: Node2D
@@ -42,15 +42,15 @@ class ActionLifecycle:
 		return hit_beat
 	
 	func rhythm_hit(strength: float, pressed: bool = true):
-		if pressed:
-			if strength == 0:
-				failed.emit()
-			else:
-				if not success_hit:
+		if not success_hit:
+			if pressed:
+				if strength == 0:
+					failed.emit()
+				else:
 					success_hit = true
 					execute(strength)
-					hit.emit()
-	
+					hit.emit(strength)
+
 	func execute(strength: float, position: Vector2 = Vector2.ZERO, direction: Vector2 = Vector2.DOWN):
 		if action.action_scene:
 			var action_instance = action.action_scene.instantiate()
@@ -87,19 +87,21 @@ class HoldActionLifecycle:
 
 	
 	func rhythm_hit(strength: float, pressed: bool = true):
-		if strength == 0:
-			failed.emit()
-			
-		if pressed and not has_started:
-			press_strength = strength
-			has_started = true
-			started.emit()
-			
-		elif not pressed and not success_hit:
-			execute(press_strength * strength)
-			success_hit = true
-			hit.emit()
-			
+		print(action.action_name, " recieved ", "press" if  pressed else "release", " with stregnth ", strength)
+		if not success_hit:
+			if strength == 0:
+				failed.emit()
+				
+			if pressed and not has_started:
+				press_strength = strength
+				has_started = true
+				started.emit()
+				
+			elif not pressed and not success_hit:
+				execute(press_strength * strength)
+				success_hit = true
+				hit.emit(press_strength * strength)
+				
 	func next_player_beat() -> int:
 		if not has_started:
 			return start_beat
@@ -110,10 +112,10 @@ class HoldActionLifecycle:
 signal failed
 signal completed
 
-signal action_activated
-signal action_hit
-signal action_started
-signal action_completed
+signal action_activated(action: BossAction)
+signal action_hit(action: BossAction, strength: float)
+signal action_started(action: BossAction)
+signal action_completed(action: BossAction)
 
 var combo : Combo
 
@@ -139,7 +141,8 @@ var next_beat = 0
 func _ready():
 	beat_manager.beat.connect(_on_beat)
 	
-	var offset = beat_manager.beat_number + 1
+	
+	var offset = beat_manager.beat_number + (1 if beat_manager.get_beat_progress() < 0.5 else 2)
 	
 	for slot in range(combo.amount_of_slots):
 		var action = combo.actions[slot]
@@ -158,14 +161,18 @@ func _ready():
 
 func _input(event: InputEvent):
 	if active_action:
+		
+
+		
 		if event.is_action_pressed("rhythm_hit"):
+			if active_action.success_hit and not action_queue.is_empty():
+				active_action = action_queue.pop_front()
 			var sync = beat_manager.get_sync_amount(active_action.next_player_beat())
 			active_action.rhythm_hit(sync, true)
 		
 		if event.is_action_released("rhythm_hit"):
 			var sync = beat_manager.get_sync_amount(active_action.next_player_beat())
 			active_action.rhythm_hit(sync, false)
-			print("release sync ", sync)
 			
 
 func _on_beat(beat_number: int):
@@ -173,9 +180,9 @@ func _on_beat(beat_number: int):
 		active_action.process_beat(beat_number)
 	pass
 
-func _on_action_hit():
+func _on_action_hit(strength):
 	print("hit ", active_action.action.action_name)
-	action_hit.emit(active_action.action)
+	action_hit.emit(active_action.action, strength)
 	pass
 func _on_action_start():
 	print("started ", active_action.action.action_name)

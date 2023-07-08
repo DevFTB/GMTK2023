@@ -10,8 +10,8 @@ func process_input(event: InputEvent):
 		
 		if event.is_action_pressed("activate_combo_1"):
 			boss.activate_combo(0)
-			state_machine.transition_to("Attacking")
+
 			
 		if event.is_action_pressed("activate_combo_2"):
 			boss.activate_combo(1)
-			state_machine.transition_to("Attacking")
+

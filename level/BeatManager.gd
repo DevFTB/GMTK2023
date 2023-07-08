@@ -39,3 +39,6 @@ func get_sync_amount(target_beat: int):
 		return ease(1 - distance, 2)
 	else:
 		return 0
+
+func get_beat_progress():
+	return fmod(timer, time_per_beat) / time_per_beat

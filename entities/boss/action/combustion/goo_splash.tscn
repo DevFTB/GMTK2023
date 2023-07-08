@@ -1,0 +1,55 @@
+[gd_scene load_steps=10 format=3 uid="uid://bdytxksyet4m"]
+
+[ext_resource type="Script" path="res://entities/boss/action/swipe/DamageComponent.gd" id="1_52fqw"]
+[ext_resource type="Shader" path="res://entities/boss/action/combustion/combustion_goo.gdshader" id="2_xakgw"]
+[ext_resource type="Texture2D" uid="uid://436fqtvvma01" path="res://entities/boss/action/combustion/goo.png" id="3_ac6oe"]
+[ext_resource type="Texture2D" uid="uid://blophl6injpty" path="res://entities/boss/action/combustion/goo_shape.png" id="4_e1sg6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q78s0"]
+shader = ExtResource("2_xakgw")
+shader_parameter/goo_texture = ExtResource("3_ac6oe")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x308v"]
+radius = 29.0172
+
+[sub_resource type="Gradient" id="Gradient_o057b"]
+colors = PackedColorArray(0.663972, 0.398824, 0.14163, 1, 0.575082, 0.216724, 0.215566, 0.164706)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kkdlx"]
+gradient = SubResource("Gradient_o057b")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aak6v"]
+emission_shape = 2
+emission_sphere_radius = 25.0
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 76.43
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+linear_accel_min = 10.0
+linear_accel_max = 10.0
+scale_min = 0.2
+scale_max = 0.3
+color_ramp = SubResource("GradientTexture1D_kkdlx")
+
+[node name="Hitbox" type="Area2D"]
+show_behind_parent = true
+script = ExtResource("1_52fqw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_q78s0")
+position = Vector2(1, 2)
+scale = Vector2(1.028, 1)
+texture = ExtResource("4_e1sg6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_x308v")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+process_material = SubResource("ParticleProcessMaterial_aak6v")
+texture = ExtResource("4_e1sg6")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
