@@ -60,7 +60,13 @@ func _process(delta):
 							# todo: can pick themself. is this an issue
 							var players_in_range = players.filter(func(p): return action.in_range(p))
 							if players_in_range.size() > 0:
-								player.do_action(action, players_in_range.reduce(func(min, p): return p if player.health < min.health else min))
+								# slightly hacky way to get healer to do mass heal during the group heal time
+								# will start group healing once they have reached their target location (check is also hacky)
+								if phase == "Heal" and (player.global_position - group_loc).length() < 32:
+									for p_heal in players_in_range:
+										player.do_action(action, p_heal)
+								else:
+									player.do_action(action, players_in_range.reduce(func(min, p): return p if player.health < min.health else min))
 					"MeleeAttack", "RangedAttack":
 						if action.off_cooldown() and action.in_range(boss):
 							player.do_action(action, boss)
@@ -77,6 +83,7 @@ func set_phase(inp_phase):
 			heal_phase_allowed_timer = heal_phase_min_interval
 			phase_timer = heal_phase_length
 			player_loc_ordering = get_players()
+			# TODO: set heal location better lol
 			group_loc = Vector2(rng.randf_range(100, 600), rng.randf_range(100, 600))
 		"Get behind me!":
 			get_behind_me_phase_allowed_timer = get_behind_me_phase_min_interval
@@ -91,9 +98,10 @@ func manage_phase():
 		set_phase("Normal")
 	
 	var player_classes = get_player_classes().values()
+	var players = get_players()
 	if phase == "Normal":
-		# TODO: add extra condition for heal phase
-		if player_classes.has("Healer") and heal_phase_allowed_timer == 0:
+		var team_health_prop = float(players.map(func(p): return p.health).reduce(func(a, b): return a + b, 0))/players.map(func(p): return p.max_health).reduce(func(a, b): return a + b, 0)
+		if player_classes.has("Healer") and heal_phase_allowed_timer == 0 and team_health_prop <= 0.4:
 			set_phase("Heal")
 		elif player_classes.has("Tank") and get_behind_me_phase_allowed_timer == 0:
 			set_phase("Get behind me!")
@@ -119,7 +127,6 @@ func get_actions(player):
 	return player.get_node("Actions").get_children()
 	
 #func has_action(player, action):
-#	# todo check that node is truthy lol
 #	return true if player.get_node("Action").get_node_or_null(action) else false
 	
 # move to clump as a group - target loc to move to, and theyll move to a circle around
