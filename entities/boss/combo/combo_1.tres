@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="Combo" load_steps=2 format=3 uid="uid://ddhkk175dkckf"]
+
+[ext_resource type="Script" path="res://entities/boss/combo/Combo.gd" id="1_ca1f4"]
+
+[resource]
+script = ExtResource("1_ca1f4")

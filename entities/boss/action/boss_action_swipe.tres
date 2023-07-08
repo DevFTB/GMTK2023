@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BossAction" load_steps=2 format=3 uid="uid://ba5jrspjog6gs"]
+
+[ext_resource type="Script" path="res://entities/boss/action/BossAction.gd" id="1_v1xax"]
+
+[resource]
+script = ExtResource("1_v1xax")
+action_name = "Swipe"
+amount_of_beats = 2

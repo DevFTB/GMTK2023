@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
 [ext_resource type="Script" path="res://entities/players/PlayerController.gd" id="3_ughe5"]
 [ext_resource type="PackedScene" uid="uid://4nht58qpg6hv" path="res://entities/players/player.tscn" id="4_bm2xl"]
+[ext_resource type="PackedScene" uid="uid://psu755d5488q" path="res://entities/boss/boss.tscn" id="3_jivh4"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
@@ -43,3 +44,6 @@ position = Vector2(253, 211)
 max_health = 10
 speed = 1
 player_class = "Healer"
+
+[node name="Boss" parent="." instance=ExtResource("3_jivh4")]
+motion_mode = 1
