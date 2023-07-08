@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=21 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
@@ -12,8 +12,16 @@
 [ext_resource type="PackedScene" uid="uid://c8gsduht2b0tl" path="res://entities/players/archer/archer.tscn" id="11_l085o"]
 [ext_resource type="PackedScene" uid="uid://cphxorrjm5k7a" path="res://entities/players/fighter/fighter.tscn" id="12_kagx0"]
 [ext_resource type="Script" path="res://scripts/TimeGradientColourRect.gd" id="12_kp5ht"]
+[ext_resource type="Script" path="res://level/beat/WarnerController.gd" id="12_xjixf"]
+[ext_resource type="PackedScene" uid="uid://b8im58bmxnhcp" path="res://level/beat/warner_scene.tscn" id="13_prhtm"]
 [ext_resource type="PackedScene" uid="uid://cva63yioyjyr3" path="res://entities/players/tank/tank.tscn" id="13_wiqs4"]
 [ext_resource type="Script" path="res://level/beat/HitLabel.gd" id="14_mp6y7"]
+
+[sub_resource type="Gradient" id="Gradient_x35c2"]
+colors = PackedColorArray(0.961374, 0.526552, 0.508241, 0, 0.253906, 0.03125, 0.363281, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2vwv1"]
+gradient = SubResource("Gradient_x35c2")
 
 [sub_resource type="Gradient" id="Gradient_6ieoh"]
 offsets = PackedFloat32Array(0, 0.274074, 0.648148, 0.996296)
@@ -65,22 +73,50 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BeatGUI" type="Control" parent="CanvasLayer/GUI" node_paths=PackedStringArray("boss", "beat_manager")]
+[node name="BeatGUI" type="HBoxContainer" parent="CanvasLayer/GUI" node_paths=PackedStringArray("boss", "beat_manager")]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -114.0
-offset_top = 9.0
-offset_right = 115.0
-offset_bottom = 104.0
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 77.0
 grow_horizontal = 2
 script = ExtResource("4_xxwnv")
 boss = NodePath("../../../Boss")
 beat_manager = NodePath("../../../BeatManager")
 
-[node name="Bar" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
-custom_minimum_size = Vector2(0, 20)
+[node name="LeftWarner" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("12_xjixf")
+warner_scene = ExtResource("13_prhtm")
+
+[node name="ColorRect" type="TextureRect" parent="CanvasLayer/GUI/BeatGUI/LeftWarner"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -0.5
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_2vwv1")
+
+[node name="Spawn" type="Control" parent="CanvasLayer/GUI/BeatGUI/LeftWarner"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BarArea" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="Bar" type="Control" parent="CanvasLayer/GUI/BeatGUI/BarArea"]
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -89,7 +125,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BackgroundColourRect" type="ColorRect" parent="CanvasLayer/GUI/BeatGUI/Bar"]
+[node name="BackgroundColourRect" type="ColorRect" parent="CanvasLayer/GUI/BeatGUI/BarArea/Bar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -98,7 +134,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.254902, 0.0313726, 0.364706, 1)
 
-[node name="ForegroundColourRect" type="ColorRect" parent="CanvasLayer/GUI/BeatGUI/Bar"]
+[node name="ForegroundColourRect" type="ColorRect" parent="CanvasLayer/GUI/BeatGUI/BarArea/Bar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -114,7 +150,7 @@ script = ExtResource("12_kp5ht")
 color_gradient = SubResource("Gradient_6ieoh")
 gradient_cycle_time = 0.3
 
-[node name="Ball" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
+[node name="Ball" type="Control" parent="CanvasLayer/GUI/BeatGUI/BarArea/Bar"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -124,7 +160,7 @@ offset_right = 40.0
 offset_bottom = 20.0
 grow_vertical = 2
 
-[node name="ColorRect" type="TextureRect" parent="CanvasLayer/GUI/BeatGUI/Ball"]
+[node name="ColorRect" type="TextureRect" parent="CanvasLayer/GUI/BeatGUI/BarArea/Bar/Ball"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -139,27 +175,29 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_svrfq")
 
-[node name="LeftBeatLabel" type="Label" parent="CanvasLayer/GUI/BeatGUI"]
-layout_mode = 0
-offset_top = 65.0
-offset_right = 40.0
-offset_bottom = 88.0
-
-[node name="RightBeatLabel" type="Label" parent="CanvasLayer/GUI/BeatGUI"]
+[node name="LeftBeatLabel" type="Label" parent="CanvasLayer/GUI/BeatGUI/BarArea"]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -41.0
-offset_top = 24.5
-offset_right = -1.0
-offset_bottom = 47.5
-grow_horizontal = 0
-grow_vertical = 2
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 40.0
+grow_vertical = 0
 
-[node name="Control" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
+[node name="RightBeatLabel" type="Label" parent="CanvasLayer/GUI/BeatGUI/BarArea"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -53.0
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Control" type="Control" parent="CanvasLayer/GUI/BeatGUI/BarArea"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -167,26 +205,54 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -20.0
-offset_top = -40.0
+offset_top = -44.0
 offset_right = 20.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="HitLabel" type="Label" parent="CanvasLayer/GUI/BeatGUI/Control"]
+[node name="HitLabel" type="Label" parent="CanvasLayer/GUI/BeatGUI/BarArea/Control"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 1.0
 offset_left = -20.0
-offset_top = -17.0
+offset_top = -34.0
 offset_right = 20.0
-offset_bottom = 17.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 pivot_offset = Vector2(20, 17)
 label_settings = SubResource("LabelSettings_qrahe")
 script = ExtResource("14_mp6y7")
 success_colours = Array[Color]([Color(0.101961, 0.337255, 1, 1), Color(0.839216, 0.52549, 0.25098, 1), Color(0.737255, 0.164706, 0.368627, 1)])
 success_text = Array[String](["Nice", "Preposterous", "Maleficent"])
+
+[node name="RightWarner" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("12_xjixf")
+from_left = false
+warner_scene = ExtResource("13_prhtm")
+
+[node name="ColorRect2" type="TextureRect" parent="CanvasLayer/GUI/BeatGUI/RightWarner"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -5.0
+offset_right = 256.0
+offset_bottom = 5.0
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_2vwv1")
+flip_h = true
+
+[node name="Spawn" type="Control" parent="CanvasLayer/GUI/BeatGUI/RightWarner"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
