@@ -7,8 +7,8 @@
 script = ExtResource("2_d2goo")
 action_name = "Swipe"
 action_scene = ExtResource("1_sro56")
-amount_of_beats = 2
-amount_of_cooldown_beats = 2
+amount_of_beats = 1
+amount_of_cooldown_beats = 1
 is_hold_action = false
 starting_animation = "swipe"
 sustain_animation = ""

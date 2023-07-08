@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BossAction" load_steps=3 format=3 uid="uid://c61fkl1ud8j26"]
+
+[ext_resource type="PackedScene" uid="uid://bgpctasn4e2ax" path="res://entities/boss/action/combustion/boss_action_combustion_scene.tscn" id="1_5hms1"]
+[ext_resource type="Script" path="res://entities/boss/action/BossAction.gd" id="2_l5ti2"]
+
+[resource]
+script = ExtResource("2_l5ti2")
+action_name = "Combustion"
+action_scene = ExtResource("1_5hms1")
+amount_of_beats = 0
+amount_of_cooldown_beats = 0
+is_hold_action = false
+starting_animation = ""
+sustain_animation = ""
+hit_animation = ""

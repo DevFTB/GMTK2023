@@ -5,6 +5,8 @@ extends Node2D
 var strength = 1
 
 func _ready():
-	$Hitbox.damage *= strength
+	for child in $Hitboxes.get_children():
+		child.damage *= strength
+
 	get_tree().create_timer(duration).timeout.connect(queue_free)
 

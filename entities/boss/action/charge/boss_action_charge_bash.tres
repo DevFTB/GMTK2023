@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BossAction" load_steps=3 format=3 uid="uid://c8dyby4o78s43"]
+
+[ext_resource type="PackedScene" uid="uid://cuuf18vvrljr5" path="res://entities/boss/action/charge/boss_action_charge_scene.tscn" id="1_1imwh"]
+[ext_resource type="Script" path="res://entities/boss/action/BossAction.gd" id="2_rkqe0"]
+
+[resource]
+script = ExtResource("2_rkqe0")
+action_name = "Charge Bash"
+action_scene = ExtResource("1_1imwh")
+amount_of_beats = 4
+amount_of_cooldown_beats = 2
+is_hold_action = true
+starting_animation = "charge_activate"
+sustain_animation = "charge_sustain"
+hit_animation = "charge_hit"

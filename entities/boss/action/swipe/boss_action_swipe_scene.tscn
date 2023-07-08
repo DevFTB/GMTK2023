@@ -6,11 +6,13 @@
 [node name="BossActionSwipe" type="Node2D"]
 script = ExtResource("1_vb7fg")
 
-[node name="Hitbox" type="Area2D" parent="."]
+[node name="Hitboxes" type="Node2D" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="Hitboxes"]
 script = ExtResource("1_n5lwg")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitboxes/Hitbox"]
 position = Vector2(2, 4)
 polygon = PackedVector2Array(-3, -30, 8, -78, -28, -41, -29, 9, -3, 51, 0, 21, -2.49284, -21.378)
 
-[connection signal="body_entered" from="Hitbox" to="Hitbox" method="_on_body_entered"]
+[connection signal="body_entered" from="Hitboxes/Hitbox" to="Hitboxes/Hitbox" method="_on_body_entered"]

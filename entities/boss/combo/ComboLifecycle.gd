@@ -71,13 +71,19 @@ class HoldActionLifecycle:
 	var press_strength = 0
 	
 	func process_beat(beat: int):
-		if has_started and beat >= hit_beat + 1 and not success_hit:
-			print("didn't hit in time")
-			failed.emit()
+		if has_started:
+			if beat >= hit_beat + 1 and not success_hit:
+				print("didn't hit in time")
+				failed.emit()
 			
-		if has_started and beat >= end_beat and success_hit:
-			completed.emit()
-			
+			if beat >= end_beat:
+				if success_hit:
+					completed.emit()
+				else:
+					failed.emit()
+		else:
+			if beat >= start_beat + 1 and not success_hit:
+				failed.emit()
 
 	
 	func rhythm_hit(strength: float, pressed: bool = true):
@@ -133,7 +139,7 @@ var next_beat = 0
 func _ready():
 	beat_manager.beat.connect(_on_beat)
 	
-	var offset = beat_manager.beat_number
+	var offset = beat_manager.beat_number + 1
 	
 	for slot in range(combo.amount_of_slots):
 		var action = combo.actions[slot]
@@ -181,7 +187,6 @@ func _on_action_completed():
 	action_completed.emit(active_action.action)
 	active_action = action_queue.pop_front()
 	if active_action != null:
-		print('asdfasdfasdf')
 		action_activated.emit(active_action)
 	else:
 		completed.emit()
@@ -191,4 +196,5 @@ func _on_action_completed():
 func _on_action_failed():
 	print("failed ", active_action.action.action_name)
 	failed.emit()
+	queue_free()
 	pass
