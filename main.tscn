@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://drbvn64cw72v0"]
+[gd_scene load_steps=8 format=3 uid="uid://drbvn64cw72v0"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://entities/players/PlayerController.gd" id="3_ughe5"]
 [ext_resource type="PackedScene" uid="uid://4nht58qpg6hv" path="res://entities/players/player.tscn" id="4_bm2xl"]
 [ext_resource type="PackedScene" uid="uid://blm81pb4htcul" path="res://entities/players/fighter/fighter.tscn" id="5_kdhpy"]
+[ext_resource type="PackedScene" uid="uid://wt2guthukmnr" path="res://entities/players/archer/archer.tscn" id="6_7wb2i"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
@@ -18,32 +19,27 @@ offset_bottom = 40.0
 
 [node name="World" parent="." instance=ExtResource("2_p3sjh")]
 
+[node name="Boss" parent="." instance=ExtResource("3_jivh4")]
+motion_mode = 1
+
 [node name="PlayerController" type="Node" parent="."]
 script = ExtResource("3_ughe5")
 
 [node name="Player2" parent="PlayerController" instance=ExtResource("4_bm2xl")]
 position = Vector2(268, 258)
-max_health = 10
-speed = 1
 player_class = "Tank"
-
-[node name="Player3" parent="PlayerController" instance=ExtResource("4_bm2xl")]
-position = Vector2(225, 257)
-max_health = 10
-speed = 1
-player_class = "Archer"
 
 [node name="Player4" parent="PlayerController" instance=ExtResource("4_bm2xl")]
 position = Vector2(253, 211)
-max_health = 10
-speed = 1
 player_class = "Healer"
 
 [node name="Fighter" parent="PlayerController" instance=ExtResource("5_kdhpy")]
 position = Vector2(207, 156)
-max_health = 10
-speed = 1
-player_class = "Fighter"
 
-[node name="Boss" parent="." instance=ExtResource("3_jivh4")]
-motion_mode = 1
+[node name="Archer" parent="PlayerController" instance=ExtResource("6_7wb2i")]
+position = Vector2(257, 64)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+enabled = false
+zoom = Vector2(2, 2)

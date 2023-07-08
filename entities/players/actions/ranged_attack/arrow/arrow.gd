@@ -19,14 +19,8 @@ func _process(delta):
 	dist_travelled += speed * delta
 	if dist_travelled > range:
 		queue_free()
-		
-	print(self.global_position)
 
-#func init(p_damage=0, p_speed=1, p_range=1, p_target=null)
-#	damage = p_damage
-#	speed = p_speed
-#	range = p_range
-#	target = p_target
+
 
 func init(p_damage, p_speed, p_range, p_target):
 	damage = p_damage
@@ -36,3 +30,9 @@ func init(p_damage, p_speed, p_range, p_target):
 	
 	self.rotation = self.global_position.angle_to_point(target.global_position)
 	
+
+
+func _on_body_entered(body):
+	if body == target:
+		target.take_damage(damage)
+		queue_free()
