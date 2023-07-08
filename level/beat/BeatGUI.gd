@@ -20,6 +20,7 @@ func is_going_right():
 func _ready():
 	beat_manager.beat.connect(_on_beat)
 	boss.started_combo.connect(_on_combo_started)
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -46,13 +47,14 @@ var combo : ComboLifecycle
 func _on_combo_started(clc: ComboLifecycle):
 	self.combo = clc
 
-	clc.failed.connect(func (): set_text(""))
-	clc.completed.connect(func (): set_text(""))
-	clc.hit_action.connect(_on_hit_action)
+	clc.failed.connect(func (): clear_text())
+	clc.completed.connect(func (): clear_text())
+	clc.action_hit.connect(_on_hit_action)
 	set_alc(clc.active_action)
 	
-func _on_hit_action():
-	set_alc(combo.action_queue.front())
+func _on_hit_action(action):
+	if not combo.action_queue.is_empty():
+		set_alc(combo.action_queue.front())
 	
 func set_alc(new_alc):
 	alc = new_alc
@@ -78,3 +80,7 @@ func _update_gui():
 				set_text("Hit!")
 		else:
 			set_text("")
+
+func clear_text():
+	lbl.text = ""
+	rbl.text = ""

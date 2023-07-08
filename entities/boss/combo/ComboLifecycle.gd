@@ -104,8 +104,10 @@ class HoldActionLifecycle:
 signal failed
 signal completed
 
-signal activated_action
-signal hit_action
+signal action_activated
+signal action_hit
+signal action_started
+signal action_completed
 
 var combo : Combo
 
@@ -149,15 +151,16 @@ func _ready():
 	pass # Replace with function body.	
 
 func _input(event: InputEvent):
-	if event.is_action_pressed("rhythm_hit"):
-		var sync = beat_manager.get_sync_amount(active_action.next_player_beat())
-		active_action.rhythm_hit(sync, true)
-	
-	if event.is_action_released("rhythm_hit"):
-		var sync = beat_manager.get_sync_amount(active_action.next_player_beat())
-		active_action.rhythm_hit(sync, false)
-		print("release sync ", sync)
+	if active_action:
+		if event.is_action_pressed("rhythm_hit"):
+			var sync = beat_manager.get_sync_amount(active_action.next_player_beat())
+			active_action.rhythm_hit(sync, true)
 		
+		if event.is_action_released("rhythm_hit"):
+			var sync = beat_manager.get_sync_amount(active_action.next_player_beat())
+			active_action.rhythm_hit(sync, false)
+			print("release sync ", sync)
+			
 
 func _on_beat(beat_number: int):
 	if active_action:
@@ -166,18 +169,23 @@ func _on_beat(beat_number: int):
 
 func _on_action_hit():
 	print("hit ", active_action.action.action_name)
-	hit_action.emit()
+	action_hit.emit(active_action.action)
 	pass
 func _on_action_start():
 	print("started ", active_action.action.action_name)
+	action_started.emit(active_action.action)
 	pass
 
 func _on_action_completed():
 	print("completed ", active_action.action.action_name)
+	action_completed.emit(active_action.action)
 	active_action = action_queue.pop_front()
 	if active_action != null:
 		print('asdfasdfasdf')
-		activated_action.emit(active_action)
+		action_activated.emit(active_action)
+	else:
+		completed.emit()
+		queue_free()
 	pass
 	
 func _on_action_failed():
