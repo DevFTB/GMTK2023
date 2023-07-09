@@ -20,6 +20,7 @@ func is_going_right():
 func _ready():
 	beat_manager.beat.connect(_on_beat)
 	boss.started_combo.connect(_on_combo_started)
+	boss.boss_reset.connect(_update_gui)
 	
 
 

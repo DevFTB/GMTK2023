@@ -10,14 +10,14 @@ var players_killed:
 
 func disable_game():
 	$BeatManager.stop()
-	set_process(false)
-	set_process_input(false)
-	visible = false
+	#process_mode = Node.PROCESS_MODE_DISABLED
 	$GameOverlay.visible = false
-	
+
+func hide_game():
+	visible = false	
+
 func enable_game(level):
-	set_process(true)
-	set_process_input(true)
+	#process_mode = Node.PROCESS_MODE_INHERIT
 	visible = true
 	$BeatManager.start()
 	$GameOverlay.visible = true

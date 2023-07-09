@@ -5,7 +5,7 @@ signal started_combo(lc: ComboLifecycle)
 signal boss_health_changed(new, max, difference)
 signal boss_name_changed(name)
 signal boss_died()
-
+signal boss_reset()
 @export var movement_speed = 200
 @export var combos : Array[Combo] = []
 
@@ -26,6 +26,48 @@ var attack_direction = Vector2.UP
 
 var can_combo = [true, true]
 @onready var combo_timers = [$Combo1Timer, $Combo2Timer]
+
+#var suffixes = ["Big",
+#"Bad",
+#"Evil",
+#"Great",
+#"Scary",
+#"Poggers",
+#"Insane",
+#"Cool",
+#"Very",
+#"Sick",
+#"Captivating",
+#"Magnificent",
+#Marvelous,
+#Fabulous,
+#Charming,
+#Bewitching,
+#Astonishing,
+#Brilliant,
+#Wicked,
+#Immoral,
+#Sinful,
+#Unholy,
+#Poggies,
+#Corrupt,
+#Degenerate,
+#Based,
+#Harmful,
+#Detrimental,
+#Vile,
+#Depraved,
+#Hungry,
+#Sensual,
+#Bossy,
+#Silly,
+#Cute,
+#Ultimate,
+#Alcoholic,
+#Crazy,
+#Energetic,
+#Kawaii,
+#]
 
 func _ready():
 	names = generate_boss_names(50)
@@ -154,9 +196,15 @@ func _on_combo_1_timer_timeout():
 func _on_combo_2_timer_timeout():
 	can_combo[1] = true
 	pass # Replace with function body.
+	
 func reset():
 	health = boss_stats.get_health()
 	boss_health_changed.emit(health, boss_stats.get_health(), 0)
+	$BossStateMachine.active_state = $BossStateMachine/Moving
+	if active_combo != null:
+		active_combo.queue_free()
+	
+	boss_reset.emit()
 
 func evolve_name():
 	if i_name < names.size() - 1:

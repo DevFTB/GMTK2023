@@ -35,7 +35,7 @@ func level_over(winner):
 		status = "death screen"
 		
 	
-		
+		$Game.disable_game()
 		var timer_gold = floor(level_timer/10)
 		var players_killed = $Game.players_killed
 		var players_killed_gold = (base_gold_per_player + (gold_per_player_scaling * level)) * players_killed
@@ -58,7 +58,7 @@ func level_over(winner):
 		await get_node("DeathScreen/Button").pressed
 		$DeathScreen.visible = false
 		
-		$Game.disable_game()
+		$Game.hide_game()
 		enter_shop()
 
 func enter_shop():

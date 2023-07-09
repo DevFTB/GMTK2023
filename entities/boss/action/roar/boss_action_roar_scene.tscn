@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://entities/boss/action/roar/CirclePolygon2D.gd" id="3_gp174"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1raey"]
-radius = 132.306
+radius = 200.0
 
 [sub_resource type="Animation" id="Animation_imdl6"]
 length = 0.001
