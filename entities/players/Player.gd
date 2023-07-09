@@ -109,7 +109,8 @@ func move(loc, delta):
 		if _flying:
 			var collision = move_and_collide(_velocity_override * delta)
 			if collision:
-				take_damage(wall_hit_damage, true)
+				if collision.get_collider().is_in_group("environment"):
+					take_damage(wall_hit_damage, true)
 			_velocity_override -= _velocity_override * _deceleration_factor *delta
 	
 func speak(text, time=2):

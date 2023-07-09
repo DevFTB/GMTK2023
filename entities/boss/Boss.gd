@@ -107,10 +107,19 @@ func teleport(movement_vector: Vector2, duration = 0.3, level = 1):
 	var collision = move_and_collide(movement_vector, true)
 	var tween = get_tree().create_tween()
 	if collision:
+		var real_duration = duration * ((position - collision.get_position()).length() / movement_vector.length())
+		print((position - collision.get_position()).length() / movement_vector.length())
+		tween.set_parallel()
+		tween.tween_property(self, "position", collision.get_position(), real_duration)
+		tween.tween_callback(func(): apply_player_knockback(collision)).set_delay(real_duration / 2)
+		
+		
+	else:
+		tween.tween_property(self, "position", position + movement_vector, duration)
+#	if collider != null and collider.is_in_group("player"):
+#		collider.apply_knockback(20*32, collision.get_travel().normalized())
 
-		tween.tween_property(self, "position", collision.get_position(), duration)
-		
-		
+func apply_player_knockback(collision):
 		var collider = collision.get_collider()
 		var space_state = get_world_2d().direct_space_state
 		
@@ -119,7 +128,7 @@ func teleport(movement_vector: Vector2, duration = 0.3, level = 1):
 		query.collision_mask = 0x1000b
 		
 		var circle =  CircleShape2D.new()
-		circle.radius = 192
+		circle.radius = 96
 		query.shape =circle
 		query.transform.origin = collision.get_position()
 		
@@ -131,11 +140,7 @@ func teleport(movement_vector: Vector2, duration = 0.3, level = 1):
 			
 			if hit_collider.is_in_group("player"):
 				print(hit_collider)
-				collider.apply_knockback(min(_max_tiles_knockback * 32, _tiles_per_level * 32 * boss_stats.level), collision.get_travel().normalized())
-	else:
-		tween.tween_property(self, "position", position + movement_vector, duration)
-#	if collider != null and collider.is_in_group("player"):
-#		collider.apply_knockback(20*32, collision.get_travel().normalized())
+				hit_collider.apply_knockback(min(_max_tiles_knockback * 32, _tiles_per_level * 32 * boss_stats.level), collision.get_travel().normalized())
 
 func get_combo_cooldown(index: int):
 	return combo_timers[index].time_left / combo_timers[index].wait_time
