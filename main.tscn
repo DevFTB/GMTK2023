@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cphxorrjm5k7a" path="res://entities/players/fighter/fighter.tscn" id="12_kagx0"]
 [ext_resource type="Script" path="res://scripts/TimeGradientColourRect.gd" id="12_kp5ht"]
 [ext_resource type="Script" path="res://level/beat/WarnerController.gd" id="12_xjixf"]
-[ext_resource type="PackedScene" uid="uid://b8im58bmxnhcp" path="res://level/beat/warner_scene.tscn" id="13_prhtm"]
+[ext_resource type="PackedScene" path="res://level/beat/warner_scene.tscn" id="13_prhtm"]
 [ext_resource type="PackedScene" uid="uid://cva63yioyjyr3" path="res://entities/players/tank/tank.tscn" id="13_wiqs4"]
 [ext_resource type="Script" path="res://level/beat/HitLabel.gd" id="14_mp6y7"]
 [ext_resource type="LabelSettings" uid="uid://vth2gq1k8myn" path="res://level/gui/boss/adithaslabelsettings.tres" id="16_qa6p5"]
@@ -197,6 +197,7 @@ bpm = 122
 stream = ExtResource("5_8wnvk")
 
 [node name="World" parent="." groups=["world"] instance=ExtResource("2_p3sjh")]
+z_index = -2
 
 [node name="Boss" parent="." instance=ExtResource("3_jivh4")]
 motion_mode = 1
@@ -204,18 +205,21 @@ boss_stats = ExtResource("6_yn8d0")
 
 [node name="PlayerController" type="Node" parent="."]
 script = ExtResource("9_6id7j")
-get_behind_me_phase_min_interval = 0
 
 [node name="Archer" parent="PlayerController" instance=ExtResource("11_l085o")]
+z_index = 0
 position = Vector2(545, 218)
 
 [node name="Fighter" parent="PlayerController" instance=ExtResource("12_kagx0")]
+z_index = 0
 position = Vector2(486, 313)
 
 [node name="Tank" parent="PlayerController" instance=ExtResource("13_wiqs4")]
+z_index = 0
 position = Vector2(429, 408)
 
 [node name="Healer" parent="PlayerController" instance=ExtResource("10_0bbld")]
+z_index = 0
 position = Vector2(601, 359)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

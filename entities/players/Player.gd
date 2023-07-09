@@ -94,8 +94,8 @@ func move(loc, delta):
 		if _flying:
 			move_and_collide(_velocity_override * delta)
 	
-func speak(text):
-	$PlayerGUI.display_speech(text)
+func speak(text, time=2):
+	$PlayerGUI.display_speech(text, time)
 
 func do_action(action: Node2D, target):
 	if not stunned and not dead:
@@ -108,9 +108,9 @@ func do_action(action: Node2D, target):
 	
 func die():
 	dead = true
-	speak(death_messages.pick_random())
+	speak(death_messages.pick_random(), 1)
 	
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(1.0).timeout
 	$PlayerGUI.visible = false
 	$StatusEffect.visible = false
 	$Sprite2D.visible = false
