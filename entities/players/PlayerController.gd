@@ -314,6 +314,6 @@ func reset(n):
 	
 
 # kill random player on click for debugging
-func _input(event: InputEvent):
-	if event.is_action_pressed("rhythm_hit") and len(get_players()) > 0:
-		get_players().pick_random().take_damage(1000)
+#func _input(event: InputEvent):
+#	if event.is_action_pressed("rhythm_hit") and len(get_players()) > 0:
+#		get_players().pick_random().take_damage(1000)

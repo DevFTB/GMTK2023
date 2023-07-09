@@ -591,6 +591,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
+[node name="Button" type="Button" parent="DeathScreen"]
+offset_left = 397.0
+offset_top = 581.0
+offset_right = 713.0
+offset_bottom = 633.0
+text = "Continue"
+
 [connection signal="boss_died" from="Boss" to="." method="_on_boss_boss_died"]
 [connection signal="boss_health_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_health_changed"]
 [connection signal="boss_name_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_name_changed"]
