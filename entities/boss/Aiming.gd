@@ -5,6 +5,7 @@ var direction_vector
 func enter():
 	#animator.play("aiming")
 	aimer.visible = true
+	boss.movement_dir = Vector2.ZERO
 	pass
 func process_input(event: InputEvent):
 	if event is InputEventMouseMotion:

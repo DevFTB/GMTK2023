@@ -10,8 +10,11 @@ var stunned = false
 var dead = false
 var slow_factor = 0.5
 
-var death_messages = ["AHHHHH", "It's over", "Nooooo", "It's just a flesh wound", "ow"]
+@export var wall_hit_damage = 6
 
+
+var death_messages = ["AHHHHH", "It's over", "Nooooo", "It's just a flesh wound", "ow"]
+var flying_messages = ["WHOA!!!!", "I can see the world!", "It's not the fall that kills you."]
 var status_sprite_mappings = {
 	"stunned": 0,
 	"slowed": 1
@@ -26,11 +29,11 @@ func _ready():
 func _process(delta):
 	pass
 
-func take_damage(damage: int):
+func take_damage(damage: int, immediate_source = false):
 	health -= damage
 	$PlayerGUI.health_changed(health, -damage)
 	if health <= 0:
-		die()
+		die(immediate_source)
 	
 func heal(heal: int):
 	health = min(max_health, heal + health)
@@ -81,15 +84,17 @@ func apply_knockback(knock_back, direction: Vector2):
 	var scale_factor = 1.5 + _knockback_scale_factor * knock_back
 	
 	var tween = get_tree().create_tween()
-	tween.tween_property(self, "scale", Vector2(scale_factor,scale_factor), time / 3).from_current()
-	tween.tween_property(self, "scale", Vector2(1,1), 2*time / 3).set_delay( time/3)
+	tween.tween_property($Sprite2D, "scale", $Sprite2D.scale * scale_factor, time / 3).from_current()
+	tween.tween_property($Sprite2D, "scale", $Sprite2D.scale, 2*time / 3).set_delay( time/3)
 	tween.tween_callback(func():
 		_flying = false;
 		collision_mask = collision_mask | (1 << 3)
 		)
 	
-	if randi() % 4 == 0 or knock_back > 128:
-		speak("WHOAA!!!")
+	if knock_back > 128:
+		speak(flying_messages[randi() % flying_messages.size()])
+	elif randi() % 4 == 0:
+		speak("WHOA!")
 	pass
 
 func move(loc, delta):
@@ -102,7 +107,9 @@ func move(loc, delta):
 		move_and_slide()
 	else:
 		if _flying:
-			move_and_collide(_velocity_override * delta)
+			var collision = move_and_collide(_velocity_override * delta)
+			if collision:
+				take_damage(wall_hit_damage, true)
 			_velocity_override -= _velocity_override * _deceleration_factor *delta
 	
 func speak(text, time=2):
@@ -117,16 +124,18 @@ func do_action(action: Node2D, target):
 #	else:
 #		global_position += speed * delta * (loc -  global_position).normalized()
 	
-func die():
+func die(immediate = false):
 	dead = true
 	speak(death_messages.pick_random(), 1)
 	
-	await get_tree().create_timer(1.0).timeout
+	if not immediate:
+		await get_tree().create_timer(1.0).timeout
 	$PlayerGUI.visible = false
 	$StatusEffect.visible = false
 	$Sprite2D.visible = false
-	$CollisionShape2D.queue_free()
 	
+	
+	$CollisionShape2D.set_deferred("disabled", true)
 	$DeadSprite.visible = true
 
 func _input(event):

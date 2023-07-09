@@ -98,9 +98,10 @@ func generate_boss_names(n=50):
 # todo make sure this exports correctly!! otherwise just hardcode it in
 func read_file(path):
 	return FileAccess.open(path, FileAccess.READ).get_as_text()
-	
 
-func teleport(movement_vector: Vector2, duration = 0.3):
+@export var _tiles_per_level = 2
+@export var _max_tiles_knockback = 10
+func teleport(movement_vector: Vector2, duration = 0.3, level = 1):
 	
 	
 	var collision = move_and_collide(movement_vector, true)
@@ -130,7 +131,7 @@ func teleport(movement_vector: Vector2, duration = 0.3):
 			
 			if hit_collider.is_in_group("player"):
 				print(hit_collider)
-				collider.apply_knockback(20*32, collision.get_travel().normalized())
+				collider.apply_knockback(min(_max_tiles_knockback * 32, _tiles_per_level * 32 * boss_stats.level), collision.get_travel().normalized())
 	else:
 		tween.tween_property(self, "position", position + movement_vector, duration)
 #	if collider != null and collider.is_in_group("player"):
