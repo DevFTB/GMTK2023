@@ -33,7 +33,7 @@ var phase_speeches = {
 			"Get behind me!",
 			"Strength in numbers!",
 			"Group up!",
-			"REEEEEEEEE!!",
+			"REEEEEEEE!",
 			"Form up!"
 		]
 	}
