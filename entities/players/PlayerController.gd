@@ -273,15 +273,15 @@ func spawn_players(level):
 
 # this is totally not way too convoluted to spawn them all in a circle
 func get_spawn_loc(group_spawn_loc, n):
-	var total = 0
+	var total = 4
 	var num = 4
 	var spawn_level = 1
-	while n <= total:
-		total += num
+	while n > total:
 		num *= 2
+		total += num
 		spawn_level += 1
 	
-	return group_spawn_loc + 20 * spawn_level * Vector2.from_angle((n - total) * 2 * PI / num)
+	return group_spawn_loc + 20 * spawn_level * Vector2.from_angle((n - (total-num)) * 2 * PI / num)
 
 func create_player(player_class, level):
 	var player_scene = class_scenes[player_class]
@@ -316,7 +316,7 @@ func set_player_attrs(player, level):
 	
 	
 func get_random_spot_on_world():
-	return Vector2(rng.randf_range(200, 600), rng.randf_range(200, 600))
+	return Vector2(rng.randf_range(200, 600), rng.randf_range(400, 600))
 	
 
 func reset(n):

@@ -23,7 +23,7 @@ func enable_game(level):
 	$GameOverlay.visible = true
 	
 		
-	$Boss.global_position = Vector2(400, 400)
+	$Boss.global_position = Vector2(400, 100)
 	$Boss.reset()
 	
 	$PlayerController.reset(level)
