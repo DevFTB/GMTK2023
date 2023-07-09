@@ -7,7 +7,10 @@ var health: int
 
 var slowed = false
 var stunned = false
+var dead = false
 var slow_factor = 0.5
+
+var death_messages = ["AHHHHH", "It's over", "Nooooo", "It's just a flesh wound", "ow"]
 
 var status_sprite_mappings = {
 	"stunned": 0,
@@ -80,7 +83,7 @@ func apply_knockback(knock_back, direction: Vector2):
 	pass
 
 func move(loc, delta):
-	if not stunned and not _flying:
+	if not stunned and not _flying and not dead:
 		var loc_diff = loc - global_position
 		var vel_vec = loc_diff if loc_diff.length() < 1 else loc_diff.normalized()
 		if slowed:
@@ -95,7 +98,7 @@ func speak(text):
 	$PlayerGUI.display_speech(text)
 
 func do_action(action: Node2D, target):
-	if not stunned:
+	if not stunned and not dead:
 		action.do(target)
 	
 #	if (loc - global_position).length() <= speed * delta:
@@ -104,7 +107,16 @@ func do_action(action: Node2D, target):
 #		global_position += speed * delta * (loc -  global_position).normalized()
 	
 func die():
-	pass
+	dead = true
+	speak(death_messages.pick_random())
+	
+	await get_tree().create_timer(2.0).timeout
+	$PlayerGUI.visible = false
+	$StatusEffect.visible = false
+	$Sprite2D.visible = false
+	$CollisionShape2D.queue_free()
+	
+	$DeadSprite.visible = true
 
 func _input(event):
 	if event.is_action_pressed("debug_key"):

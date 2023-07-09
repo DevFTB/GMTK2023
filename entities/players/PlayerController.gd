@@ -104,7 +104,7 @@ func _process(delta):
 		
 
 func get_players():
-	return self.get_children()
+	return self.get_children().filter(func(p): return not p.dead)
 	
 func set_phase(inp_phase):
 	match inp_phase:
@@ -232,3 +232,10 @@ func get_most_damaged_player():
 #
 #func dist_to_boss(loc):
 #	return (loc - boss.global_position()).length()
+
+#func clear_players():
+#	for player in get_players():
+#		player.queue_free()
+#
+#func spawn_players():
+	

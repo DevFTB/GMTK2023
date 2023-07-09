@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://jc15k6rexkl2"]
+[gd_scene load_steps=9 format=3 uid="uid://jc15k6rexkl2"]
 
 [ext_resource type="Script" path="res://entities/players/Player.gd" id="1_l1dva"]
 [ext_resource type="Texture2D" uid="uid://csxynyfjfd4jh" path="res://entities/players/fighter/fighter.png" id="2_2lh5h"]
 [ext_resource type="Texture2D" uid="uid://ikmxpy4gagtm" path="res://entities/players/condition_sprites/stun.png" id="4_3v406"]
 [ext_resource type="PackedScene" uid="uid://kbthggvh3r0n" path="res://entities/players/player_gui/player_gui.tscn" id="4_svkkc"]
 [ext_resource type="Texture2D" uid="uid://c7g506auv6mpi" path="res://entities/players/condition_sprites/slowed.png" id="5_hlcli"]
+[ext_resource type="Texture2D" uid="uid://che5hock38mht" path="res://entities/players/dead_sprite.png" id="6_xp4pb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lpubb"]
 height = 28.0
@@ -50,6 +51,10 @@ one_shot = true
 
 [node name="SlowTimer" type="Timer" parent="StatusEffect"]
 one_shot = true
+
+[node name="DeadSprite" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("6_xp4pb")
 
 [connection signal="timeout" from="StatusEffect/StunTimer" to="." method="_on_stun_timer_timeout"]
 [connection signal="timeout" from="StatusEffect/SlowTimer" to="." method="_on_slow_timer_timeout"]
