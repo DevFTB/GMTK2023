@@ -2,6 +2,8 @@ extends CharacterBody2D
 class_name Boss
 
 signal started_combo(lc: ComboLifecycle)
+signal boss_health_changed(new, max, difference)
+signal boss_name_changed(name)
 
 @export var movement_speed = 200
 @export var combos : Array[Combo] = []
@@ -14,10 +16,13 @@ var health
 var movement_dir = Vector2.ZERO
 var active_combo : Node2D
 var names
+var boss_name
 
 func _ready():
 	health = max_health
-	names = generate_boss_names(60)
+	names = generate_boss_names(50)
+	boss_name = names[0]
+	boss_name_changed.emit(boss_name)
 
 func _process(delta):
 	velocity = movement_dir * movement_speed
@@ -39,6 +44,7 @@ func activate_combo(index: int) -> void:
 
 func take_damage(damage: int):
 	health -= damage
+	boss_health_changed.emit(health, max_health, -damage)
 	print("Boss took %s damage. Now at %s HP" % [damage, health])
 	
 func generate_boss_names(n=50):

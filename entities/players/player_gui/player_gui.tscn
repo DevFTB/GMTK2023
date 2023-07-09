@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://kbthggvh3r0n"]
 
 [ext_resource type="Script" path="res://entities/players/player_gui/PlayerGUI.gd" id="1_ycgvh"]
-[ext_resource type="Texture2D" uid="uid://by624p0om6rf4" path="res://entities/players/player_gui/healthbar_empty.png" id="2_noaqh"]
-[ext_resource type="Texture2D" uid="uid://j6ty3wplwt8o" path="res://entities/players/player_gui/healthbar_full.png" id="3_p36wt"]
+[ext_resource type="Texture2D" uid="uid://by624p0om6rf4" path="res://entities/players/player_gui/healthbar_empty.png" id="2_vuvv2"]
+[ext_resource type="Texture2D" uid="uid://j6ty3wplwt8o" path="res://entities/players/player_gui/healthbar_full.png" id="3_rnysl"]
 [ext_resource type="Texture2D" uid="uid://dcvne14fdao10" path="res://entities/players/player_gui/speech_bubble_large.png" id="4_c5njw"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xjb4x"]
@@ -23,8 +23,8 @@ scale = Vector2(0.5, 0.5)
 offset_right = 512.0
 offset_bottom = 34.0
 value = 50.0
-texture_under = ExtResource("2_noaqh")
-texture_progress = ExtResource("3_p36wt")
+texture_under = ExtResource("2_vuvv2")
+texture_progress = ExtResource("3_rnysl")
 
 [node name="SpeechBubble" type="Sprite2D" parent="."]
 visible = false

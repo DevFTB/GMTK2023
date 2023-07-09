@@ -3,7 +3,6 @@ FINAL
 final
 COMPLETE
 new
-.txt
 Alpha
 Omega
 Awakened
@@ -18,4 +17,3 @@ Grande
 exception
 LAST
 FINISHED
-DONE
