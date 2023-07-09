@@ -9,9 +9,7 @@ var player_win_message = "You, %s, have been %s by the players"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	status = "level"
-#	enter_level(0)
-	pass
+	enter_level(level)
 	
 
 func enter_level(n):
@@ -33,6 +31,9 @@ func level_over(winner):
 	if status == "level":
 		status = "death screen"
 		$Boss.set_process(false)
+		
+		if winner == "Boss":
+			level += 1
 		
 		$DeathScreen.visible = true
 		$DeathScreen.get_node("DeathText").text = boss_win_message % [$Boss.boss_name, kill_words.pick_random()] if winner == "Boss" else player_win_message % [$Boss.boss_name, kill_words.pick_random()]
@@ -68,3 +69,7 @@ func _on_boss_boss_died():
 
 func _on_player_controller_all_players_dead():
 	level_over("Boss")
+
+func _on_combo_screen_start_button_pressed():
+	exit_shop()
+	enter_level(level)

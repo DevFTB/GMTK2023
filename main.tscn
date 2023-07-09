@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=39 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
@@ -11,12 +11,16 @@
 [ext_resource type="Script" path="res://entities/players/PlayerController.gd" id="9_6id7j"]
 [ext_resource type="PackedScene" uid="uid://b5rfpsbs4b8sw" path="res://entities/players/healer/healer.tscn" id="10_0bbld"]
 [ext_resource type="PackedScene" uid="uid://c8gsduht2b0tl" path="res://entities/players/archer/archer.tscn" id="11_l085o"]
+[ext_resource type="Resource" uid="uid://c0vih5876diqa" path="res://entities/players/fighter/fighter_stats.tres" id="12_auqfx"]
 [ext_resource type="PackedScene" uid="uid://cphxorrjm5k7a" path="res://entities/players/fighter/fighter.tscn" id="12_kagx0"]
 [ext_resource type="Script" path="res://scripts/TimeGradientColourRect.gd" id="12_kp5ht"]
 [ext_resource type="Script" path="res://level/beat/WarnerController.gd" id="12_xjixf"]
+[ext_resource type="Resource" uid="uid://dvb2c750qbiv1" path="res://entities/players/healer/healer_stats.tres" id="13_e0yce"]
 [ext_resource type="PackedScene" path="res://level/beat/warner_scene.tscn" id="13_prhtm"]
 [ext_resource type="PackedScene" uid="uid://cva63yioyjyr3" path="res://entities/players/tank/tank.tscn" id="13_wiqs4"]
+[ext_resource type="Resource" uid="uid://maocwxgwcrnt" path="res://entities/players/archer/archer_stats.tres" id="14_3ihno"]
 [ext_resource type="Script" path="res://level/beat/HitLabel.gd" id="14_mp6y7"]
+[ext_resource type="Resource" uid="uid://bj3ibpoj1eyh6" path="res://entities/players/tank/tank_stats.tres" id="15_sk0mq"]
 [ext_resource type="LabelSettings" uid="uid://vth2gq1k8myn" path="res://level/gui/boss/adithaslabelsettings.tres" id="16_qa6p5"]
 [ext_resource type="Script" path="res://level/gui/boss/BossUI.gd" id="17_al4u4"]
 [ext_resource type="Texture2D" uid="uid://dg0j6n14sw0ot" path="res://level/gui/boss/healthbar_empty.png" id="18_4uspl"]
@@ -216,6 +220,18 @@ boss_stats = ExtResource("6_yn8d0")
 
 [node name="PlayerController" type="Node" parent="."]
 script = ExtResource("9_6id7j")
+class_scenes = {
+"Archer": ExtResource("11_l085o"),
+"Fighter": ExtResource("12_kagx0"),
+"Healer": ExtResource("10_0bbld"),
+"Tank": ExtResource("13_wiqs4")
+}
+class_stats = {
+"Archer": ExtResource("14_3ihno"),
+"Fighter": ExtResource("12_auqfx"),
+"Healer": ExtResource("13_e0yce"),
+"Tank": ExtResource("15_sk0mq")
+}
 
 [node name="Archer" parent="PlayerController" instance=ExtResource("11_l085o")]
 z_index = 0
@@ -547,24 +563,29 @@ visible = false
 [node name="ActionComboScreen" parent="ActionComboScreenCanvasLayer" instance=ExtResource("22_y1okt")]
 
 [node name="DeathScreen" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="DeathScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.25098, 0.25098, 0.25098, 0.752941)
 
 [node name="DeathText" type="Label" parent="DeathScreen"]
-anchors_preset = -1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -576.0
-offset_top = -324.0
-offset_right = 233.0
-offset_bottom = 119.0
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -404.5
+offset_top = -221.5
+offset_right = 404.5
+offset_bottom = 221.5
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
+size_flags_horizontal = 4
 label_settings = SubResource("LabelSettings_537yj")
 horizontal_alignment = 1
 vertical_alignment = 1

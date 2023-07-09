@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PlayerStats" load_steps=2 format=3 uid="uid://dvb2c750qbiv1"]
+
+[ext_resource type="Script" path="res://entities/players/PlayerStats.gd" id="1_7h3xe"]
+
+[resource]
+script = ExtResource("1_7h3xe")
+base_health = 5
+base_speed = 60
+base_ability_power = 1
+base_ability_cooldown = 3.0
+health_scaling = 1.5
+speed_scaling = 0.0
+ability_power_scaling = 1.5
+ability_cooldown_scaling = 1.0
