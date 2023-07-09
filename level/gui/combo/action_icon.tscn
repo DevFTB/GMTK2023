@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt6wo80lia41b"]
+
+[ext_resource type="Script" path="res://level/gui/combo/ActionIcon.gd" id="1_qbfpl"]
+
+[node name="ActionIcon" type="Control" groups=["action_icon"]]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+script = ExtResource("1_qbfpl")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

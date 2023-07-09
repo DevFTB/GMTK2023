@@ -16,6 +16,10 @@ class_name BossAction
 @export var sustain_animation = ""
 @export var hit_animation = ""
 
+
+@export var gold_cost = 1
+@export var is_locked = true
+
 func _init(p_action_name = "New Action", p_action_scene = null, p_action_icon = null, p_amount_of_beats = 1, p_amount_of_cooldown_beats = 0, p_hold_action = false):
 	action_name  = p_action_name
 	action_scene = p_action_scene
