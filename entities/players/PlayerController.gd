@@ -214,7 +214,7 @@ func move_player_handler(player, delta):
 		"Tank", "Fighter":
 			player.move(get_loc_dist_from(player.global_position, boss.global_position, 80), delta)
 		"Archer":
-			player.move(get_loc_dist_from(player.global_position, boss.global_position, 256), delta)
+			player.move(get_loc_dist_from(player.global_position, boss.global_position, 220), delta)
 		# todo try move healer not boss side of to heal player
 		"Healer":
 			player.move(get_loc_dist_from(player.global_position, get_most_damaged_player().global_position, 64), delta)
@@ -262,17 +262,34 @@ func spawn_players(level):
 	for i in range(randomly_allocated_players):
 		class_spawns[classes.pick_random()] += 1
 	
+	var spawn_point = get_random_spot_on_world()
+	
+	var spawn_num = 1
 	for c in classes:
 		for i in range(class_spawns[c]):
-			spawn_player(c, level)
+			var player = create_player(c, level)
+			player.global_position = get_spawn_loc(spawn_point, spawn_num)
+			spawn_num += 1
 
-func spawn_player(player_class, level):
+# this is totally not way too convoluted to spawn them all in a circle
+func get_spawn_loc(group_spawn_loc, n):
+	var total = 0
+	var num = 4
+	var spawn_level = 1
+	while n <= total:
+		total += num
+		num *= 2
+		spawn_level += 1
+	
+	return group_spawn_loc + 20 * spawn_level * Vector2.from_angle((n - total) * 2 * PI / num)
+
+func create_player(player_class, level):
 	var player_scene = class_scenes[player_class]
 	var new_player = player_scene.instantiate()
 	set_player_attrs(new_player, level)
 	add_child(new_player)
 	
-	new_player.global_position = get_random_spot_on_world()
+	return new_player
 	
 
 func set_player_attrs(player, level):
@@ -314,6 +331,6 @@ func reset(n):
 	
 
 # kill random player on click for debugging
-func _input(event: InputEvent):
-	if event.is_action_pressed("rhythm_hit") and len(get_players()) > 0:
-		get_players().pick_random().take_damage(1000)
+#func _input(event: InputEvent):
+#	if event.is_action_pressed("rhythm_hit") and len(get_players()) > 0:
+#		get_players().pick_random().take_damage(1000)
