@@ -20,7 +20,8 @@ var active_combo : Node2D
 var names
 var boss_name
 
-
+var selected_combo = -1
+var attack_direction = Vector2.UP
 
 func _ready():
 	health = max_health
@@ -33,13 +34,15 @@ func _process(delta):
 	velocity = movement_dir * movement_speed
 	move_and_slide()
 
-func activate_combo(index: int) -> void:
-	var combo = combos[index]
+func activate_combo() -> void:
+	var combo = combos[selected_combo]
 	
 	var lifecycle = ComboLifecycle.new()
+	lifecycle.rotation = attack_direction.angle()
 	lifecycle.combo = combo
 	
 	active_combo = lifecycle
+	
 	
 	add_child(lifecycle)
 	

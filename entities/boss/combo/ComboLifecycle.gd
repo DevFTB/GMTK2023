@@ -51,13 +51,13 @@ class ActionLifecycle:
 					execute(strength)
 					hit.emit(strength)
 
-	func execute(strength: float, position: Vector2 = Vector2.ZERO, direction: Vector2 = Vector2.DOWN):
+	func execute(strength: float, position: Vector2 = Vector2.ZERO):
 		if action.action_scene:
 			var action_instance = action.action_scene.instantiate()
 			action_instance.strength = strength
 		
 			action_instance.position = position
-			action_instance.rotation = direction.angle()
+			action_instance.rotation = parent.rotation
 			action_instance.action = action
 		
 			parent.add_child(action_instance)
@@ -135,6 +135,8 @@ var is_charging = false
 var press_strength = 0
 
 var next_beat = 0
+
+var direction = Vector2.UP
 
 @onready var beat_manager = get_tree().get_first_node_in_group("beat_manager")
 # Called when the node enters the scene tree for the first time.

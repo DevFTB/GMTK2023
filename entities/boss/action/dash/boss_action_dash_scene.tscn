@@ -6,7 +6,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_x308v"]
 radius = 60.208
 
-[node name="BossActionSwipe" type="Node2D"]
+[node name="BossActionDash" type="Node2D"]
+position = Vector2(373, -1)
 script = ExtResource("1_mc6fe")
 
 [node name="Hitboxes" type="Node2D" parent="."]
