@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdytxksyet4m"]
+[gd_scene load_steps=10 format=3 uid="uid://b3ef02sy4hft"]
 
 [ext_resource type="Script" path="res://entities/boss/action/swipe/DamageComponent.gd" id="1_52fqw"]
 [ext_resource type="Shader" path="res://entities/boss/action/combustion/combustion_goo.gdshader" id="2_xakgw"]

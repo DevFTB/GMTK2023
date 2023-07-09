@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=35 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://cqy8vqr4hmkj6" path="res://level/gui/boss/healthbar_full.png" id="19_opri7"]
 [ext_resource type="Script" path="res://level/gui/combo/ComboOverlay.gd" id="22_issrv"]
 [ext_resource type="PackedScene" uid="uid://bwmaqrqk5phnk" path="res://level/gui/combo/combo_action_slot.tscn" id="22_p7whu"]
+[ext_resource type="PackedScene" uid="uid://dbmmaoubp84nk" path="res://level/gui/combo_screen.tscn" id="22_y1okt"]
 [ext_resource type="Resource" uid="uid://ddhkk175dkckf" path="res://entities/boss/combo/combo_1.tres" id="23_6xrl7"]
 [ext_resource type="Resource" uid="uid://by12hxe7vrgxt" path="res://entities/boss/combo/combo_2.tres" id="24_hwk8y"]
 
@@ -190,6 +191,12 @@ line_spacing = 0.0
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
 
+[sub_resource type="LabelSettings" id="LabelSettings_537yj"]
+line_spacing = 0.0
+font_size = 48
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
 
@@ -201,6 +208,7 @@ bpm = 122
 stream = ExtResource("5_8wnvk")
 
 [node name="World" parent="." groups=["world"] instance=ExtResource("2_p3sjh")]
+z_index = -2
 
 [node name="Boss" parent="." instance=ExtResource("3_jivh4")]
 motion_mode = 1
@@ -208,18 +216,21 @@ boss_stats = ExtResource("6_yn8d0")
 
 [node name="PlayerController" type="Node" parent="."]
 script = ExtResource("9_6id7j")
-get_behind_me_phase_min_interval = 0
 
 [node name="Archer" parent="PlayerController" instance=ExtResource("11_l085o")]
+z_index = 0
 position = Vector2(545, 218)
 
 [node name="Fighter" parent="PlayerController" instance=ExtResource("12_kagx0")]
+z_index = 0
 position = Vector2(486, 313)
 
 [node name="Tank" parent="PlayerController" instance=ExtResource("13_wiqs4")]
+z_index = 0
 position = Vector2(429, 408)
 
 [node name="Healer" parent="PlayerController" instance=ExtResource("10_0bbld")]
+z_index = 0
 position = Vector2(601, 359)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -515,11 +526,6 @@ value = 1.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GUI/Combo2"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="ComboActionSlot" parent="CanvasLayer/GUI/Combo2/HBoxContainer" instance=ExtResource("22_p7whu")]
 layout_mode = 2
@@ -535,5 +541,34 @@ layout_mode = 2
 combo = ExtResource("24_hwk8y")
 slot = 2
 
+[node name="ActionComboScreen" parent="." instance=ExtResource("22_y1okt")]
+visible = false
+
+[node name="DeathScreen" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="DeathScreen"]
+color = Color(0.25098, 0.25098, 0.25098, 0.752941)
+
+[node name="DeathText" type="Label" parent="DeathScreen"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 233.0
+offset_bottom = 119.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+label_settings = SubResource("LabelSettings_537yj")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[connection signal="boss_died" from="Boss" to="." method="_on_boss_boss_died"]
 [connection signal="boss_health_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_health_changed"]
 [connection signal="boss_name_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_name_changed"]
+[connection signal="all_players_dead" from="PlayerController" to="." method="_on_player_controller_all_players_dead"]

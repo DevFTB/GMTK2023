@@ -61,6 +61,8 @@ cooldown = 4
 
 [node name="ActionAnimation" type="AnimatedSprite2D" parent="."]
 z_index = 1
+position = Vector2(-15, 0)
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_7kxwy")
 
 [connection signal="animation_finished" from="ActionAnimation" to="." method="_on_action_animation_animation_finished"]

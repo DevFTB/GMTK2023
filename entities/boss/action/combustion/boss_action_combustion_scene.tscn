@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bgpctasn4e2ax"]
 
 [ext_resource type="Script" path="res://entities/boss/action/BossActionInstance.gd" id="1_cycn1"]
-[ext_resource type="PackedScene" uid="uid://bdytxksyet4m" path="res://entities/boss/action/combustion/goo_splash.tscn" id="2_syjul"]
+[ext_resource type="PackedScene" uid="uid://b3ef02sy4hft" path="res://entities/boss/action/combustion/goo_splash.tscn" id="2_syjul"]
 
 [sub_resource type="Animation" id="Animation_4mdpg"]
 resource_name = "hit"
