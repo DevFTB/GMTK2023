@@ -13,6 +13,7 @@ var slow_factor = 0.5
 @export var wall_hit_damage = 6
 
 
+
 var death_messages = ["AHHHHH", "It's over", "Nooooo", "It's just a flesh wound", "ow"]
 var flying_messages = ["WHOA!!!!", "I can see the world!", "It's not the fall that kills you."]
 var status_sprite_mappings = {
@@ -33,6 +34,7 @@ func take_damage(damage: int, immediate_source = false):
 	print("taking %s" % damage)
 	health -= damage
 	$PlayerGUI.health_changed(health, -damage)
+	$PlayerSound.play_sound("hurt")
 	if health <= 0:
 		die(immediate_source)
 		
@@ -97,10 +99,13 @@ func apply_knockback(knock_back, direction: Vector2):
 	
 	_wall_hit = false
 	
-	if knock_back > 128:
+	if knock_back > 96:
 		speak(flying_messages[randi() % flying_messages.size()])
+		$PlayerSound.play_sound("launch")
 	elif randi() % 4 == 0:
 		speak("WHOA!")
+		
+
 	pass
 var _wall_hit =false
 func move(loc, delta):
@@ -127,6 +132,7 @@ func move(loc, delta):
 	
 func speak(text, time=2):
 	$PlayerGUI.display_speech(text, time)
+	$PlayerSound.play_sound("speech")
 
 func do_action(action: Node2D, target):
 	if not stunned and not dead:

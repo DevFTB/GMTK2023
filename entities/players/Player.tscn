@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://jc15k6rexkl2"]
+[gd_scene load_steps=18 format=3 uid="uid://jc15k6rexkl2"]
 
 [ext_resource type="Script" path="res://entities/players/Player.gd" id="1_l1dva"]
 [ext_resource type="Texture2D" uid="uid://csxynyfjfd4jh" path="res://entities/players/fighter/fighter.png" id="2_2lh5h"]
@@ -7,6 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://kbthggvh3r0n" path="res://entities/players/player_gui/player_gui.tscn" id="4_svkkc"]
 [ext_resource type="Texture2D" uid="uid://c7g506auv6mpi" path="res://entities/players/condition_sprites/slowed.png" id="5_hlcli"]
 [ext_resource type="Texture2D" uid="uid://che5hock38mht" path="res://entities/players/dead_sprite.png" id="6_xp4pb"]
+[ext_resource type="Script" path="res://entities/players/PlayerAudioPlayer.gd" id="8_ryh6h"]
+[ext_resource type="AudioStream" uid="uid://caspn0ul0l2kx" path="res://entities/players/sounds/speech.wav" id="9_y385k"]
+[ext_resource type="AudioStream" uid="uid://br1c1mrea1gvr" path="res://entities/players/sounds/hurt.wav" id="10_s1g2t"]
+[ext_resource type="AudioStream" uid="uid://df173ptaxdec5" path="res://entities/players/sounds/launch.wav" id="11_op5k2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lpubb"]
 height = 28.0
@@ -94,6 +98,14 @@ texture = ExtResource("6_xp4pb")
 amount = 16
 process_material = SubResource("ParticleProcessMaterial_uw237")
 lifetime = 0.4
+
+[node name="PlayerSound" type="AudioStreamPlayer2D" parent="."]
+process_mode = 4
+volume_db = -3.399
+script = ExtResource("8_ryh6h")
+speech_sound = ExtResource("9_y385k")
+hurt_sound = ExtResource("10_s1g2t")
+launch_sound = ExtResource("11_op5k2")
 
 [connection signal="timeout" from="StatusEffect/StunTimer" to="." method="_on_stun_timer_timeout"]
 [connection signal="timeout" from="StatusEffect/SlowTimer" to="." method="_on_slow_timer_timeout"]

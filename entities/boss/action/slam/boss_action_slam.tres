@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="BossAction" load_steps=5 format=3 uid="uid://b0cxrsu03dl23"]
+[gd_resource type="Resource" script_class="BossAction" load_steps=6 format=3 uid="uid://b0cxrsu03dl23"]
 
 [ext_resource type="PackedScene" uid="uid://ch4ee4byeyeaq" path="res://entities/boss/action/slam/boss_action_slam_scene.tscn" id="1_1h8y3"]
 [ext_resource type="Texture2D" uid="uid://cp7mgtw21cnum" path="res://entities/boss/action/action_icons.png" id="1_3jvjq"]
 [ext_resource type="Script" path="res://entities/boss/action/BossAction.gd" id="1_yttbp"]
+[ext_resource type="AudioStream" uid="uid://hvd0jrbjgghc" path="res://entities/boss/action/slam/slam.wav" id="3_uf4wc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oywrn"]
 atlas = ExtResource("1_3jvjq")
@@ -27,3 +28,4 @@ level = 1
 level_scaling = 2
 base_damage = 5
 upgrade_scaling = 1.5
+hit_sound = ExtResource("3_uf4wc")

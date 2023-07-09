@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=5 format=3 uid="uid://c61fkl1ud8j26"]
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://c61fkl1ud8j26"]
 
 [ext_resource type="Script" path="res://entities/boss/action/DashBossAction.gd" id="1_0ro0h"]
 [ext_resource type="PackedScene" uid="uid://cet6xiw7xsjp3" path="res://entities/boss/action/dash/boss_action_dash_scene.tscn" id="1_ih847"]
 [ext_resource type="Texture2D" uid="uid://cp7mgtw21cnum" path="res://entities/boss/action/action_icons.png" id="1_kkc1t"]
+[ext_resource type="AudioStream" uid="uid://c4ixkypwwmx2u" path="res://entities/boss/action/dash/dash.wav" id="3_8krw8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pvf4b"]
 atlas = ExtResource("1_kkc1t")
@@ -28,3 +29,4 @@ level = 1
 level_scaling = 2
 base_damage = 5
 upgrade_scaling = 1.5
+hit_sound = ExtResource("3_8krw8")
