@@ -59,12 +59,15 @@ script = ExtResource("6_s2ga5")
 [node name="Aiming" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("aimer")]
 script = ExtResource("7_bf5v3")
 aimer = NodePath("../../Aimer")
+movement_modifier = 0.6
 
 [node name="Attacking" type="Node" parent="BossStateMachine"]
 script = ExtResource("7_pkteh")
+movement_modifier = 0.2
 
 [node name="Collapsed" type="Node" parent="BossStateMachine"]
 script = ExtResource("8_mgixy")
+movement_modifier = 0.0
 
 [node name="CollapseTimer" type="Timer" parent="BossStateMachine/Collapsed"]
 wait_time = 3.0

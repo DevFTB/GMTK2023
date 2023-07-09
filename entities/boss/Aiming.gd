@@ -8,6 +8,8 @@ func enter():
 	boss.movement_dir = Vector2.ZERO
 	pass
 func process_input(event: InputEvent):
+	super.process_input(event)
+	
 	if event is InputEventMouseMotion:
 		var pos_to_mouse = boss.get_global_mouse_position() -  boss.global_position
 

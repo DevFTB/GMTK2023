@@ -30,7 +30,7 @@ func _process(delta):
 	pass
 
 func take_damage(damage: int, immediate_source = false):
-	print("taking")
+	print("taking %s" % damage)
 	health -= damage
 	$PlayerGUI.health_changed(health, -damage)
 	if health <= 0:
@@ -146,10 +146,6 @@ func die(immediate = false):
 	
 	$CollisionShape2D.set_deferred("disabled", true)
 	$DeadSprite.visible = true
-
-func _input(event):
-	if event.is_action_pressed("debug_key"):
-		apply_knockback(96, Vector2.RIGHT)
 
 func _on_stun_timer_timeout():
 	stunned = false

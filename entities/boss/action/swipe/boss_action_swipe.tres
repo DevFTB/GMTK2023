@@ -25,5 +25,5 @@ is_locked = false
 max_level = 3
 level = 1
 level_scaling = 2
-base_damage = 5
+base_damage = 3
 upgrade_scaling = 1.5

@@ -36,7 +36,7 @@ func _ready():
 	boss_health_changed.emit(health, max_health, 0)
 
 func _process(_delta):
-	velocity = movement_dir * movement_speed
+	velocity = movement_dir * movement_speed * $BossStateMachine.active_state.movement_modifier
 	move_and_slide()
 
 func activate_combo() -> void:

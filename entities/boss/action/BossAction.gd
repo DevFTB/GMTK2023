@@ -39,6 +39,7 @@ func _init(p_action_name = "New Action", p_action_scene = null, p_action_icon = 
 
 
 func get_damage() -> int:
+	print(base_damage, ", ", base_damage + (level - 1) * level_scaling )
 	return base_damage + (level - 1) * level_scaling
 
 func can_upgrade() -> bool :

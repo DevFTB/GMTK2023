@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dyq235tghxi0j" path="res://level/gui/menu/main_menu.png" id="1_7ftw8"]
 [ext_resource type="Theme" uid="uid://pjssvnja6jwk" path="res://level/gui/theme.tres" id="1_biqm1"]
-[ext_resource type="Script" path="res://level/gui/menu/MainMeu.gd" id="2_gynag"]
+[ext_resource type="Script" path="res://level/gui/menu/MainMenu.gd" id="2_ahq7p"]
 [ext_resource type="Texture2D" uid="uid://puhu7mmit7ce" path="res://level/gui/menu/main_menu_bg.png" id="4_lo56t"]
 [ext_resource type="Texture2D" uid="uid://c45ytlw6gere8" path="res://entities/boss/boss_spritesheet.png" id="5_eolr6"]
 
@@ -64,7 +64,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_biqm1")
-script = ExtResource("2_gynag")
+script = ExtResource("2_ahq7p")
 
 [node name="Main" type="Control" parent="."]
 layout_mode = 1
@@ -163,7 +163,7 @@ position = Vector2(200.5, 202.5)
 scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_t0vgk")
 autoplay = "default"
-frame_progress = 0.906402
+frame_progress = 0.53841
 
 [node name="Control2" type="Control" parent="HowToPlay/Control"]
 layout_mode = 2
