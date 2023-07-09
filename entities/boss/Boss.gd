@@ -8,14 +8,13 @@ signal boss_died()
 
 @export var movement_speed = 200
 @export var combos : Array[Combo] = []
-@export var max_health = 20
 
 @export var prefix_path = "res://entities/boss/boss_name/prefixes.txt"
 @export var suffix_path = "res://entities/boss/boss_name/suffixes.txt"
 
 @export var boss_stats: BossStats
 
-var health
+@onready var health = boss_stats.get_health()
 var movement_dir = Vector2.ZERO
 var active_combo : Node2D
 var names
@@ -29,11 +28,10 @@ var can_combo = [true, true]
 @onready var combo_timers = [$Combo1Timer, $Combo2Timer]
 
 func _ready():
-	health = max_health
 	names = generate_boss_names(50)
 	boss_name = names[i_name]
 	boss_name_changed.emit(boss_name)
-	boss_health_changed.emit(health, max_health, 0)
+	boss_health_changed.emit(health, boss_stats.get_health(), 0)
 	
 	boss_stats.level_changed.connect(evolve_name)
 
@@ -62,7 +60,7 @@ func activate_combo() -> void:
 
 func take_damage(damage: int):
 	health -= damage
-	boss_health_changed.emit(health, max_health, -damage)
+	boss_health_changed.emit(health, boss_stats.get_health(), -damage)
 	$AnimatedSprite2D.material.set_shader_parameter("should_flash", true)
 	get_tree().create_timer(0.3).timeout.connect(func(): $AnimatedSprite2D.material.set_shader_parameter("should_flash", false))
 	if health <= 0:
@@ -161,8 +159,8 @@ func _on_combo_2_timer_timeout():
 	can_combo[1] = true
 	pass # Replace with function body.
 func reset():
-	health = max_health
-	boss_health_changed.emit(health, max_health, 0)
+	health = boss_stats.get_health()
+	boss_health_changed.emit(health, boss_stats.get_health(), 0)
 
 func evolve_name():
 	if i_name < names.size() - 1:

@@ -22,7 +22,7 @@ func play_started_animation(action :BossAction):
 	pass
 
 func play_hit_animation(action : BossAction):
-	animator.play(action.hit_animation)
+	boss.get_node("BossAudioPlayer").play_action_sound(action)
 	
 	if action.is_hold_action:
 		boss.get_node("Camera2D").do_large_shake()

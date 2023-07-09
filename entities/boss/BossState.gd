@@ -5,6 +5,9 @@ extends State
 
 @export var movement_modifier : float = 1.0
 
+@export var enter_sound : AudioStream
+@export var exit_sound : AudioStream 
+
 func process_input(event: InputEvent):
 	if event is InputEventKey:
 		var axis = Input.get_vector("move_left", "move_right", "move_up", "move_down")

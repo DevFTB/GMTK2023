@@ -29,7 +29,15 @@ func _process(delta):
 func start():
 	$AudioStreamPlayer.play()
 	started = true
+	
+	beat_number = 1
+	timer = 0.0
+	_target_beat = 1
 	pass
+	
+func stop():
+	started = false
+	$AudioStreamPlayer.stop()
 
 func get_sync_amount(target_beat: int):
 	var time_since_target_beat = abs(timer - time_per_beat * (target_beat))

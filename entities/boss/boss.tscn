@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c7q25yyup7fu8"]
+[gd_scene load_steps=16 format=3 uid="uid://c7q25yyup7fu8"]
 
 [ext_resource type="Script" path="res://entities/boss/Boss.gd" id="1_ag2a5"]
 [ext_resource type="SpriteFrames" uid="uid://75jl0scp8une" path="res://entities/boss/boss_sprite_frames.tres" id="1_mm22x"]
@@ -10,7 +10,9 @@
 [ext_resource type="Script" path="res://entities/boss/Aiming.gd" id="7_bf5v3"]
 [ext_resource type="Script" path="res://entities/boss/state/Attacking.gd" id="7_pkteh"]
 [ext_resource type="Script" path="res://entities/boss/state/Collapsed.gd" id="8_mgixy"]
+[ext_resource type="AudioStream" uid="uid://b8cmxgu1d66f8" path="res://entities/boss/state/collapse.wav" id="10_crxjn"]
 [ext_resource type="Script" path="res://entities/boss/BossCamera.gd" id="10_mwoo8"]
+[ext_resource type="Script" path="res://entities/boss/BossAudioPlayer.gd" id="12_np8om"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pc1ul"]
 radius = 55.0
@@ -68,6 +70,7 @@ movement_modifier = 0.2
 [node name="Collapsed" type="Node" parent="BossStateMachine"]
 script = ExtResource("8_mgixy")
 movement_modifier = 0.0
+enter_sound = ExtResource("10_crxjn")
 
 [node name="CollapseTimer" type="Timer" parent="BossStateMachine/Collapsed"]
 wait_time = 3.0
@@ -86,6 +89,12 @@ one_shot = true
 wait_time = 8.0
 one_shot = true
 
+[node name="BossAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+volume_db = 5.887
+script = ExtResource("12_np8om")
+
+[connection signal="state_entered" from="BossStateMachine" to="BossAudioPlayer" method="_on_boss_state_machine_state_entered"]
+[connection signal="state_exited" from="BossStateMachine" to="BossAudioPlayer" method="_on_boss_state_machine_state_exited"]
 [connection signal="timeout" from="BossStateMachine/Collapsed/CollapseTimer" to="BossStateMachine/Collapsed" method="_on_timer_timeout"]
 [connection signal="timeout" from="Combo1Timer" to="." method="_on_combo_1_timer_timeout"]
 [connection signal="timeout" from="Combo2Timer" to="." method="_on_combo_2_timer_timeout"]

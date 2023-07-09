@@ -4,6 +4,7 @@ class_name BossStats
 signal level_changed()
 signal gold_changed()
 
+@export var base_health = 30
 @export var level = 1
 @export var level_scaling = 1.3
 @export var base_level_gold_cost = 5.0
@@ -44,4 +45,4 @@ func spend_gold(amnt: int):
 	gold -= amnt
 
 func get_health():
-	return health_per_level * level
+	return base_health + health_per_level * level

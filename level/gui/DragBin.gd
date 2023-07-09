@@ -8,10 +8,3 @@ func _drop_data(at_position, data):
 	
 func _can_drop_data(at_position, data):
 	return true
-	
-func _notification(what):
-	if what == NOTIFICATION_DRAG_BEGIN:
-		visible = true
-	
-	if what == NOTIFICATION_DRAG_END:
-		visible = false

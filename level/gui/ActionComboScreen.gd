@@ -20,3 +20,5 @@ func _on_action_detail_upgraded(action: BossAction):
 
 func _on_gold_changed():
 	get_node("HBoxContainer/VBoxContainer/Control/HBoxContainer/Control/MarginContainer/HBoxContainer/Money").text = str(boss_stats.gold)
+
+
