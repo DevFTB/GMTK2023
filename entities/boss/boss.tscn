@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7q25yyup7fu8"]
+[gd_scene load_steps=12 format=3 uid="uid://c7q25yyup7fu8"]
 
 [ext_resource type="Script" path="res://entities/boss/Boss.gd" id="1_ag2a5"]
 [ext_resource type="SpriteFrames" uid="uid://75jl0scp8une" path="res://entities/boss/boss_sprite_frames.tres" id="1_mm22x"]
@@ -6,17 +6,30 @@
 [ext_resource type="Resource" uid="uid://by12hxe7vrgxt" path="res://entities/boss/combo/combo_2.tres" id="3_3n8fb"]
 [ext_resource type="Script" path="res://scripts/StateMachine.gd" id="5_6cn3x"]
 [ext_resource type="Script" path="res://entities/boss/state/Moving.gd" id="6_s2ga5"]
+[ext_resource type="Script" path="res://entities/boss/Aiming.gd" id="7_bf5v3"]
 [ext_resource type="Script" path="res://entities/boss/state/Attacking.gd" id="7_pkteh"]
 [ext_resource type="Script" path="res://entities/boss/state/Collapsed.gd" id="8_mgixy"]
+[ext_resource type="Script" path="res://entities/boss/BossCamera.gd" id="10_mwoo8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pc1ul"]
 radius = 55.0
 height = 110.0
 
 [node name="Boss" type="CharacterBody2D" groups=["boss"]]
+y_sort_enabled = true
 position = Vector2(320, 223)
+collision_layer = 2
+collision_mask = 15
 script = ExtResource("1_ag2a5")
+movement_speed = 70
 combos = Array[Resource("res://entities/boss/combo/Combo.gd")]([ExtResource("2_vvgcd"), ExtResource("3_3n8fb")])
+
+[node name="Aimer" type="Node2D" parent="."]
+visible = false
+
+[node name="Line2D" type="Line2D" parent="Aimer"]
+points = PackedVector2Array(0, -1, 169, -1)
+end_cap_mode = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_pc1ul")
@@ -25,12 +38,19 @@ shape = SubResource("CapsuleShape2D_pc1ul")
 texture_filter = 1
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("1_mm22x")
+animation = &"charge_hit"
+frame = 4
+frame_progress = 1.0
 
 [node name="BossStateMachine" type="Node" parent="."]
 script = ExtResource("5_6cn3x")
 
 [node name="Moving" type="Node" parent="BossStateMachine"]
 script = ExtResource("6_s2ga5")
+
+[node name="Aiming" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("aimer")]
+script = ExtResource("7_bf5v3")
+aimer = NodePath("../../Aimer")
 
 [node name="Attacking" type="Node" parent="BossStateMachine"]
 script = ExtResource("7_pkteh")
@@ -44,5 +64,17 @@ one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
+script = ExtResource("10_mwoo8")
+max_shake_power = 8
+
+[node name="Combo1Timer" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+
+[node name="Combo2Timer" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
 
 [connection signal="timeout" from="BossStateMachine/Collapsed/CollapseTimer" to="BossStateMachine/Collapsed" method="_on_timer_timeout"]
+[connection signal="timeout" from="Combo1Timer" to="." method="_on_combo_1_timer_timeout"]
+[connection signal="timeout" from="Combo2Timer" to="." method="_on_combo_2_timer_timeout"]

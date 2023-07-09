@@ -34,8 +34,6 @@ func display_details(action: BossAction):
 	
 	var description=format.format({"name": action.action_name, "desc": action.action_description, "beats": action.amount_of_beats, "cd": action.amount_of_cooldown_beats, "dmg": action.get_damage()})
 	
-	print(description)
-	
 	description_label.text = description
 	
 	buy_button.visible = action.is_locked

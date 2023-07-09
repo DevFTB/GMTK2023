@@ -1,13 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://cuuf18vvrljr5"]
+[gd_scene load_steps=6 format=3 uid="uid://cuuf18vvrljr5"]
 
 [ext_resource type="Script" path="res://entities/boss/action/BossActionInstance.gd" id="1_vjwod"]
 [ext_resource type="Script" path="res://entities/boss/action/swipe/DamageComponent.gd" id="2_vnpdx"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ihk57"]
-radius = 150.053
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ye3yq"]
+radius = 47.0
+height = 174.0
+
+[sub_resource type="Animation" id="Animation_s6mt6"]
+resource_name = "hit"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ltvjg"]
+_data = {
+"hit": SubResource("Animation_s6mt6")
+}
 
 [node name="BossActionChargeBash" type="Node2D"]
-position = Vector2(1, 38)
 script = ExtResource("1_vjwod")
 stun_duration = 0.5
 knockback = 32.0
@@ -15,9 +23,17 @@ knockback = 32.0
 [node name="Hitboxes" type="Node2D" parent="."]
 
 [node name="Hitbox" type="Area2D" parent="Hitboxes"]
+collision_layer = 4
+collision_mask = 8
 script = ExtResource("2_vnpdx")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitboxes/Hitbox"]
-shape = SubResource("CircleShape2D_ihk57")
+position = Vector2(45, -1)
+shape = SubResource("CapsuleShape2D_ye3yq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ltvjg")
+}
 
 [connection signal="body_entered" from="Hitboxes/Hitbox" to="Hitboxes/Hitbox" method="_on_body_entered"]

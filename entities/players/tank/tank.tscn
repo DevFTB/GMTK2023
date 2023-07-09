@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cva63yioyjyr3"]
 
-[ext_resource type="PackedScene" uid="uid://jc15k6rexkl2" path="res://entities/players/player.tscn" id="1_tf7pq"]
+[ext_resource type="PackedScene" uid="uid://jc15k6rexkl2" path="res://entities/players/Player.tscn" id="1_tf7pq"]
 [ext_resource type="PackedScene" uid="uid://bdbpgb2uscom2" path="res://entities/players/actions/melee_attack/melee_attack.tscn" id="2_a8bkk"]
 [ext_resource type="Texture2D" uid="uid://wkssy5ryyqd6" path="res://entities/players/tank/tank.png" id="2_er3yj"]
 

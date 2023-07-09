@@ -22,8 +22,6 @@ func submit_input(beat: int, is_press: bool, is_hold: bool):
 	
 	var time_to_move = (beat_offset) * seconds_per_beat - time_remaining
 	
-	print("b-o, ", beat_offset, ", ", time_remaining, ",", time_to_move)
-	
 	if from_left:
 		new_warner.position.x = size.x - beat_offset * size.x / beat_length
 		#new_warner.velocity = Vector2((position.x - size.x) / time_to_move , 0)

@@ -21,7 +21,7 @@ func health_changed(new_health, difference):
 		$DamageNumber.text = str(abs(difference))
 		$HealNumber.text = ""
 	var damage_number_timer = $DamageNumberTimer
-	damage_number_timer.start(0.5)
+	damage_number_timer.start(1)
 	
 func display_speech(text, time=2):
 	$SpeechBubble.visible = true

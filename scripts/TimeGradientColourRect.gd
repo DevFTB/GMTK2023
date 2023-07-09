@@ -7,7 +7,6 @@ var timer = 0.0
 
 var active = false:
 	set(value):
-		print(value)
 		if not value:
 			color = color_gradient.sample(0)
 		else:

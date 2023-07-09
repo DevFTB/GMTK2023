@@ -51,19 +51,21 @@ class ActionLifecycle:
 					execute(strength)
 					hit.emit(strength)
 
-	func execute(strength: float, position: Vector2 = Vector2.ZERO, direction: Vector2 = Vector2.DOWN):
+	func execute(strength: float, position: Vector2 = Vector2.ZERO):
 		if action.action_scene:
 			var action_instance = action.action_scene.instantiate()
 			action_instance.strength = strength
 		
 			action_instance.position = position
-			action_instance.rotation = direction.angle()
+			action_instance.rotation = parent.attack_direction.angle()
 			action_instance.action = action
 		
 			parent.add_child(action_instance)
 			
 		else:
 			print("action ", action.action_name, " with strength ", strength)
+			
+		action.do_effect(parent, Vector2.from_angle(parent.attack_direction.angle()))
 		pass
 
 class HoldActionLifecycle:
@@ -90,14 +92,19 @@ class HoldActionLifecycle:
 	func rhythm_hit(strength: float, pressed: bool = true):
 		print(action.action_name, " recieved ", "press" if  pressed else "release", " with stregnth ", strength)
 		if not success_hit:
-			if is_equal_approx(0, strength):
-				failed.emit()
-			elif pressed and not has_started:
+			
+			if pressed and not has_started:
+				if is_equal_approx(0, strength):
+					failed.emit()
+				else:
 					press_strength = strength
 					has_started = true
 					started.emit()
 					
-			elif not pressed and not success_hit:
+			elif not pressed and not success_hit and has_started:
+				if is_equal_approx(0, strength):
+					failed.emit()
+				else:
 					execute(press_strength * strength)
 					success_hit = true
 					hit.emit(press_strength * strength)
@@ -136,26 +143,30 @@ var press_strength = 0
 
 var next_beat = 0
 
+var direction = Vector2.UP
+
 @onready var beat_manager = get_tree().get_first_node_in_group("beat_manager")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	beat_manager.beat.connect(_on_beat)
 	
-	
+	print(rotation)
 	var offset = beat_manager.beat_number + (1 if beat_manager.get_beat_progress() < 0.5 else 2)
+	if combo.actions[0].is_hold_action:
+		offset += 1
 	
 	for slot in range(combo.amount_of_slots):
 		var action = combo.actions[slot]
 		var lc
 		if action.is_hold_action:
-			lc = HoldActionLifecycle.new(self, action, offset)
+			lc = HoldActionLifecycle.new(get_parent(), action, offset)
+			
 		else:
-			lc = ActionLifecycle.new(self, action, offset)
+			lc = ActionLifecycle.new(get_parent(), action, offset)
 			
 		action_queue.append(lc)
 		offset = lc.end_beat
 	
-	print (action_queue)
 	active_action = action_queue.pop_front()
 	pass # Replace with function body.	
 
