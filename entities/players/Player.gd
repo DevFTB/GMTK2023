@@ -110,6 +110,10 @@ func move(loc, delta):
 		if slowed:
 			vel_vec *= slow_factor
 		velocity = speed * vel_vec
+		
+		# set way player is facing based on velocity
+		$Sprite2D.set_flip_h(not (velocity.angle() <= PI/2 and velocity.angle() >= -PI/2))
+		
 		move_and_slide()
 	else:
 		if _flying:

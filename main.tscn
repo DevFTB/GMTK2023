@@ -550,28 +550,35 @@ layout_mode = 2
 combo = ExtResource("24_hwk8y")
 slot = 2
 
-[node name="ActionComboScreen" parent="." instance=ExtResource("22_y1okt")]
+[node name="ActionComboScreenCanvasLayer" type="CanvasLayer" parent="."]
 visible = false
 
+[node name="ActionComboScreen" parent="ActionComboScreenCanvasLayer" instance=ExtResource("22_y1okt")]
+
 [node name="DeathScreen" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="DeathScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.25098, 0.25098, 0.25098, 0.752941)
 
 [node name="DeathText" type="Label" parent="DeathScreen"]
-anchors_preset = -1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -576.0
-offset_top = -324.0
-offset_right = 233.0
-offset_bottom = 119.0
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -404.5
+offset_top = -221.5
+offset_right = 404.5
+offset_bottom = 221.5
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
+size_flags_horizontal = 4
 label_settings = SubResource("LabelSettings_537yj")
 horizontal_alignment = 1
 vertical_alignment = 1

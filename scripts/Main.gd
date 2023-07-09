@@ -39,7 +39,7 @@ func level_over(winner):
 		$DeathScreen.get_node("DeathText").label_settings.font_size = 48 if len($DeathScreen.get_node("DeathText").text) < 250 else 32
 		# todo: change to button?
 		await get_tree().create_timer(3.0).timeout
-		$DeathScreen.get_node("DeathText").visible = false
+		$DeathScreen.visible = false
 		
 		$PlayerController.clear_players()
 		$World.visible = false
@@ -49,11 +49,26 @@ func level_over(winner):
 		enter_shop()
 
 func enter_shop():
+	status = "shop"
+	$ActionComboScreenCanvasLayer.visible = true
+
+func exit_shop():
+	$ActionComboScreenCanvasLayer.visible = false
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
 	pass
 
+
 func _on_boss_boss_died():
+	# todo - on kill players, next level of players walks on in
 	level_over("Players")
 
 
 func _on_player_controller_all_players_dead():
 	level_over("Boss")
+
+func _on_combo_screen_start_button_pressed():
+	exit_shop()
+	enter_level(0)
