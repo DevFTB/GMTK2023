@@ -67,4 +67,14 @@ zoom = Vector2(2, 2)
 script = ExtResource("10_mwoo8")
 max_shake_power = 8
 
+[node name="Combo1Timer" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+
+[node name="Combo2Timer" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+
 [connection signal="timeout" from="BossStateMachine/Collapsed/CollapseTimer" to="BossStateMachine/Collapsed" method="_on_timer_timeout"]
+[connection signal="timeout" from="Combo1Timer" to="." method="_on_combo_1_timer_timeout"]
+[connection signal="timeout" from="Combo2Timer" to="." method="_on_combo_2_timer_timeout"]

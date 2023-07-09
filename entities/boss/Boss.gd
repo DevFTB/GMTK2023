@@ -23,6 +23,9 @@ var boss_name
 var selected_combo = -1
 var attack_direction = Vector2.UP
 
+var can_combo = [true, true]
+@onready var combo_timers = [$Combo1Timer, $Combo2Timer]
+
 func _ready():
 	health = max_health
 	names = generate_boss_names(50)
@@ -35,20 +38,23 @@ func _process(delta):
 	move_and_slide()
 
 func activate_combo() -> void:
-	var combo = combos[selected_combo]
-	
-	var lifecycle = ComboLifecycle.new()
+	if can_combo[selected_combo]:
+		var combo = combos[selected_combo]
+		
+		var lifecycle = ComboLifecycle.new()
 
-	lifecycle.combo = combo
-	
-	active_combo = lifecycle
-	
-	lifecycle.rotation = attack_direction.angle()
-	add_child(lifecycle)
-	
-	started_combo.emit(lifecycle)
-	$BossStateMachine.transition_to("Attacking")
-	pass
+		lifecycle.combo = combo
+		
+		active_combo = lifecycle
+		
+		lifecycle.rotation = attack_direction.angle()
+		add_child(lifecycle)
+		
+		started_combo.emit(lifecycle)
+		$BossStateMachine.transition_to("Attacking")
+		combo_timers[selected_combo].start()
+		can_combo[selected_combo] = false
+		pass
 
 func take_damage(damage: int):
 	health -= damage
@@ -116,3 +122,16 @@ func teleport(movement_vector: Vector2, duration = 0.3):
 	
 #	if collider != null and collider.is_in_group("player"):
 #		collider.apply_knockback(20*32, collision.get_travel().normalized())
+
+func get_combo_cooldown(index: int):
+	return combo_timers[index].time_left / combo_timers[index].wait_time
+
+
+func _on_combo_1_timer_timeout():
+	can_combo[0] = true
+	pass # Replace with function body.
+
+
+func _on_combo_2_timer_timeout():
+	can_combo[1] = true
+	pass # Replace with function body.
