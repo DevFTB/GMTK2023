@@ -50,3 +50,6 @@ func get_upgrade_cost():
 func upgrade() -> void:
 	if level < max_level:
 		level += 1
+
+func do_effect(boss: Boss, direction: Vector2):
+	pass

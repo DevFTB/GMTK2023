@@ -22,7 +22,11 @@ var names
 var boss_name
 var i_name = 0
 
+var selected_combo = -1
+var attack_direction = Vector2.UP
 
+var can_combo = [true, true]
+@onready var combo_timers = [$Combo1Timer, $Combo2Timer]
 
 func _ready():
 	health = max_health
@@ -35,19 +39,24 @@ func _process(delta):
 	velocity = movement_dir * movement_speed
 	move_and_slide()
 
-func activate_combo(index: int) -> void:
-	var combo = combos[index]
-	
-	var lifecycle = ComboLifecycle.new()
-	lifecycle.combo = combo
-	
-	active_combo = lifecycle
-	
-	add_child(lifecycle)
-	
-	started_combo.emit(lifecycle)
-	$BossStateMachine.transition_to("Attacking")
-	pass
+func activate_combo() -> void:
+	if can_combo[selected_combo]:
+		var combo = combos[selected_combo]
+		
+		var lifecycle = ComboLifecycle.new()
+
+		lifecycle.combo = combo
+		
+		active_combo = lifecycle
+		
+		lifecycle.rotation = attack_direction.angle()
+		add_child(lifecycle)
+		
+		started_combo.emit(lifecycle)
+		$BossStateMachine.transition_to("Attacking")
+		combo_timers[selected_combo].start()
+		can_combo[selected_combo] = false
+		pass
 
 func take_damage(damage: int):
 	health -= damage
@@ -90,6 +99,49 @@ func generate_boss_names(n=50):
 func read_file(path):
 	return FileAccess.open(path, FileAccess.READ).get_as_text()
 	
+
+func teleport(movement_vector: Vector2, duration = 0.3):
+	#var tween = get_tree().create_tween()
+	#tween.tween_property(self, "position", position + movement_vector, duration)
+	var collision = move_and_collide(movement_vector)
+	if collision:
+		var collider = collision.get_collider()
+		var space_state = get_world_2d().direct_space_state
+		
+		var query = PhysicsShapeQueryParameters2D.new()
+		query.collide_with_bodies = true
+		query.collision_mask = 0x1000b
+		
+		var circle =  CircleShape2D.new()
+		circle.radius = 192
+		query.shape =circle
+		query.transform.origin = collision.get_position()
+		
+		var hits = space_state.intersect_shape(query)
+		
+		for hit in hits:
+			
+			var hit_collider = hit.collider
+			
+			if hit_collider.is_in_group("player"):
+				print(hit_collider)
+				collider.apply_knockback(20*32, collision.get_travel().normalized())
+	
+#	if collider != null and collider.is_in_group("player"):
+#		collider.apply_knockback(20*32, collision.get_travel().normalized())
+
+func get_combo_cooldown(index: int):
+	return combo_timers[index].time_left / combo_timers[index].wait_time
+
+
+func _on_combo_1_timer_timeout():
+	can_combo[0] = true
+	pass # Replace with function body.
+
+
+func _on_combo_2_timer_timeout():
+	can_combo[1] = true
+	pass # Replace with function body.
 func reset():
 	health = max_health
 	boss_health_changed.emit(health, max_health, 0)

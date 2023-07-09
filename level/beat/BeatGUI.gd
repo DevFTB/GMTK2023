@@ -52,7 +52,6 @@ func _on_combo_started(clc: ComboLifecycle):
 func _on_hit_action(action: BossAction, strength: float):
 	if not combo.action_queue.is_empty():
 		set_alc(combo.action_queue.front())
-		print(alc.action.action_name, " giss")
 	$BarArea/Control/HitLabel.display_hit_text(strength)
 	
 func set_alc(new_alc):

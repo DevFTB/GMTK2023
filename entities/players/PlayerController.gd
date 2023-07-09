@@ -129,7 +129,7 @@ func set_phase(inp_phase):
 			player_loc_ordering = get_players()
 	
 	phase = inp_phase
-	print("New phase: " + phase)
+	#print("New phase: " + phase)
 
 func do_phase_speech(phase):
 	var players = get_players()

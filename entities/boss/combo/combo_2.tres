@@ -1,15 +1,13 @@
-[gd_resource type="Resource" script_class="Combo" load_steps=5 format=3 uid="uid://by12hxe7vrgxt"]
+[gd_resource type="Resource" script_class="Combo" load_steps=3 format=3 uid="uid://by12hxe7vrgxt"]
 
-[ext_resource type="Resource" uid="uid://b0cxrsu03dl23" path="res://entities/boss/action/slam/boss_action_slam.tres" id="1_1aoci"]
 [ext_resource type="Script" path="res://entities/boss/combo/Combo.gd" id="1_m0fxg"]
-[ext_resource type="Resource" uid="uid://da1nvew4jbd0v" path="res://entities/boss/action/combustion/boss_action_combustion.tres" id="2_bj2hr"]
 [ext_resource type="Resource" uid="uid://c61fkl1ud8j26" path="res://entities/boss/action/dash/boss_action_dash.tres" id="3_b3js8"]
 
 [resource]
 script = ExtResource("1_m0fxg")
 actions = {
-0: ExtResource("1_1aoci"),
-1: ExtResource("2_bj2hr"),
+0: ExtResource("3_b3js8"),
+1: ExtResource("3_b3js8"),
 2: ExtResource("3_b3js8")
 }
 amount_of_slots = 3

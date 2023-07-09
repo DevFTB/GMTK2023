@@ -10,7 +10,7 @@ var dist_travelled
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	dist_travelled = 0
-	print("arrow created")
+	#print("arrow created")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
