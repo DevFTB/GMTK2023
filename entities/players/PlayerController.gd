@@ -1,5 +1,7 @@
 extends Node
 
+signal all_players_dead()
+
 var phase
 @export var heal_phase_min_interval = 40
 @export var get_behind_me_phase_min_interval = 30
@@ -68,6 +70,11 @@ func _process(delta):
 	get_behind_me_phase_allowed_timer = max(0, get_behind_me_phase_allowed_timer - delta)
 	
 	var players = get_players()
+	
+	# if all players dead
+	if players.size() == 0:
+		all_players_dead.emit()
+	
 	# move
 	if phase == "Heal":
 		group_move(group_loc, delta)
@@ -203,6 +210,7 @@ func move_player_handler(player, delta):
 			player.move(get_loc_dist_from(player.global_position, boss.global_position, 80), delta)
 		"Archer":
 			player.move(get_loc_dist_from(player.global_position, boss.global_position, 256), delta)
+		# todo try move healer not boss side of to heal player
 		"Healer":
 			player.move(get_loc_dist_from(player.global_position, get_most_damaged_player().global_position, 64), delta)
 		
@@ -233,13 +241,26 @@ func get_most_damaged_player():
 #func dist_to_boss(loc):
 #	return (loc - boss.global_position()).length()
 
-#func clear_players():
-#	for player in get_players():
-#		player.queue_free()
-#
-#func spawn_players():
+func clear_players():
+	for player in self.get_children():
+		player.queue_free()
+
+
+func spawn_players(n):
+	pass
+
+func reset(n):
+	clear_players()
+	spawn_players(n)
+	
+	set_phase("Normal")
+	player_loc_ordering = get_players()
+	phase_timer = 0
+	heal_phase_allowed_timer = heal_phase_min_interval
+	get_behind_me_phase_allowed_timer = get_behind_me_phase_min_interval
+	
 
 # kill random player on click for debugging
-#func _input(event: InputEvent):
-#	if event.is_action_pressed("rhythm_hit") and len(get_players()) > 0:
-#		get_players().pick_random().take_damage(1000)
+func _input(event: InputEvent):
+	if event.is_action_pressed("rhythm_hit") and len(get_players()) > 0:
+		get_players().pick_random().take_damage(1000)

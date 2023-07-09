@@ -4,6 +4,7 @@ class_name Boss
 signal started_combo(lc: ComboLifecycle)
 signal boss_health_changed(new, max, difference)
 signal boss_name_changed(name)
+signal boss_died()
 
 @export var movement_speed = 200
 @export var combos : Array[Combo] = []
@@ -19,13 +20,14 @@ var movement_dir = Vector2.ZERO
 var active_combo : Node2D
 var names
 var boss_name
+var i_name = 0
 
 
 
 func _ready():
 	health = max_health
 	names = generate_boss_names(50)
-	boss_name = names[0]
+	boss_name = names[i_name]
 	boss_name_changed.emit(boss_name)
 	boss_health_changed.emit(health, max_health, 0)
 
@@ -50,7 +52,12 @@ func activate_combo(index: int) -> void:
 func take_damage(damage: int):
 	health -= damage
 	boss_health_changed.emit(health, max_health, -damage)
+	if health <= 0:
+		die()
 	print("Boss took %s damage. Now at %s HP" % [damage, health])
+	
+func die():
+	boss_died.emit()
 	
 func generate_boss_names(n=50):
 	var prefixes = read_file(prefix_path).split("\n")
@@ -82,3 +89,15 @@ func generate_boss_names(n=50):
 # todo make sure this exports correctly!! otherwise just hardcode it in
 func read_file(path):
 	return FileAccess.open(path, FileAccess.READ).get_as_text()
+	
+func reset():
+	health = max_health
+	boss_health_changed.emit(health, max_health, 0)
+
+func evolve_name():
+	if i_name < names.size() - 1:
+		i_name += 1
+		boss_name = names[i_name]
+		boss_name_changed.emit(boss_name)
+		return true
+	return false

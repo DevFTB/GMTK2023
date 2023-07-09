@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=31 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" path="res://level/gui/boss/BossUI.gd" id="17_al4u4"]
 [ext_resource type="Texture2D" uid="uid://dg0j6n14sw0ot" path="res://level/gui/boss/healthbar_empty.png" id="18_4uspl"]
 [ext_resource type="Texture2D" uid="uid://cqy8vqr4hmkj6" path="res://level/gui/boss/healthbar_full.png" id="19_opri7"]
+[ext_resource type="PackedScene" uid="uid://dbmmaoubp84nk" path="res://level/gui/combo_screen.tscn" id="22_y1okt"]
 
 [sub_resource type="Gradient" id="Gradient_x35c2"]
 colors = PackedColorArray(0.961374, 0.526552, 0.508241, 0, 0.253906, 0.03125, 0.363281, 1)
@@ -185,6 +186,12 @@ _data = {
 line_spacing = 0.0
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_537yj"]
+line_spacing = 0.0
+font_size = 48
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
@@ -454,5 +461,40 @@ grow_vertical = 2
 text = "0/0"
 label_settings = SubResource("LabelSettings_l70j4")
 
+[node name="ActionComboScreen" parent="." instance=ExtResource("22_y1okt")]
+visible = false
+
+[node name="DeathScreen" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="DeathScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.25098, 0.25098, 0.25098, 0.752941)
+
+[node name="DeathText" type="Label" parent="DeathScreen"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -383.0
+offset_top = -210.0
+offset_right = 426.0
+offset_bottom = 233.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+label_settings = SubResource("LabelSettings_537yj")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[connection signal="boss_died" from="Boss" to="." method="_on_boss_boss_died"]
 [connection signal="boss_health_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_health_changed"]
 [connection signal="boss_name_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_name_changed"]
+[connection signal="all_players_dead" from="PlayerController" to="." method="_on_player_controller_all_players_dead"]
