@@ -10,12 +10,14 @@ func process_input(event: InputEvent):
 		
 		if event.is_action_pressed("activate_combo_1"):
 			#boss.activate_combo(0)
-			state_machine.transition_to("Aiming")
-			boss.selected_combo = 0
+			if boss.can_activate_combo(0):
+				state_machine.transition_to("Aiming")
+				boss.selected_combo = 0
 
 			
 		if event.is_action_pressed("activate_combo_2"):
 			#boss.activate_combo(1)
-			state_machine.transition_to("Aiming")
-			boss.selected_combo = 1
+			if boss.can_activate_combo(1):
+				state_machine.transition_to("Aiming")
+				boss.selected_combo = 1
 

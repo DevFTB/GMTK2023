@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://jc15k6rexkl2"]
+[gd_scene load_steps=14 format=3 uid="uid://jc15k6rexkl2"]
 
 [ext_resource type="Script" path="res://entities/players/Player.gd" id="1_l1dva"]
 [ext_resource type="Texture2D" uid="uid://csxynyfjfd4jh" path="res://entities/players/fighter/fighter.png" id="2_2lh5h"]
+[ext_resource type="Shader" path="res://entities/players/hit_shader.gdshader" id="2_rhioj"]
 [ext_resource type="Texture2D" uid="uid://ikmxpy4gagtm" path="res://entities/players/condition_sprites/stun.png" id="4_3v406"]
 [ext_resource type="PackedScene" uid="uid://kbthggvh3r0n" path="res://entities/players/player_gui/player_gui.tscn" id="4_svkkc"]
 [ext_resource type="Texture2D" uid="uid://c7g506auv6mpi" path="res://entities/players/condition_sprites/slowed.png" id="5_hlcli"]
@@ -9,6 +10,13 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lpubb"]
 height = 28.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jyd60"]
+resource_local_to_scene = true
+shader = ExtResource("2_rhioj")
+shader_parameter/should_flash = false
+shader_parameter/flash_speed = 0.05
+shader_parameter/flash_color = Color(1, 0.752941, 0.713726, 1)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qf50w"]
 animations = [{
@@ -56,6 +64,7 @@ player_class = "Fighter"
 shape = SubResource("CapsuleShape2D_lpubb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_jyd60")
 scale = Vector2(2, 2)
 texture = ExtResource("2_2lh5h")
 

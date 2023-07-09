@@ -30,10 +30,14 @@ func _process(delta):
 	pass
 
 func take_damage(damage: int, immediate_source = false):
+	print("taking")
 	health -= damage
 	$PlayerGUI.health_changed(health, -damage)
 	if health <= 0:
 		die(immediate_source)
+		
+	$Sprite2D.material.set_shader_parameter("should_flash", true)
+	get_tree().create_timer(0.4).timeout.connect(func(): $Sprite2D.material.set_shader_parameter("should_flash", false))
 	
 func heal(heal: int):
 	health = min(max_health, heal + health)
@@ -79,7 +83,7 @@ func apply_knockback(knock_back, direction: Vector2):
 	var time = knock_back * _time_per_pixel
 	
 	# remove player mask
-	collision_mask = collision_mask & ~(1 << 3)
+	collision_mask = collision_mask & ~(1 << 3) & ~(1 << 1)
 	
 	var scale_factor = 1.5 + _knockback_scale_factor * knock_back
 	
@@ -88,15 +92,17 @@ func apply_knockback(knock_back, direction: Vector2):
 	tween.tween_property($Sprite2D, "scale", $Sprite2D.scale, 2*time / 3).set_delay( time/3)
 	tween.tween_callback(func():
 		_flying = false;
-		collision_mask = collision_mask | (1 << 3)
+		collision_mask = collision_mask | (1 << 3) | (1 << 1)
 		)
+	
+	_wall_hit = false
 	
 	if knock_back > 128:
 		speak(flying_messages[randi() % flying_messages.size()])
 	elif randi() % 4 == 0:
 		speak("WHOA!")
 	pass
-
+var _wall_hit =false
 func move(loc, delta):
 	if not stunned and not _flying and not dead:
 		var loc_diff = loc - global_position
@@ -109,7 +115,9 @@ func move(loc, delta):
 		if _flying:
 			var collision = move_and_collide(_velocity_override * delta)
 			if collision:
-				if collision.get_collider().is_in_group("environment"):
+				print(collision.get_collider())
+				if collision.get_collider().is_in_group("environment") and not _wall_hit:
+					_wall_hit = true
 					take_damage(wall_hit_damage, true)
 			_velocity_override -= _velocity_override * _deceleration_factor *delta
 	

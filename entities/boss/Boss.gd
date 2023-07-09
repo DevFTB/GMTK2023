@@ -61,6 +61,8 @@ func activate_combo() -> void:
 func take_damage(damage: int):
 	health -= damage
 	boss_health_changed.emit(health, max_health, -damage)
+	$AnimatedSprite2D.material.set_shader_parameter("should_flash", true)
+	get_tree().create_timer(0.3).timeout.connect(func(): $AnimatedSprite2D.material.set_shader_parameter("should_flash", false))
 	if health <= 0:
 		die()
 	print("Boss took %s damage. Now at %s HP" % [damage, health])
@@ -145,6 +147,8 @@ func apply_player_knockback(collision):
 func get_combo_cooldown(index: int):
 	return combo_timers[index].time_left / combo_timers[index].wait_time
 
+func can_activate_combo(index: int):
+	return can_combo[index]
 
 func _on_combo_1_timer_timeout():
 	can_combo[0] = true
