@@ -27,13 +27,14 @@ texture_under = ExtResource("2_noaqh")
 texture_progress = ExtResource("3_p36wt")
 
 [node name="SpeechBubble" type="Sprite2D" parent="."]
+visible = false
 z_index = 2
 position = Vector2(40, -41)
 texture = ExtResource("4_c5njw")
 
 [node name="Speech" type="Label" parent="SpeechBubble"]
 anchors_preset = -1
-anchor_left = 0.0625
+anchor_left = 0.03125
 anchor_top = -0.015625
 anchor_right = 0.03125
 offset_left = -22.0
