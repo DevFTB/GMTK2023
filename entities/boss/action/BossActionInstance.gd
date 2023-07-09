@@ -12,7 +12,7 @@ var strength = 1
 func _ready():
 	for child in $Hitboxes.get_children():
 		child.damaged.connect(_on_player_damaged)
-		child.damage = strength * action.get_damage()
+		child.damage = ceil(strength * action.get_damage())
 		
 	$AnimationPlayer.animation_finished.connect(func(x): queue_free())
 	$AnimationPlayer.play("hit")
@@ -33,6 +33,6 @@ func _on_player_damaged(player: Node2D):
 
 func disable_hitboxes():
 	for c in $Hitboxes.get_children():
-		c.monitoring = false
+		c.disable()
 
 	pass # Replace with function body.

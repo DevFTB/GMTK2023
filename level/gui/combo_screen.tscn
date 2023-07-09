@@ -400,6 +400,7 @@ stretch_mode = 4
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+text = "10"
 label_settings = SubResource("LabelSettings_306gy")
 vertical_alignment = 1
 clip_text = true

@@ -59,6 +59,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [12]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(63, -4)]
+}
 
 [sub_resource type="Animation" id="Animation_5g7kx"]
 resource_name = "hit"
@@ -70,10 +82,10 @@ tracks/0/path = NodePath("GPUParticles2D:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
 "update": 0,
-"values": [Vector2(54, -56), Vector2(99, -12), Vector2(43, 44)]
+"values": []
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -87,6 +99,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [12, 24]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(63, -4), Vector2(63, -4), Vector2(240, -2)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5ied6"]
 _data = {
@@ -95,6 +119,7 @@ _data = {
 }
 
 [node name="BossActionSwipe" type="Node2D"]
+z_index = -1
 script = ExtResource("1_vb7fg")
 knockback = 16.0
 
@@ -107,7 +132,12 @@ script = ExtResource("1_n5lwg")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitboxes/Hitbox"]
 position = Vector2(2, 4)
-polygon = PackedVector2Array(44, -52, 24, -75, 81, -67, 108, -50, 123, -12, 112, 13, 87, 30, 25, 51, 55, 17, 59, -15)
+polygon = PackedVector2Array(99, -18, 183, -15, 244, -17, 245, 10, 182, 9, 100, 8, 29, 23, 55, -1, 33, -28)
+
+[node name="HitboxVisual" type="Polygon2D" parent="Hitboxes/Hitbox"]
+position = Vector2(3, 4)
+color = Color(0.819608, 0.360784, 0.239216, 0.462745)
+polygon = PackedVector2Array(99, -18, 183, -15, 244, -17, 245, 10, 182, 9, 100, 8, 29, 23, 55, -1, 33, -28)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(54, -56)
@@ -117,7 +147,7 @@ lifetime = 0.5
 speed_scale = 2.0
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
-position = Vector2(56, -53)
+position = Vector2(63, -4)
 amount = 24
 process_material = SubResource("ParticleProcessMaterial_hle17")
 lifetime = 0.5

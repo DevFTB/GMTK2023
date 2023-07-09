@@ -1,0 +1,202 @@
+[gd_scene load_steps=13 format=3 uid="uid://bq1f61qv4j31k"]
+
+[ext_resource type="Texture2D" uid="uid://dyq235tghxi0j" path="res://level/gui/menu/main_menu.png" id="1_7ftw8"]
+[ext_resource type="Theme" uid="uid://pjssvnja6jwk" path="res://level/gui/theme.tres" id="1_biqm1"]
+[ext_resource type="Script" path="res://level/gui/menu/MainMenu.gd" id="2_ahq7p"]
+[ext_resource type="Texture2D" uid="uid://puhu7mmit7ce" path="res://level/gui/menu/main_menu_bg.png" id="4_lo56t"]
+[ext_resource type="Texture2D" uid="uid://c45ytlw6gere8" path="res://entities/boss/boss_spritesheet.png" id="5_eolr6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7aqq"]
+atlas = ExtResource("5_eolr6")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yyds8"]
+atlas = ExtResource("5_eolr6")
+region = Rect2(32, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hythi"]
+atlas = ExtResource("5_eolr6")
+region = Rect2(64, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pgwhx"]
+atlas = ExtResource("5_eolr6")
+region = Rect2(96, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8x7qu"]
+atlas = ExtResource("5_eolr6")
+region = Rect2(128, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fy1y0"]
+atlas = ExtResource("5_eolr6")
+region = Rect2(160, 160, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t0vgk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7aqq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yyds8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hythi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pgwhx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8x7qu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fy1y0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_biqm1")
+script = ExtResource("2_ahq7p")
+
+[node name="Main" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Main"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7ftw8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -564.0
+offset_top = -380.0
+offset_right = -185.0
+offset_bottom = -34.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="PlayButton" type="Button" parent="Main/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 32
+text = "Play"
+
+[node name="HTPButton" type="Button" parent="Main/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 32
+text = "How to Play"
+
+[node name="Exit" type="Button" parent="Main/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 32
+text = "Exit"
+
+[node name="HowToPlay" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="HowToPlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_lo56t")
+
+[node name="Control" type="HBoxContainer" parent="HowToPlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="HowToPlay/Control"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="HowToPlay/Control/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.5
+offset_top = -203.5
+offset_right = 203.5
+offset_bottom = 203.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="AnimatedSprite2D" parent="HowToPlay/Control/Control/Panel"]
+position = Vector2(200.5, 202.5)
+scale = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_t0vgk")
+autoplay = "default"
+frame_progress = 0.53841
+
+[node name="Control2" type="Control" parent="HowToPlay/Control"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HowToPlay/Control/Control2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="HowToPlay/Control/Control2/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HowToPlay/Control/Control2/MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackButton" type="Button" parent="HowToPlay"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 7.0
+offset_right = 63.0
+offset_bottom = 47.0
+text = "  < Back   "
+
+[connection signal="pressed" from="Main/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Main/VBoxContainer/HTPButton" to="." method="_on_htp_button_pressed"]
+[connection signal="pressed" from="Main/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="HowToPlay/BackButton" to="." method="_on_back_button_pressed"]

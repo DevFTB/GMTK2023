@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://c7q25yyup7fu8"]
+[gd_scene load_steps=14 format=3 uid="uid://c7q25yyup7fu8"]
 
 [ext_resource type="Script" path="res://entities/boss/Boss.gd" id="1_ag2a5"]
 [ext_resource type="SpriteFrames" uid="uid://75jl0scp8une" path="res://entities/boss/boss_sprite_frames.tres" id="1_mm22x"]
 [ext_resource type="Resource" uid="uid://ddhkk175dkckf" path="res://entities/boss/combo/combo_1.tres" id="2_vvgcd"]
 [ext_resource type="Resource" uid="uid://by12hxe7vrgxt" path="res://entities/boss/combo/combo_2.tres" id="3_3n8fb"]
+[ext_resource type="Shader" path="res://entities/players/hit_shader.gdshader" id="4_ac75r"]
 [ext_resource type="Script" path="res://scripts/StateMachine.gd" id="5_6cn3x"]
 [ext_resource type="Script" path="res://entities/boss/state/Moving.gd" id="6_s2ga5"]
 [ext_resource type="Script" path="res://entities/boss/Aiming.gd" id="7_bf5v3"]
@@ -15,8 +16,14 @@
 radius = 55.0
 height = 110.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ry1ah"]
+shader = ExtResource("4_ac75r")
+shader_parameter/should_flash = false
+shader_parameter/flash_speed = 0.05
+shader_parameter/flash_color = Color(0.956863, 0.364706, 0.321569, 0.364706)
+
 [node name="Boss" type="CharacterBody2D" groups=["boss"]]
-y_sort_enabled = true
+z_index = 2
 position = Vector2(320, 223)
 collision_layer = 2
 collision_mask = 15
@@ -36,6 +43,7 @@ shape = SubResource("CapsuleShape2D_pc1ul")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+material = SubResource("ShaderMaterial_ry1ah")
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("1_mm22x")
 animation = &"charge_hit"
@@ -51,12 +59,15 @@ script = ExtResource("6_s2ga5")
 [node name="Aiming" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("aimer")]
 script = ExtResource("7_bf5v3")
 aimer = NodePath("../../Aimer")
+movement_modifier = 0.6
 
 [node name="Attacking" type="Node" parent="BossStateMachine"]
 script = ExtResource("7_pkteh")
+movement_modifier = 0.2
 
 [node name="Collapsed" type="Node" parent="BossStateMachine"]
 script = ExtResource("8_mgixy")
+movement_modifier = 0.0
 
 [node name="CollapseTimer" type="Timer" parent="BossStateMachine/Collapsed"]
 wait_time = 3.0

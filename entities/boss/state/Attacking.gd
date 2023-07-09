@@ -27,13 +27,6 @@ func play_hit_animation(action : BossAction):
 	if action.is_hold_action:
 		boss.get_node("Camera2D").do_large_shake()
 	pass
-
-
-func process_input(event: InputEvent):
-	pass
-	
-func update(delta: float) -> void:
-	pass
 	
 func _on_combo_completed():
 	state_machine.transition_to("Moving")
