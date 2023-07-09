@@ -1,0 +1,61 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://pjssvnja6jwk"]
+
+[ext_resource type="Texture2D" uid="uid://xeg8tgnv3nqm" path="res://level/gui/combo/box-texture.png" id="1_tktup"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbdro"]
+bg_color = Color(0.34902, 0.207843, 0.341176, 1)
+border_width_bottom = 2
+border_color = Color(0.498039, 0.0156863, 0.501961, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0.596078, 0.14902, 0.235294, 0.6)
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f6kal"]
+bg_color = Color(0.870588, 0.172549, 0.701961, 1)
+border_width_bottom = 2
+border_color = Color(0.498039, 0.0156863, 0.501961, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0.596078, 0.14902, 0.235294, 0.6)
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aag2o"]
+bg_color = Color(0.87451, 0.352941, 0.858824, 1)
+border_width_bottom = 2
+border_color = Color(0.498039, 0.0156863, 0.501961, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0.596078, 0.14902, 0.235294, 0.6)
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xmj8v"]
+bg_color = Color(0.65098, 0.0784314, 0.411765, 1)
+border_width_bottom = 2
+border_color = Color(0.498039, 0.0156863, 0.501961, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0.596078, 0.14902, 0.235294, 0.6)
+shadow_size = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_erhkc"]
+texture = ExtResource("1_tktup")
+
+[resource]
+Button/styles/disabled = SubResource("StyleBoxFlat_tbdro")
+Button/styles/hover = SubResource("StyleBoxFlat_f6kal")
+Button/styles/normal = SubResource("StyleBoxFlat_aag2o")
+Button/styles/pressed = SubResource("StyleBoxFlat_xmj8v")
+MarginContainer/constants/margin_bottom = 14
+MarginContainer/constants/margin_left = 14
+MarginContainer/constants/margin_right = 14
+MarginContainer/constants/margin_top = 14
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_erhkc")

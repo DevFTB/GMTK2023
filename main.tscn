@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=24 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
@@ -7,16 +7,179 @@
 [ext_resource type="Script" path="res://level/beat/BeatGUI.gd" id="4_xxwnv"]
 [ext_resource type="AudioStream" uid="uid://3yh8shsiwy0q" path="res://level/Raving Energy.mp3" id="5_8wnvk"]
 [ext_resource type="Texture2D" uid="uid://bj2c08let7yd5" path="res://level/beat/beat_ball.png" id="5_svrfq"]
-[ext_resource type="Script" path="res://TimeGradientColourRect.gd" id="7_0ugbx"]
 [ext_resource type="Script" path="res://entities/players/PlayerController.gd" id="9_6id7j"]
 [ext_resource type="PackedScene" uid="uid://b5rfpsbs4b8sw" path="res://entities/players/healer/healer.tscn" id="10_0bbld"]
 [ext_resource type="PackedScene" uid="uid://c8gsduht2b0tl" path="res://entities/players/archer/archer.tscn" id="11_l085o"]
 [ext_resource type="PackedScene" uid="uid://cphxorrjm5k7a" path="res://entities/players/fighter/fighter.tscn" id="12_kagx0"]
+[ext_resource type="Script" path="res://scripts/TimeGradientColourRect.gd" id="12_kp5ht"]
+[ext_resource type="Script" path="res://level/beat/WarnerController.gd" id="12_xjixf"]
+[ext_resource type="PackedScene" uid="uid://b8im58bmxnhcp" path="res://level/beat/warner_scene.tscn" id="13_prhtm"]
 [ext_resource type="PackedScene" uid="uid://cva63yioyjyr3" path="res://entities/players/tank/tank.tscn" id="13_wiqs4"]
+[ext_resource type="Script" path="res://level/beat/HitLabel.gd" id="14_mp6y7"]
+
+[sub_resource type="Gradient" id="Gradient_x35c2"]
+colors = PackedColorArray(0.961374, 0.526552, 0.508241, 0, 0.253906, 0.03125, 0.363281, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2vwv1"]
+gradient = SubResource("Gradient_x35c2")
 
 [sub_resource type="Gradient" id="Gradient_6ieoh"]
 offsets = PackedFloat32Array(0, 0.274074, 0.648148, 0.996296)
 colors = PackedColorArray(0.603922, 0.172549, 0.827451, 1, 0.824238, 0.221158, 0.219652, 1, 0.980307, 0.480217, 0.252419, 1, 0.603922, 0.172549, 0.827451, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qrahe"]
+font_size = 24
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_rwrgk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BarArea/Bar:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-4, 26)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BarArea/Bar:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BarArea/Bar:modulate:r")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BarArea/Bar:modulate:g")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BarArea/Bar:modulate:b")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BarArea/Bar:modulate:a")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_fmj4h"]
+resource_name = "fail_shake"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BarArea/Bar:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 26), Vector2(-14, 26), Vector2(2, 26), Vector2(14, 26), Vector2(0, 26)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BarArea/Bar:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.00217629, 0.0262032, 0.391732),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(1, 1)]
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BarArea/Bar:modulate:r")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.721569, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.00217629, 0.0261155, 0.396085)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BarArea/Bar:modulate:g")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.168627, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.0565836, 0.396085)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BarArea/Bar:modulate:b")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.231373, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.0565836, 0.396085)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BarArea/Bar:modulate:a")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.0565836, 0.396085)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aabl5"]
+_data = {
+"RESET": SubResource("Animation_rwrgk"),
+"fail_shake": SubResource("Animation_fmj4h")
+}
 
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
@@ -33,7 +196,25 @@ stream = ExtResource("5_8wnvk")
 [node name="Boss" parent="." instance=ExtResource("3_jivh4")]
 motion_mode = 1
 
-[node name="GUI" type="Control" parent="."]
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("9_6id7j")
+get_behind_me_phase_min_interval = 0
+
+[node name="Archer" parent="PlayerController" instance=ExtResource("11_l085o")]
+position = Vector2(545, 218)
+
+[node name="Fighter" parent="PlayerController" instance=ExtResource("12_kagx0")]
+position = Vector2(486, 313)
+
+[node name="Tank" parent="PlayerController" instance=ExtResource("13_wiqs4")]
+position = Vector2(429, 408)
+
+[node name="Healer" parent="PlayerController" instance=ExtResource("10_0bbld")]
+position = Vector2(601, 359)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" type="Control" parent="CanvasLayer"]
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -42,22 +223,51 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BeatGUI" type="Control" parent="GUI" node_paths=PackedStringArray("boss", "beat_manager")]
+[node name="BeatGUI" type="HBoxContainer" parent="CanvasLayer/GUI" node_paths=PackedStringArray("boss", "beat_manager")]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -114.5
-offset_top = 9.0
-offset_right = 114.5
-offset_bottom = 86.0
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 77.0
 grow_horizontal = 2
 script = ExtResource("4_xxwnv")
-boss = NodePath("../../Boss")
-beat_manager = NodePath("../../BeatManager")
+boss = NodePath("../../../Boss")
+beat_manager = NodePath("../../../BeatManager")
 
-[node name="Bar" type="Control" parent="GUI/BeatGUI"]
-custom_minimum_size = Vector2(0, 20)
+[node name="LeftWarner" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("12_xjixf")
+warner_scene = ExtResource("13_prhtm")
+
+[node name="ColorRect" type="TextureRect" parent="CanvasLayer/GUI/BeatGUI/LeftWarner"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -0.5
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_2vwv1")
+
+[node name="Spawn" type="Control" parent="CanvasLayer/GUI/BeatGUI/LeftWarner"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BarArea" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="Bar" type="Control" parent="CanvasLayer/GUI/BeatGUI/BarArea"]
+z_index = 1
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -66,7 +276,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BackgroundColourRect" type="ColorRect" parent="GUI/BeatGUI/Bar"]
+[node name="BackgroundColourRect" type="ColorRect" parent="CanvasLayer/GUI/BeatGUI/BarArea/Bar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -75,7 +285,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.254902, 0.0313726, 0.364706, 1)
 
-[node name="ForegroundColourRect" type="ColorRect" parent="GUI/BeatGUI/Bar"]
+[node name="ForegroundColourRect" type="ColorRect" parent="CanvasLayer/GUI/BeatGUI/BarArea/Bar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -87,11 +297,11 @@ offset_bottom = -4.5
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.603922, 0.172549, 0.827451, 1)
-script = ExtResource("7_0ugbx")
+script = ExtResource("12_kp5ht")
 color_gradient = SubResource("Gradient_6ieoh")
 gradient_cycle_time = 0.3
 
-[node name="Ball" type="Control" parent="GUI/BeatGUI"]
+[node name="Ball" type="Control" parent="CanvasLayer/GUI/BeatGUI/BarArea/Bar"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -101,7 +311,7 @@ offset_right = 40.0
 offset_bottom = 20.0
 grow_vertical = 2
 
-[node name="ColorRect" type="TextureRect" parent="GUI/BeatGUI/Ball"]
+[node name="ColorRect" type="TextureRect" parent="CanvasLayer/GUI/BeatGUI/BarArea/Bar/Ball"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -116,37 +326,66 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_svrfq")
 
-[node name="LeftBeatLabel" type="Label" parent="GUI/BeatGUI"]
-layout_mode = 0
-offset_top = 65.0
-offset_right = 40.0
-offset_bottom = 88.0
-
-[node name="RightBeatLabel" type="Label" parent="GUI/BeatGUI"]
+[node name="Control" type="Control" parent="CanvasLayer/GUI/BeatGUI/BarArea"]
+z_index = 2
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -77.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HitLabel" type="Label" parent="CanvasLayer/GUI/BeatGUI/BarArea/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -34.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(20, 17)
+label_settings = SubResource("LabelSettings_qrahe")
+script = ExtResource("14_mp6y7")
+success_colours = Array[Color]([Color(0.101961, 0.337255, 1, 1), Color(0.839216, 0.52549, 0.25098, 1), Color(0.737255, 0.164706, 0.368627, 1)])
+success_text = Array[String](["Nice", "Preposterous", "Maleficent"])
+
+[node name="RightWarner" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("12_xjixf")
+from_left = false
+warner_scene = ExtResource("13_prhtm")
+
+[node name="ColorRect2" type="TextureRect" parent="CanvasLayer/GUI/BeatGUI/RightWarner"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 1
+anchors_preset = 4
 anchor_top = 0.5
-anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -41.0
-offset_top = 24.5
-offset_right = -1.0
-offset_bottom = 47.5
-grow_horizontal = 0
+offset_top = -5.0
+offset_right = 256.0
+offset_bottom = 5.0
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_2vwv1")
+flip_h = true
+
+[node name="Spawn" type="Control" parent="CanvasLayer/GUI/BeatGUI/RightWarner"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayerController" type="Node" parent="."]
-script = ExtResource("9_6id7j")
-
-[node name="Archer" parent="PlayerController" instance=ExtResource("11_l085o")]
-position = Vector2(545, 218)
-
-[node name="Fighter" parent="PlayerController" instance=ExtResource("12_kagx0")]
-position = Vector2(486, 313)
-
-[node name="Tank" parent="PlayerController" instance=ExtResource("13_wiqs4")]
-position = Vector2(429, 408)
-
-[node name="Healer" parent="PlayerController" instance=ExtResource("10_0bbld")]
-position = Vector2(601, 359)
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/GUI/BeatGUI"]
+reset_on_save = false
+libraries = {
+"": SubResource("AnimationLibrary_aabl5")
+}

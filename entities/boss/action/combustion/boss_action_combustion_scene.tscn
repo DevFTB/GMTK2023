@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgpctasn4e2ax"]
+
+[ext_resource type="Script" path="res://entities/boss/action/BossActionInstance.gd" id="1_cycn1"]
+[ext_resource type="PackedScene" uid="uid://bdytxksyet4m" path="res://entities/boss/action/combustion/goo_splash.tscn" id="2_syjul"]
+
+[node name="BossActionSwipe" type="Node2D"]
+script = ExtResource("1_cycn1")
+duration = 4.0
+
+[node name="Hitboxes" type="Node2D" parent="."]
+
+[node name="Hitbox" parent="Hitboxes" instance=ExtResource("2_syjul")]
+
+[node name="Hitbox2" parent="Hitboxes" instance=ExtResource("2_syjul")]
+position = Vector2(103, -47)
+
+[node name="Hitbox3" parent="Hitboxes" instance=ExtResource("2_syjul")]
+position = Vector2(82, 62)
+
+[node name="Hitbox4" parent="Hitboxes" instance=ExtResource("2_syjul")]
+position = Vector2(-118, 5)
+
+[node name="Hitbox5" parent="Hitboxes" instance=ExtResource("2_syjul")]
+position = Vector2(-2, -107)
+
+[node name="Hitbox6" parent="Hitboxes" instance=ExtResource("2_syjul")]
+position = Vector2(-22, 116)

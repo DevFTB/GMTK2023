@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BossAction" load_steps=5 format=3 uid="uid://c8dyby4o78s43"]
+
+[ext_resource type="PackedScene" uid="uid://cuuf18vvrljr5" path="res://entities/boss/action/charge/boss_action_charge_scene.tscn" id="1_1imwh"]
+[ext_resource type="Texture2D" uid="uid://cp7mgtw21cnum" path="res://entities/boss/action/action_icons.png" id="1_6puod"]
+[ext_resource type="Script" path="res://entities/boss/action/BossAction.gd" id="2_rkqe0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38q33"]
+atlas = ExtResource("1_6puod")
+region = Rect2(0, 0, 16, 16)
+
+[resource]
+script = ExtResource("2_rkqe0")
+action_name = "Charge Bash"
+action_scene = ExtResource("1_1imwh")
+action_icon = SubResource("AtlasTexture_38q33")
+amount_of_beats = 4
+amount_of_cooldown_beats = 2
+is_hold_action = true
+starting_animation = "charge_activate"
+sustain_animation = "charge_sustain"
+hit_animation = "charge_hit"

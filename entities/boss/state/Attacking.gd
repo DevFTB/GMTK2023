@@ -8,7 +8,7 @@ func enter():
 	boss.active_combo.completed.connect(_on_combo_completed)
 	
 	boss.active_combo.action_started.connect(func(action): play_started_animation(action))
-	boss.active_combo.action_hit.connect(func(action): play_hit_animation(action))
+	boss.active_combo.action_hit.connect(func(action, strength): play_hit_animation(action))
 	pass
 
 

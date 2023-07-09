@@ -1,0 +1,239 @@
+[gd_scene load_steps=14 format=3 uid="uid://dbmmaoubp84nk"]
+
+[ext_resource type="Texture2D" uid="uid://de2pmqri8aphu" path="res://level/gui/combo/combo-gui.png" id="1_4r2sl"]
+[ext_resource type="Theme" uid="uid://pjssvnja6jwk" path="res://level/gui/theme.tres" id="1_ktc6r"]
+[ext_resource type="PackedScene" uid="uid://bt6wo80lia41b" path="res://level/gui/combo/action_icon.tscn" id="3_2ya5y"]
+[ext_resource type="Script" path="res://level/ActionDetailGUI.gd" id="3_5dxiw"]
+[ext_resource type="PackedScene" uid="uid://bwmaqrqk5phnk" path="res://level/gui/combo/combo_action_slot.tscn" id="3_jxg7e"]
+[ext_resource type="Resource" uid="uid://c8dyby4o78s43" path="res://entities/boss/action/boss_action_charge_bash.tres" id="4_61oof"]
+[ext_resource type="Resource" uid="uid://da1nvew4jbd0v" path="res://entities/boss/action/combustion/boss_action_combustion.tres" id="5_3sk2v"]
+[ext_resource type="Resource" uid="uid://b0cxrsu03dl23" path="res://entities/boss/action/slam/boss_action_slam.tres" id="6_1n712"]
+[ext_resource type="Resource" uid="uid://c61fkl1ud8j26" path="res://entities/boss/action/dash/boss_action_dash.tres" id="7_m17a3"]
+[ext_resource type="Resource" uid="uid://ba5jrspjog6gs" path="res://entities/boss/action/swipe/boss_action_swipe.tres" id="8_q2xrh"]
+[ext_resource type="Resource" uid="uid://ckvatt7s0bhyp" path="res://entities/boss/action/roar/boss_action_roar.tres" id="9_bpbjr"]
+[ext_resource type="Resource" uid="uid://ddhkk175dkckf" path="res://entities/boss/combo/combo_1.tres" id="12_q2elv"]
+[ext_resource type="Resource" uid="uid://by12hxe7vrgxt" path="res://entities/boss/combo/combo_2.tres" id="12_xy040"]
+
+[node name="ActionComboScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ktc6r")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_4r2sl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ActionSelect" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/ActionSelect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="HBoxContainer/ActionSelect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActionDetail" type="PanelContainer" parent="HBoxContainer/ActionSelect/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -391.0
+offset_top = -122.0
+offset_right = -78.0
+offset_bottom = 191.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("3_5dxiw")
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+expand_mode = 5
+stretch_mode = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Buy"
+
+[node name="Control2" type="Control" parent="HBoxContainer/ActionSelect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" type="HBoxContainer" parent="HBoxContainer/ActionSelect/VBoxContainer/Control2"]
+layout_mode = 0
+offset_left = 187.0
+offset_top = 44.0
+offset_right = 456.0
+offset_bottom = 84.0
+
+[node name="ActionIcon" parent="HBoxContainer/ActionSelect/VBoxContainer/Control2/Control" instance=ExtResource("3_2ya5y")]
+layout_mode = 2
+action = ExtResource("4_61oof")
+
+[node name="ActionIcon2" parent="HBoxContainer/ActionSelect/VBoxContainer/Control2/Control" instance=ExtResource("3_2ya5y")]
+layout_mode = 2
+action = ExtResource("5_3sk2v")
+
+[node name="ActionIcon3" parent="HBoxContainer/ActionSelect/VBoxContainer/Control2/Control" instance=ExtResource("3_2ya5y")]
+layout_mode = 2
+action = ExtResource("6_1n712")
+
+[node name="Control2" type="HBoxContainer" parent="HBoxContainer/ActionSelect/VBoxContainer/Control2"]
+layout_mode = 0
+offset_left = 129.0
+offset_top = 126.0
+offset_right = 398.0
+offset_bottom = 166.0
+
+[node name="ActionIcon" parent="HBoxContainer/ActionSelect/VBoxContainer/Control2/Control2" instance=ExtResource("3_2ya5y")]
+layout_mode = 2
+action = ExtResource("7_m17a3")
+
+[node name="ActionIcon2" parent="HBoxContainer/ActionSelect/VBoxContainer/Control2/Control2" instance=ExtResource("3_2ya5y")]
+layout_mode = 2
+action = ExtResource("8_q2xrh")
+
+[node name="ActionIcon3" parent="HBoxContainer/ActionSelect/VBoxContainer/Control2/Control2" instance=ExtResource("3_2ya5y")]
+layout_mode = 2
+action = ExtResource("9_bpbjr")
+
+[node name="ComboSelect" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="VBoxContainer" parent="HBoxContainer/ComboSelect"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 88.0
+offset_top = -96.0
+offset_right = -114.0
+offset_bottom = 103.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/ComboSelect/Control"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/ComboSelect/Control/VBoxContainer"]
+layout_mode = 2
+text = "Combo 1"
+
+[node name="Control" type="PanelContainer" parent="HBoxContainer/ComboSelect/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="HBoxContainer/ComboSelect/Control/VBoxContainer/Control"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ComboSelect/Control/VBoxContainer/Control/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 4.0
+offset_right = -19.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ComboActionSlot" parent="HBoxContainer/ComboSelect/Control/VBoxContainer/Control/Control/HBoxContainer" instance=ExtResource("3_jxg7e")]
+layout_mode = 2
+combo = ExtResource("12_q2elv")
+
+[node name="ComboActionSlot2" parent="HBoxContainer/ComboSelect/Control/VBoxContainer/Control/Control/HBoxContainer" instance=ExtResource("3_jxg7e")]
+layout_mode = 2
+combo = ExtResource("12_q2elv")
+slot = 1
+
+[node name="ComboActionSlot3" parent="HBoxContainer/ComboSelect/Control/VBoxContainer/Control/Control/HBoxContainer" instance=ExtResource("3_jxg7e")]
+layout_mode = 2
+combo = ExtResource("12_q2elv")
+slot = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/ComboSelect/Control"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2"]
+layout_mode = 2
+text = "Combo 2"
+
+[node name="Control" type="PanelContainer" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2/Control"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2/Control/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 4.0
+offset_right = -19.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ComboActionSlot" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2/Control/Control/HBoxContainer" instance=ExtResource("3_jxg7e")]
+layout_mode = 2
+combo = ExtResource("12_xy040")
+
+[node name="ComboActionSlot2" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2/Control/Control/HBoxContainer" instance=ExtResource("3_jxg7e")]
+layout_mode = 2
+combo = ExtResource("12_xy040")
+slot = 1
+
+[node name="ComboActionSlot3" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2/Control/Control/HBoxContainer" instance=ExtResource("3_jxg7e")]
+layout_mode = 2
+combo = ExtResource("12_xy040")
+slot = 2
+
+[connection signal="gui_input" from="HBoxContainer/ActionSelect/VBoxContainer/Control2/Control/ActionIcon" to="HBoxContainer/ActionSelect/VBoxContainer/Control2/Control/ActionIcon" method="_on_gui_input"]

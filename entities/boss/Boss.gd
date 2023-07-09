@@ -34,6 +34,7 @@ func activate_combo(index: int) -> void:
 	add_child(lifecycle)
 	
 	started_combo.emit(lifecycle)
+	$BossStateMachine.transition_to("Attacking")
 	pass
 
 func take_damage(damage: int):
