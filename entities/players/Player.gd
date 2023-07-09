@@ -58,14 +58,38 @@ func apply_slow(time=1):
 		slow_timer.start(time)
 	update_status_sprite()
 
+# knockback sends them flying
+var _flying = false
+var _gravity = -32
+var _velocity_override = Vector2.ZERO
+var _scale_override = 1
+var _time_per_pixel = 0.008
+func apply_knockback(knock_back, direction: Vector2):
+	_flying = true
+	_velocity_override = direction.normalized() / _time_per_pixel
+	
+	var time = knock_back * _time_per_pixel
+	print(time)
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "scale", Vector2(1.5,1.5), time / 3).from_current()
+	tween.tween_property(self, "scale", Vector2(1,1), 2*time / 3).set_delay( time/3)
+	tween.tween_callback(func(): _flying = false)
+	
+	if randi() % 4 == 0:
+		speak("WHOAA!!!")
+	pass
+
 func move(loc, delta):
-	if not stunned:
+	if not stunned and not _flying:
 		var loc_diff = loc - global_position
 		var vel_vec = loc_diff if loc_diff.length() < 1 else loc_diff.normalized()
 		if slowed:
 			vel_vec *= slow_factor
 		velocity = speed * vel_vec
 		move_and_slide()
+	else:
+		if _flying:
+			move_and_collide(_velocity_override * delta)
 	
 func speak(text):
 	$PlayerGUI.display_speech(text)
@@ -82,6 +106,9 @@ func do_action(action: Node2D, target):
 func die():
 	pass
 
+func _input(event):
+	if event.is_action_pressed("debug_key"):
+		apply_knockback(96, Vector2.RIGHT)
 
 func _on_stun_timer_timeout():
 	stunned = false

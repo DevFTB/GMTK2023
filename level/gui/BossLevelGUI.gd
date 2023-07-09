@@ -11,7 +11,7 @@ func _ready():
 
 func update_gui():
 	print("updating")
-	var bs =owner.boss_stats
+	var bs = owner.boss_stats
 	health_label.text = "Health: %s" % str(bs.get_health())
 	upgrade_button.text = "Level up for %s Gold" % str(bs.get_level_cost())
 	upgrade_button.disabled = not bs.can_spend_gold(bs.get_level_cost())
