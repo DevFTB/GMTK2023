@@ -20,4 +20,4 @@ starting_animation = ""
 sustain_animation = ""
 hit_animation = ""
 gold_cost = 1
-is_locked = true
+is_locked = false
