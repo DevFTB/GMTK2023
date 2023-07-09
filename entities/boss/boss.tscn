@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c7q25yyup7fu8"]
+[gd_scene load_steps=12 format=3 uid="uid://c7q25yyup7fu8"]
 
 [ext_resource type="Script" path="res://entities/boss/Boss.gd" id="1_ag2a5"]
 [ext_resource type="SpriteFrames" uid="uid://75jl0scp8une" path="res://entities/boss/boss_sprite_frames.tres" id="1_mm22x"]
@@ -9,14 +9,17 @@
 [ext_resource type="Script" path="res://entities/boss/Aiming.gd" id="7_bf5v3"]
 [ext_resource type="Script" path="res://entities/boss/state/Attacking.gd" id="7_pkteh"]
 [ext_resource type="Script" path="res://entities/boss/state/Collapsed.gd" id="8_mgixy"]
+[ext_resource type="Script" path="res://entities/boss/BossCamera.gd" id="10_mwoo8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pc1ul"]
 radius = 55.0
 height = 110.0
 
 [node name="Boss" type="CharacterBody2D" groups=["boss"]]
+y_sort_enabled = true
 position = Vector2(320, 223)
 script = ExtResource("1_ag2a5")
+movement_speed = 70
 combos = Array[Resource("res://entities/boss/combo/Combo.gd")]([ExtResource("2_vvgcd"), ExtResource("3_3n8fb")])
 
 [node name="Aimer" type="Node2D" parent="."]
@@ -33,6 +36,9 @@ shape = SubResource("CapsuleShape2D_pc1ul")
 texture_filter = 1
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("1_mm22x")
+animation = &"charge_hit"
+frame = 4
+frame_progress = 1.0
 
 [node name="BossStateMachine" type="Node" parent="."]
 script = ExtResource("5_6cn3x")
@@ -56,5 +62,7 @@ one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
+script = ExtResource("10_mwoo8")
+max_shake_power = 8
 
 [connection signal="timeout" from="BossStateMachine/Collapsed/CollapseTimer" to="BossStateMachine/Collapsed" method="_on_timer_timeout"]

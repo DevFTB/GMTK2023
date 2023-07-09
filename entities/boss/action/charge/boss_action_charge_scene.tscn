@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cuuf18vvrljr5"]
+[gd_scene load_steps=6 format=3 uid="uid://cuuf18vvrljr5"]
 
 [ext_resource type="Script" path="res://entities/boss/action/BossActionInstance.gd" id="1_vjwod"]
 [ext_resource type="Script" path="res://entities/boss/action/swipe/DamageComponent.gd" id="2_vnpdx"]
@@ -6,6 +6,14 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ye3yq"]
 radius = 47.0
 height = 174.0
+
+[sub_resource type="Animation" id="Animation_s6mt6"]
+resource_name = "hit"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ltvjg"]
+_data = {
+"hit": SubResource("Animation_s6mt6")
+}
 
 [node name="BossActionChargeBash" type="Node2D"]
 script = ExtResource("1_vjwod")
@@ -20,5 +28,10 @@ script = ExtResource("2_vnpdx")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitboxes/Hitbox"]
 position = Vector2(45, -1)
 shape = SubResource("CapsuleShape2D_ye3yq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ltvjg")
+}
 
 [connection signal="body_entered" from="Hitboxes/Hitbox" to="Hitboxes/Hitbox" method="_on_body_entered"]

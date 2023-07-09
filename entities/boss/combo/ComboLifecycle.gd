@@ -90,14 +90,19 @@ class HoldActionLifecycle:
 	func rhythm_hit(strength: float, pressed: bool = true):
 		print(action.action_name, " recieved ", "press" if  pressed else "release", " with stregnth ", strength)
 		if not success_hit:
-			if is_equal_approx(0, strength):
-				failed.emit()
-			elif pressed and not has_started:
+			
+			if pressed and not has_started:
+				if is_equal_approx(0, strength):
+					failed.emit()
+				else:
 					press_strength = strength
 					has_started = true
 					started.emit()
 					
-			elif not pressed and not success_hit:
+			elif not pressed and not success_hit and has_started:
+				if is_equal_approx(0, strength):
+					failed.emit()
+				else:
 					execute(press_strength * strength)
 					success_hit = true
 					hit.emit(press_strength * strength)
@@ -145,14 +150,16 @@ func _ready():
 	
 	
 	var offset = beat_manager.beat_number + (1 if beat_manager.get_beat_progress() < 0.5 else 2)
+	if combo.actions[0].is_hold_action:
+		offset += 1
 	
 	for slot in range(combo.amount_of_slots):
 		var action = combo.actions[slot]
 		var lc
 		if action.is_hold_action:
-			lc = HoldActionLifecycle.new(self, action, offset)
+			lc = HoldActionLifecycle.new(get_parent(), action, offset)
 		else:
-			lc = ActionLifecycle.new(self, action, offset)
+			lc = ActionLifecycle.new(get_parent(), action, offset)
 			
 		action_queue.append(lc)
 		offset = lc.end_beat

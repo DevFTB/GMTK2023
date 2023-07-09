@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://74nnccfg2ajn"]
+[gd_scene load_steps=10 format=3 uid="uid://74nnccfg2ajn"]
 
 [ext_resource type="Script" path="res://entities/boss/action/BossActionInstance.gd" id="1_na6du"]
 [ext_resource type="Script" path="res://entities/boss/action/swipe/DamageComponent.gd" id="2_fmj4d"]
@@ -6,9 +6,75 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_1raey"]
 radius = 205.139
 
+[sub_resource type="Animation" id="Animation_imdl6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node/GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_fmpkv"]
+resource_name = "hit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node/GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_van4r"]
+_data = {
+"RESET": SubResource("Animation_imdl6"),
+"hit": SubResource("Animation_fmpkv")
+}
+
+[sub_resource type="Curve" id="Curve_qxk8y"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.541475, 0.294737), 0.0, 0.0, 0, 0, Vector2(1, 0.147368), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_5gghs"]
+curve = SubResource("Curve_qxk8y")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_facef"]
+emission_shape = 2
+emission_sphere_radius = 31.65
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 80.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 169.02
+initial_velocity_max = 323.94
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+linear_accel_min = -24.41
+linear_accel_max = -8.45
+scale_min = 0.0
+scale_max = 24.08
+scale_curve = SubResource("CurveTexture_5gghs")
+color = Color(0.933333, 0.466667, 0.462745, 0.286275)
+
 [node name="BossActionRoar" type="Node2D"]
 script = ExtResource("1_na6du")
 stun_duration = 2.0
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+remote_path = NodePath("../Node/GPUParticles2D")
+update_rotation = false
+update_scale = false
 
 [node name="Hitboxes" type="Node2D" parent="."]
 
@@ -17,5 +83,17 @@ script = ExtResource("2_fmj4d")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitboxes/Hitbox"]
 shape = SubResource("CircleShape2D_1raey")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_van4r")
+}
+
+[node name="Node" type="Node" parent="."]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Node"]
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_facef")
 
 [connection signal="body_entered" from="Hitboxes/Hitbox" to="Hitboxes/Hitbox" method="_on_body_entered"]

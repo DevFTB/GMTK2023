@@ -23,6 +23,9 @@ func play_started_animation(action :BossAction):
 
 func play_hit_animation(action : BossAction):
 	animator.play(action.hit_animation)
+	
+	if action.is_hold_action:
+		boss.get_node("Camera2D").do_large_shake()
 	pass
 
 

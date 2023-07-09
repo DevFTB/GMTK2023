@@ -9,3 +9,6 @@ func _on_body_entered(body: Node2D):
 		body.take_damage(damage)
 		damaged.emit(body)
 	pass # Replace with function body.
+
+func disable():
+	$CollisionShape2D.set_deferred("disabled", true)
