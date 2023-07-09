@@ -2,6 +2,10 @@ extends Control
 
 @export var boss_stats : BossStats
 
+func _ready():
+	var start_button = get_node("HBoxContainer/VBoxContainer/Control/HBoxContainer/Control2/MarginContainer/StartButton")
+	start_button.button_down.connect(get_parent().get_parent()._on_combo_screen_start_button_pressed)
+
 func _on_action_detail_bought(action: BossAction):
 	boss_stats.spend_gold(action.gold_cost)
 	action.is_locked = false

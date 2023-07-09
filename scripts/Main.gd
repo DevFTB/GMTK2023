@@ -68,3 +68,7 @@ func _on_boss_boss_died():
 
 func _on_player_controller_all_players_dead():
 	level_over("Boss")
+
+func _on_combo_screen_start_button_pressed():
+	exit_shop()
+	enter_level(0)
