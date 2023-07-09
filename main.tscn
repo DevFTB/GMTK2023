@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=29 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cphxorrjm5k7a" path="res://entities/players/fighter/fighter.tscn" id="12_kagx0"]
 [ext_resource type="Script" path="res://scripts/TimeGradientColourRect.gd" id="12_kp5ht"]
 [ext_resource type="Script" path="res://level/beat/WarnerController.gd" id="12_xjixf"]
-[ext_resource type="PackedScene" path="res://level/beat/warner_scene.tscn" id="13_prhtm"]
+[ext_resource type="PackedScene" uid="uid://b8im58bmxnhcp" path="res://level/beat/warner_scene.tscn" id="13_prhtm"]
 [ext_resource type="PackedScene" uid="uid://cva63yioyjyr3" path="res://entities/players/tank/tank.tscn" id="13_wiqs4"]
 [ext_resource type="Script" path="res://level/beat/HitLabel.gd" id="14_mp6y7"]
 [ext_resource type="LabelSettings" uid="uid://vth2gq1k8myn" path="res://level/gui/boss/adithaslabelsettings.tres" id="16_qa6p5"]

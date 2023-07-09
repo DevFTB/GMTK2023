@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BossAction" load_steps=5 format=3 uid="uid://c61fkl1ud8j26"]
 
-[ext_resource type="PackedScene" path="res://entities/boss/action/dash/boss_action_dash_scene.tscn" id="1_ih847"]
+[ext_resource type="PackedScene" uid="uid://cet6xiw7xsjp3" path="res://entities/boss/action/dash/boss_action_dash_scene.tscn" id="1_ih847"]
 [ext_resource type="Texture2D" uid="uid://cp7mgtw21cnum" path="res://entities/boss/action/action_icons.png" id="1_kkc1t"]
 [ext_resource type="Script" path="res://entities/boss/action/BossAction.gd" id="2_l5ti2"]
 
