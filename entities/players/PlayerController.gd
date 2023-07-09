@@ -7,6 +7,11 @@ var phase
 @export var get_behind_me_phase_min_interval = 30
 @export var heal_phase_length = 10
 @export var get_behind_me_phase_length = 10
+@export var player_num_level_multipler = 1
+#@export var levels_per_statup = 1
+
+@export var class_scenes: Dictionary
+@export var class_stats: Dictionary
 
 var normal_phase_speeches = [
 	"Back to your positions",
@@ -122,7 +127,7 @@ func set_phase(inp_phase):
 			phase_timer = heal_phase_length
 			player_loc_ordering = get_players()
 			# TODO: set heal location better lol
-			group_loc = Vector2(rng.randf_range(100, 600), rng.randf_range(100, 600))
+			group_loc = get_random_spot_on_world()
 		"Get behind me!":
 			get_behind_me_phase_allowed_timer = get_behind_me_phase_min_interval
 			phase_timer = get_behind_me_phase_length
@@ -246,8 +251,56 @@ func clear_players():
 		player.queue_free()
 
 
-func spawn_players(n):
-	pass
+func spawn_players(level):
+	var classes = class_scenes.keys()
+	var num_players = classes.size() + player_num_level_multipler * level
+	var randomly_allocated_players = num_players - classes.size()
+	var class_spawns = {}
+	for c in classes:
+		class_spawns[c] = 1
+		
+	for i in range(randomly_allocated_players):
+		class_spawns[classes.pick_random()] += 1
+	
+	for c in classes:
+		for i in range(class_spawns[c]):
+			spawn_player(c, level)
+
+func spawn_player(player_class, level):
+	var player_scene = class_scenes[player_class]
+	var new_player = player_scene.instantiate()
+	set_player_attrs(new_player, level)
+	add_child(new_player)
+	
+	new_player.global_position = get_random_spot_on_world()
+	
+
+func set_player_attrs(player, level):
+	# for level 0 we want stats to be base
+	var player_class = player.player_class
+	var stats = class_stats[player_class]
+	
+	player.max_health = int(stats.base_health + level * stats.health_scaling)
+	player.speed = int(stats.base_speed + level * stats.speed_scaling)
+	var action
+	match player_class:
+		"Fighter", "Tank":
+			action = player.get_node("Actions/MeleeAttack")
+			action.damage = int(stats.base_ability_power + level * stats.ability_power_scaling)
+			action.cooldown = stats.base_ability_cooldown
+		"Archer":
+			action = player.get_node("Actions/RangedAttack")
+			action.damage = int(stats.base_ability_power + level * stats.ability_power_scaling)
+			action.cooldown = stats.base_ability_cooldown
+		"Healer":
+			action = player.get_node("Actions/Heal")
+			action.heal = int(stats.base_ability_power + level * stats.ability_power_scaling)
+			action.cooldown = stats.base_ability_cooldown
+	
+	
+func get_random_spot_on_world():
+	return Vector2(rng.randf_range(100, 600), rng.randf_range(100, 600))
+	
 
 func reset(n):
 	clear_players()
