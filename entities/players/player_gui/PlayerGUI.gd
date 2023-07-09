@@ -13,6 +13,15 @@ func _process(delta):
 func health_changed(new_health, difference):
 	var max_health = get_parent().max_health
 	$HealthBarHolder.get_node("HealthBar").value = round((float(new_health)/max_health) * 100)
+	# grr this is kinda bad but eh
+	if difference > 0:
+		$DamageNumber.text = ""
+		$HealNumber.text = str(abs(difference))
+	else:
+		$DamageNumber.text = str(abs(difference))
+		$HealNumber.text = ""
+	var damage_number_timer = $DamageNumberTimer
+	damage_number_timer.start(0.5)
 	
 func display_speech(text, time=2):
 	$SpeechBubble.visible = true
@@ -23,3 +32,8 @@ func display_speech(text, time=2):
 
 func _on_timer_timeout():
 	$SpeechBubble.visible = false
+
+
+func _on_damage_number_timer_timeout():
+	$DamageNumber.text = ""
+	$HealNumber.text = ""
