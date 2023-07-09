@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PlayerStats" load_steps=2 format=3 uid="uid://c0vih5876diqa"]
+
+[ext_resource type="Script" path="res://entities/players/PlayerStats.gd" id="1_tayr7"]
+
+[resource]
+script = ExtResource("1_tayr7")
+base_health = 10
+base_speed = 60
+base_ability_power = 1
+base_ability_cooldown = 3
+health_scaling = 2
+speed_scaling = 1
+ability_power_scaling = 2
+ability_cooldown_scaling = 1

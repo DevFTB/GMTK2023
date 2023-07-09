@@ -34,6 +34,8 @@ func _ready():
 	boss_name = names[i_name]
 	boss_name_changed.emit(boss_name)
 	boss_health_changed.emit(health, max_health, 0)
+	
+	boss_stats.level_changed.connect(evolve_name)
 
 func _process(delta):
 	velocity = movement_dir * movement_speed
