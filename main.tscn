@@ -1,11 +1,11 @@
-[gd_scene load_steps=39 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=40 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
 [ext_resource type="PackedScene" uid="uid://c7q25yyup7fu8" path="res://entities/boss/boss.tscn" id="3_jivh4"]
+[ext_resource type="AudioStream" uid="uid://ow6nwgw4yaim" path="res://level/song_130.wav" id="3_nancj"]
 [ext_resource type="Script" path="res://level/BeatManager.gd" id="4_w0ul8"]
 [ext_resource type="Script" path="res://level/beat/BeatGUI.gd" id="4_xxwnv"]
-[ext_resource type="AudioStream" uid="uid://3yh8shsiwy0q" path="res://level/Raving Energy.mp3" id="5_8wnvk"]
 [ext_resource type="Texture2D" uid="uid://bj2c08let7yd5" path="res://level/beat/beat_ball.png" id="5_svrfq"]
 [ext_resource type="Resource" uid="uid://bp42206cq1np4" path="res://entities/boss/boss_stats.tres" id="6_yn8d0"]
 [ext_resource type="Script" path="res://entities/players/PlayerController.gd" id="9_6id7j"]
@@ -16,7 +16,7 @@
 [ext_resource type="Script" path="res://scripts/TimeGradientColourRect.gd" id="12_kp5ht"]
 [ext_resource type="Script" path="res://level/beat/WarnerController.gd" id="12_xjixf"]
 [ext_resource type="Resource" uid="uid://dvb2c750qbiv1" path="res://entities/players/healer/healer_stats.tres" id="13_e0yce"]
-[ext_resource type="PackedScene" path="res://level/beat/warner_scene.tscn" id="13_prhtm"]
+[ext_resource type="PackedScene" uid="uid://b8im58bmxnhcp" path="res://level/beat/warner_scene.tscn" id="13_prhtm"]
 [ext_resource type="PackedScene" uid="uid://cva63yioyjyr3" path="res://entities/players/tank/tank.tscn" id="13_wiqs4"]
 [ext_resource type="Resource" uid="uid://maocwxgwcrnt" path="res://entities/players/archer/archer_stats.tres" id="14_3ihno"]
 [ext_resource type="Script" path="res://level/beat/HitLabel.gd" id="14_mp6y7"]
@@ -30,6 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://dbmmaoubp84nk" path="res://level/gui/combo_screen.tscn" id="22_y1okt"]
 [ext_resource type="Resource" uid="uid://ddhkk175dkckf" path="res://entities/boss/combo/combo_1.tres" id="23_6xrl7"]
 [ext_resource type="Resource" uid="uid://by12hxe7vrgxt" path="res://entities/boss/combo/combo_2.tres" id="24_hwk8y"]
+[ext_resource type="AudioStream" uid="uid://snov2juva413" path="res://level/idle.wav" id="31_q1iwg"]
 
 [sub_resource type="Gradient" id="Gradient_x35c2"]
 colors = PackedColorArray(0.961374, 0.526552, 0.508241, 0, 0.253906, 0.03125, 0.363281, 1)
@@ -206,10 +207,10 @@ script = ExtResource("1_y2mx8")
 
 [node name="BeatManager" type="Node" parent="." groups=["beat_manager"]]
 script = ExtResource("4_w0ul8")
-bpm = 122
+bpm = 130
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="BeatManager"]
-stream = ExtResource("5_8wnvk")
+stream = ExtResource("3_nancj")
 
 [node name="World" parent="." groups=["world"] instance=ExtResource("2_p3sjh")]
 z_index = -2
@@ -567,7 +568,6 @@ combo = ExtResource("24_hwk8y")
 slot = 2
 
 [node name="ActionComboScreenCanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="ActionComboScreen" parent="ActionComboScreenCanvasLayer" instance=ExtResource("22_y1okt")]
 
@@ -599,6 +599,9 @@ label_settings = SubResource("LabelSettings_537yj")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="IdleMusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("31_q1iwg")
 
 [connection signal="boss_died" from="Boss" to="." method="_on_boss_boss_died"]
 [connection signal="boss_health_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_health_changed"]

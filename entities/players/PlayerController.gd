@@ -199,7 +199,7 @@ func group_move(target_loc, delta):
 	for i in range(player_loc_ordering.size()):
 		var player = player_loc_ordering[i]
 		# if players die, ordering will remain the same from last set, but with missing person in circle
-		if player:
+		if player != null:
 			player.move(player_target_locs[i], delta)
 			
 # gets location dist distance from to, on the line from from to to

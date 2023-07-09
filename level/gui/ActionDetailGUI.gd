@@ -60,3 +60,7 @@ func _on_upgrade_button_pressed():
 	upgraded.emit(current_action)
 	display_details(current_action)
 	pass # Replace with function body.
+
+
+func _on_bin_binned(data):
+	pass # Replace with function body.

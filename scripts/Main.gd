@@ -23,6 +23,7 @@ func enter_level(n):
 	$Boss.visible = true
 	
 	$PlayerController.reset(n)
+	$BeatManager.start()
 
 func setup_level(n):
 	pass
@@ -50,11 +51,15 @@ func level_over(winner):
 		enter_shop()
 
 func enter_shop():
+	$BeatManager.stop()
 	status = "shop"
 	$ActionComboScreenCanvasLayer.visible = true
+	
+	$IdleMusicPlayer.play()
 
 func exit_shop():
 	$ActionComboScreenCanvasLayer.visible = false
+	$IdleMusicPlayer.stop()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
