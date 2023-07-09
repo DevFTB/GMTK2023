@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bt6wo80lia41b" path="res://level/gui/combo/action_icon.tscn" id="3_2ya5y"]
 [ext_resource type="Script" path="res://level/ActionDetailGUI.gd" id="3_5dxiw"]
 [ext_resource type="PackedScene" uid="uid://bwmaqrqk5phnk" path="res://level/gui/combo/combo_action_slot.tscn" id="3_jxg7e"]
-[ext_resource type="Resource" uid="uid://c8dyby4o78s43" path="res://entities/boss/action/charge/boss_action_charge_bash.tres" id="4_61oof"]
+[ext_resource type="Resource" uid="uid://c8dyby4o78s43" path="res://entities/boss/action/boss_action_charge_bash.tres" id="4_61oof"]
 [ext_resource type="Resource" uid="uid://da1nvew4jbd0v" path="res://entities/boss/action/combustion/boss_action_combustion.tres" id="5_3sk2v"]
 [ext_resource type="Resource" uid="uid://b0cxrsu03dl23" path="res://entities/boss/action/slam/boss_action_slam.tres" id="6_1n712"]
 [ext_resource type="Resource" uid="uid://c61fkl1ud8j26" path="res://entities/boss/action/dash/boss_action_dash.tres" id="7_m17a3"]

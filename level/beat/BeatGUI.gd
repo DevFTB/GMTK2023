@@ -6,8 +6,7 @@ const BossState = preload("res://entities/boss/BossState.gd")
 @export var beat_manager : BeatManager
 
 
-@onready var lbl = $BarArea/LeftBeatLabel
-@onready var rbl = $BarArea/RightBeatLabel
+
 @onready var fg_color_rect = $BarArea/Bar/ForegroundColourRect
 @onready var ball = $BarArea/Bar/Ball
 @onready var left_warner = $LeftWarner

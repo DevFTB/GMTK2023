@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://jc15k6rexkl2"]
+
+[ext_resource type="Script" path="res://entities/players/Player.gd" id="1_l1dva"]
+[ext_resource type="Texture2D" uid="uid://csxynyfjfd4jh" path="res://entities/players/fighter/fighter.png" id="2_2lh5h"]
+[ext_resource type="PackedScene" uid="uid://kbthggvh3r0n" path="res://entities/players/player_gui/player_gui.tscn" id="4_svkkc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lpubb"]
+radius = 5.0
+height = 14.0
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_l1dva")
+max_health = null
+speed = null
+player_class = "Fighter"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_lpubb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_2lh5h")
+
+[node name="Actions" type="Node2D" parent="."]
+
+[node name="PlayerGUI" parent="." instance=ExtResource("4_svkkc")]
