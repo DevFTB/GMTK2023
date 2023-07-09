@@ -29,6 +29,7 @@ var can_combo = [true, true]
 
 func _ready():
 	names = generate_boss_names(50)
+	names = ["boss"]
 	boss_name = names[i_name]
 	boss_name_changed.emit(boss_name)
 	boss_health_changed.emit(health, boss_stats.get_health(), 0)
