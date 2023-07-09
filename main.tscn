@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=28 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
@@ -179,6 +179,11 @@ _data = {
 "RESET": SubResource("Animation_rwrgk"),
 "fail_shake": SubResource("Animation_fmj4h")
 }
+
+[sub_resource type="LabelSettings" id="LabelSettings_l70j4"]
+line_spacing = 0.0
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
 
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
@@ -426,6 +431,22 @@ size_flags_horizontal = 3
 value = 100.0
 texture_under = ExtResource("18_4uspl")
 texture_progress = ExtResource("19_opri7")
+
+[node name="BossHealthLabel" type="Label" parent="CanvasLayer/GUI/MarginContainer/BossUI/BossHealthBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0/0"
+label_settings = SubResource("LabelSettings_l70j4")
 
 [connection signal="boss_health_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_health_changed"]
 [connection signal="boss_name_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_name_changed"]

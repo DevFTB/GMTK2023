@@ -23,6 +23,7 @@ func _ready():
 	names = generate_boss_names(50)
 	boss_name = names[0]
 	boss_name_changed.emit(boss_name)
+	boss_health_changed.emit(health, max_health, 0)
 
 func _process(delta):
 	velocity = movement_dir * movement_speed

@@ -7,6 +7,7 @@ func _ready():
 
 func health_changed(new_health, max_health, difference):
 	$BossHealthBar.value = round((float(new_health)/max_health) * 100)
+	$BossHealthBar.get_node("BossHealthLabel").text = "%s/%s" % [new_health, max_health]
 	
 func name_changed(name):
 	$BossName.text = name
