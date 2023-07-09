@@ -1,21 +1,39 @@
-[gd_scene load_steps=4 format=3 uid="uid://byepyr00rxho8"]
+[gd_scene load_steps=7 format=3 uid="uid://byepyr00rxho8"]
 
 [ext_resource type="Texture2D" uid="uid://wrtmdetpj8vl" path="res://entities/players/actions/heal/heal_animation.png" id="1_si4wu"]
 [ext_resource type="Script" path="res://entities/players/actions/heal/heal_animation.gd" id="2_ok1dp"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_8alby"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_0utfs"]
+atlas = ExtResource("1_si4wu")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62mlq"]
+atlas = ExtResource("1_si4wu")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rm33j"]
+atlas = ExtResource("1_si4wu")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mndtp"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_si4wu")
+"texture": SubResource("AtlasTexture_0utfs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_62mlq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rm33j")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 6.0
 }]
 
 [node name="heal_animation" type="AnimatedSprite2D"]
-sprite_frames = SubResource("SpriteFrames_8alby")
+sprite_frames = SubResource("SpriteFrames_mndtp")
 script = ExtResource("2_ok1dp")
 
 [node name="Timer" type="Timer" parent="."]

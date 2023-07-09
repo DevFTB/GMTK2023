@@ -43,7 +43,7 @@ scale = Vector2(2, 2)
 
 [node name="StatusEffect" type="AnimatedSprite2D" parent="."]
 visible = false
-position = Vector2(0, -16)
+position = Vector2(0, -28)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_qf50w")
 
