@@ -8,8 +8,8 @@
 [resource]
 script = ExtResource("1_m0fxg")
 actions = {
-0: ExtResource("1_1aoci"),
-1: ExtResource("2_bj2hr"),
-2: ExtResource("3_b3js8")
+0: ExtResource("3_b3js8"),
+1: ExtResource("1_1aoci"),
+2: ExtResource("2_bj2hr")
 }
 amount_of_slots = 3

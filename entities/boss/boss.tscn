@@ -18,6 +18,8 @@ height = 110.0
 [node name="Boss" type="CharacterBody2D" groups=["boss"]]
 y_sort_enabled = true
 position = Vector2(320, 223)
+collision_layer = 2
+collision_mask = 15
 script = ExtResource("1_ag2a5")
 movement_speed = 70
 combos = Array[Resource("res://entities/boss/combo/Combo.gd")]([ExtResource("2_vvgcd"), ExtResource("3_3n8fb")])

@@ -38,12 +38,12 @@ func activate_combo() -> void:
 	var combo = combos[selected_combo]
 	
 	var lifecycle = ComboLifecycle.new()
-	lifecycle.rotation = attack_direction.angle()
+
 	lifecycle.combo = combo
 	
 	active_combo = lifecycle
 	
-	
+	lifecycle.rotation = attack_direction.angle()
 	add_child(lifecycle)
 	
 	started_combo.emit(lifecycle)
@@ -85,3 +85,34 @@ func generate_boss_names(n=50):
 # todo make sure this exports correctly!! otherwise just hardcode it in
 func read_file(path):
 	return FileAccess.open(path, FileAccess.READ).get_as_text()
+	
+
+func teleport(movement_vector: Vector2, duration = 0.3):
+	#var tween = get_tree().create_tween()
+	#tween.tween_property(self, "position", position + movement_vector, duration)
+	var collision = move_and_collide(movement_vector)
+	if collision:
+		var collider = collision.get_collider()
+		var space_state = get_world_2d().direct_space_state
+		
+		var query = PhysicsShapeQueryParameters2D.new()
+		query.collide_with_bodies = true
+		query.collision_mask = 0x1000b
+		
+		var circle =  CircleShape2D.new()
+		circle.radius = 192
+		query.shape =circle
+		query.transform.origin = collision.get_position()
+		
+		var hits = space_state.intersect_shape(query)
+		
+		for hit in hits:
+			
+			var hit_collider = hit.collider
+			
+			if hit_collider.is_in_group("player"):
+				print(hit_collider)
+				collider.apply_knockback(20*32, collision.get_travel().normalized())
+	
+#	if collider != null and collider.is_in_group("player"):
+#		collider.apply_knockback(20*32, collision.get_travel().normalized())

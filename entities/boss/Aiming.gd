@@ -16,6 +16,7 @@ func process_input(event: InputEvent):
 	elif event is InputEventMouseButton:
 		if event.is_action_pressed("rhythm_hit"):
 			boss.attack_direction = direction_vector
+			print(direction_vector)
 			boss.activate_combo()
 
 	pass

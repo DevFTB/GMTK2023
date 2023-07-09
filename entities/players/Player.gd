@@ -63,18 +63,29 @@ var _flying = false
 var _gravity = -32
 var _velocity_override = Vector2.ZERO
 var _scale_override = 1
-var _time_per_pixel = 0.008
+var _time_per_pixel = 0.002
+var _knockback_scale_factor = 0.1 / (3 * 32)
+var _deceleration_factor = 0.5
 func apply_knockback(knock_back, direction: Vector2):
 	_flying = true
 	_velocity_override = direction.normalized() / _time_per_pixel
 	
 	var time = knock_back * _time_per_pixel
-	var tween = get_tree().create_tween()
-	tween.tween_property(self, "scale", Vector2(1.5,1.5), time / 3).from_current()
-	tween.tween_property(self, "scale", Vector2(1,1), 2*time / 3).set_delay( time/3)
-	tween.tween_callback(func(): _flying = false)
 	
-	if randi() % 4 == 0:
+	# remove player mask
+	collision_mask = collision_mask & ~(1 << 3)
+	
+	var scale_factor = 1.5 + _knockback_scale_factor * knock_back
+	
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "scale", Vector2(scale_factor,scale_factor), time / 3).from_current()
+	tween.tween_property(self, "scale", Vector2(1,1), 2*time / 3).set_delay( time/3)
+	tween.tween_callback(func():
+		_flying = false;
+		collision_mask = collision_mask | (1 << 3)
+		)
+	
+	if randi() % 4 == 0 or knock_back > 128:
 		speak("WHOAA!!!")
 	pass
 
@@ -89,6 +100,7 @@ func move(loc, delta):
 	else:
 		if _flying:
 			move_and_collide(_velocity_override * delta)
+			_velocity_override -= _velocity_override * _deceleration_factor *delta
 	
 func speak(text):
 	$PlayerGUI.display_speech(text)

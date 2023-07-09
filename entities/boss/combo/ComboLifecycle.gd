@@ -57,13 +57,15 @@ class ActionLifecycle:
 			action_instance.strength = strength
 		
 			action_instance.position = position
-			action_instance.rotation = parent.rotation
+			action_instance.rotation = parent.attack_direction.angle()
 			action_instance.action = action
 		
 			parent.add_child(action_instance)
 			
 		else:
 			print("action ", action.action_name, " with strength ", strength)
+			
+		action.do_effect(parent, Vector2.from_angle(parent.attack_direction.angle()))
 		pass
 
 class HoldActionLifecycle:
@@ -148,7 +150,7 @@ var direction = Vector2.UP
 func _ready():
 	beat_manager.beat.connect(_on_beat)
 	
-	
+	print(rotation)
 	var offset = beat_manager.beat_number + (1 if beat_manager.get_beat_progress() < 0.5 else 2)
 	if combo.actions[0].is_hold_action:
 		offset += 1
@@ -158,6 +160,7 @@ func _ready():
 		var lc
 		if action.is_hold_action:
 			lc = HoldActionLifecycle.new(get_parent(), action, offset)
+			
 		else:
 			lc = ActionLifecycle.new(get_parent(), action, offset)
 			
