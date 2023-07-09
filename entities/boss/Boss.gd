@@ -169,3 +169,7 @@ func evolve_name():
 		boss_name_changed.emit(boss_name)
 		return true
 	return false
+
+func spawn_action(action_instance):
+	action_instance.position = global_position
+	$ActionInstances.add_child(action_instance)

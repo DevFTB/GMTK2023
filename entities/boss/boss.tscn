@@ -93,6 +93,8 @@ one_shot = true
 volume_db = 5.887
 script = ExtResource("12_np8om")
 
+[node name="ActionInstances" type="Node" parent="."]
+
 [connection signal="state_entered" from="BossStateMachine" to="BossAudioPlayer" method="_on_boss_state_machine_state_entered"]
 [connection signal="state_exited" from="BossStateMachine" to="BossAudioPlayer" method="_on_boss_state_machine_state_exited"]
 [connection signal="timeout" from="BossStateMachine/Collapsed/CollapseTimer" to="BossStateMachine/Collapsed" method="_on_timer_timeout"]

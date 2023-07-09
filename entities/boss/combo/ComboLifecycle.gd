@@ -51,16 +51,15 @@ class ActionLifecycle:
 					execute(strength)
 					hit.emit(strength)
 
-	func execute(strength: float, position: Vector2 = Vector2.ZERO):
+	func execute(strength: float):
 		if action.action_scene:
 			var action_instance = action.action_scene.instantiate()
 			action_instance.strength = strength
-		
-			action_instance.position = position
+	
 			action_instance.rotation = boss.attack_direction.angle()
 			action_instance.action = action
 		
-			boss.add_child(action_instance)
+			boss.spawn_action(action_instance)
 			
 		else:
 			print("action ", action.action_name, " with strength ", strength)

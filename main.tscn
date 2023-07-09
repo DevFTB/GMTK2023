@@ -1,6 +1,7 @@
-[gd_scene load_steps=40 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=41 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
+[ext_resource type="Script" path="res://Game.gd" id="2_d5dl5"]
 [ext_resource type="PackedScene" uid="uid://bjdxeturp0x3h" path="res://level/world.tscn" id="2_p3sjh"]
 [ext_resource type="PackedScene" uid="uid://c7q25yyup7fu8" path="res://entities/boss/boss.tscn" id="3_jivh4"]
 [ext_resource type="AudioStream" uid="uid://ow6nwgw4yaim" path="res://level/song_130.wav" id="3_nancj"]
@@ -205,21 +206,25 @@ outline_color = Color(0, 0, 0, 1)
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
 
-[node name="BeatManager" type="Node" parent="." groups=["beat_manager"]]
+[node name="Game" type="Node2D" parent="."]
+visible = false
+script = ExtResource("2_d5dl5")
+
+[node name="BeatManager" type="Node" parent="Game" groups=["beat_manager"]]
 script = ExtResource("4_w0ul8")
 bpm = 130
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="BeatManager"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Game/BeatManager"]
 stream = ExtResource("3_nancj")
 
-[node name="World" parent="." groups=["world"] instance=ExtResource("2_p3sjh")]
+[node name="World" parent="Game" groups=["world"] instance=ExtResource("2_p3sjh")]
 z_index = -2
 
-[node name="Boss" parent="." instance=ExtResource("3_jivh4")]
+[node name="Boss" parent="Game" instance=ExtResource("3_jivh4")]
 motion_mode = 1
 boss_stats = ExtResource("6_yn8d0")
 
-[node name="PlayerController" type="Node" parent="."]
+[node name="PlayerController" type="Node" parent="Game"]
 script = ExtResource("9_6id7j")
 class_scenes = {
 "Archer": ExtResource("11_l085o"),
@@ -234,25 +239,9 @@ class_stats = {
 "Tank": ExtResource("15_sk0mq")
 }
 
-[node name="Archer" parent="PlayerController" instance=ExtResource("11_l085o")]
-z_index = 0
-position = Vector2(545, 218)
+[node name="GameOverlay" type="CanvasLayer" parent="Game"]
 
-[node name="Fighter" parent="PlayerController" instance=ExtResource("12_kagx0")]
-z_index = 0
-position = Vector2(486, 313)
-
-[node name="Tank" parent="PlayerController" instance=ExtResource("13_wiqs4")]
-z_index = 0
-position = Vector2(429, 408)
-
-[node name="Healer" parent="PlayerController" instance=ExtResource("10_0bbld")]
-z_index = 0
-position = Vector2(601, 359)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="GUI" type="Control" parent="CanvasLayer"]
+[node name="GUI" type="Control" parent="Game/GameOverlay"]
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -261,7 +250,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BeatGUI" type="HBoxContainer" parent="CanvasLayer/GUI" node_paths=PackedStringArray("boss", "beat_manager")]
+[node name="BeatGUI" type="HBoxContainer" parent="Game/GameOverlay/GUI" node_paths=PackedStringArray("boss", "beat_manager")]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -271,13 +260,13 @@ script = ExtResource("4_xxwnv")
 boss = NodePath("../../../Boss")
 beat_manager = NodePath("../../../BeatManager")
 
-[node name="LeftWarner" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
+[node name="LeftWarner" type="Control" parent="Game/GameOverlay/GUI/BeatGUI"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("12_xjixf")
 warner_scene = ExtResource("13_prhtm")
 
-[node name="ColorRect" type="TextureRect" parent="CanvasLayer/GUI/BeatGUI/LeftWarner"]
+[node name="ColorRect" type="TextureRect" parent="Game/GameOverlay/GUI/BeatGUI/LeftWarner"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 1
 anchors_preset = 14
@@ -290,7 +279,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_2vwv1")
 
-[node name="Spawn" type="Control" parent="CanvasLayer/GUI/BeatGUI/LeftWarner"]
+[node name="Spawn" type="Control" parent="Game/GameOverlay/GUI/BeatGUI/LeftWarner"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -298,12 +287,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BarArea" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
+[node name="BarArea" type="Control" parent="Game/GameOverlay/GUI/BeatGUI"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="Bar" type="Control" parent="CanvasLayer/GUI/BeatGUI/BarArea"]
+[node name="Bar" type="Control" parent="Game/GameOverlay/GUI/BeatGUI/BarArea"]
 z_index = 1
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 1
@@ -318,7 +307,7 @@ offset_bottom = 12.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BackgroundColourRect" type="ColorRect" parent="CanvasLayer/GUI/BeatGUI/BarArea/Bar"]
+[node name="BackgroundColourRect" type="ColorRect" parent="Game/GameOverlay/GUI/BeatGUI/BarArea/Bar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -327,7 +316,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.254902, 0.0313726, 0.364706, 1)
 
-[node name="ForegroundColourRect" type="ColorRect" parent="CanvasLayer/GUI/BeatGUI/BarArea/Bar"]
+[node name="ForegroundColourRect" type="ColorRect" parent="Game/GameOverlay/GUI/BeatGUI/BarArea/Bar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -343,7 +332,7 @@ script = ExtResource("12_kp5ht")
 color_gradient = SubResource("Gradient_6ieoh")
 gradient_cycle_time = 0.3
 
-[node name="Ball" type="Control" parent="CanvasLayer/GUI/BeatGUI/BarArea/Bar"]
+[node name="Ball" type="Control" parent="Game/GameOverlay/GUI/BeatGUI/BarArea/Bar"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -353,7 +342,7 @@ offset_right = 40.0
 offset_bottom = 20.0
 grow_vertical = 2
 
-[node name="ColorRect" type="TextureRect" parent="CanvasLayer/GUI/BeatGUI/BarArea/Bar/Ball"]
+[node name="ColorRect" type="TextureRect" parent="Game/GameOverlay/GUI/BeatGUI/BarArea/Bar/Ball"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -368,7 +357,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_svrfq")
 
-[node name="Control" type="Control" parent="CanvasLayer/GUI/BeatGUI/BarArea"]
+[node name="Control" type="Control" parent="Game/GameOverlay/GUI/BeatGUI/BarArea"]
 z_index = 2
 layout_mode = 1
 anchors_preset = 7
@@ -380,7 +369,7 @@ offset_top = -77.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="HitLabel" type="Label" parent="CanvasLayer/GUI/BeatGUI/BarArea/Control"]
+[node name="HitLabel" type="Label" parent="Game/GameOverlay/GUI/BeatGUI/BarArea/Control"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -398,14 +387,14 @@ script = ExtResource("14_mp6y7")
 success_colours = Array[Color]([Color(0.101961, 0.337255, 1, 1), Color(0.839216, 0.52549, 0.25098, 1), Color(0.737255, 0.164706, 0.368627, 1)])
 success_text = Array[String](["Nice", "Preposterous", "Maleficent"])
 
-[node name="RightWarner" type="Control" parent="CanvasLayer/GUI/BeatGUI"]
+[node name="RightWarner" type="Control" parent="Game/GameOverlay/GUI/BeatGUI"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("12_xjixf")
 from_left = false
 warner_scene = ExtResource("13_prhtm")
 
-[node name="ColorRect2" type="TextureRect" parent="CanvasLayer/GUI/BeatGUI/RightWarner"]
+[node name="ColorRect2" type="TextureRect" parent="Game/GameOverlay/GUI/BeatGUI/RightWarner"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 1
 anchors_preset = 4
@@ -418,7 +407,7 @@ grow_vertical = 2
 texture = SubResource("GradientTexture1D_2vwv1")
 flip_h = true
 
-[node name="Spawn" type="Control" parent="CanvasLayer/GUI/BeatGUI/RightWarner"]
+[node name="Spawn" type="Control" parent="Game/GameOverlay/GUI/BeatGUI/RightWarner"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -426,13 +415,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/GUI/BeatGUI"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Game/GameOverlay/GUI/BeatGUI"]
 reset_on_save = false
 libraries = {
 "": SubResource("AnimationLibrary_aabl5")
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/GUI"]
+[node name="MarginContainer" type="MarginContainer" parent="Game/GameOverlay/GUI"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -446,12 +435,12 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/margin_bottom = 20
 
-[node name="BossUI" type="VBoxContainer" parent="CanvasLayer/GUI/MarginContainer"]
+[node name="BossUI" type="VBoxContainer" parent="Game/GameOverlay/GUI/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 script = ExtResource("17_al4u4")
 
-[node name="BossName" type="Label" parent="CanvasLayer/GUI/MarginContainer/BossUI"]
+[node name="BossName" type="Label" parent="Game/GameOverlay/GUI/MarginContainer/BossUI"]
 layout_mode = 2
 text = "BSUIDFNOSNDCOINIOSDNIOFNIOSDNFIONSIODFFFSDFFECVSDCSDFEFSFSDCC"
 label_settings = ExtResource("16_qa6p5")
@@ -459,14 +448,14 @@ horizontal_alignment = 1
 autowrap_mode = 3
 max_lines_visible = 3
 
-[node name="BossHealthBar" type="TextureProgressBar" parent="CanvasLayer/GUI/MarginContainer/BossUI"]
+[node name="BossHealthBar" type="TextureProgressBar" parent="Game/GameOverlay/GUI/MarginContainer/BossUI"]
 layout_mode = 2
 size_flags_horizontal = 3
 value = 100.0
 texture_under = ExtResource("18_4uspl")
 texture_progress = ExtResource("19_opri7")
 
-[node name="BossHealthLabel" type="Label" parent="CanvasLayer/GUI/MarginContainer/BossUI/BossHealthBar"]
+[node name="BossHealthLabel" type="Label" parent="Game/GameOverlay/GUI/MarginContainer/BossUI/BossHealthBar"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -482,7 +471,7 @@ grow_vertical = 2
 text = "0/0"
 label_settings = SubResource("LabelSettings_l70j4")
 
-[node name="Combo1" type="VBoxContainer" parent="CanvasLayer/GUI"]
+[node name="Combo1" type="VBoxContainer" parent="Game/GameOverlay/GUI"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -494,30 +483,30 @@ offset_bottom = -19.0
 grow_vertical = 0
 script = ExtResource("22_issrv")
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/GUI/Combo1"]
+[node name="ProgressBar" type="ProgressBar" parent="Game/GameOverlay/GUI/Combo1"]
 layout_mode = 2
 max_value = 1.0
 value = 1.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GUI/Combo1"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Game/GameOverlay/GUI/Combo1"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ComboActionSlot" parent="CanvasLayer/GUI/Combo1/HBoxContainer" instance=ExtResource("22_p7whu")]
+[node name="ComboActionSlot" parent="Game/GameOverlay/GUI/Combo1/HBoxContainer" instance=ExtResource("22_p7whu")]
 layout_mode = 2
 combo = ExtResource("23_6xrl7")
 
-[node name="ComboActionSlot2" parent="CanvasLayer/GUI/Combo1/HBoxContainer" instance=ExtResource("22_p7whu")]
+[node name="ComboActionSlot2" parent="Game/GameOverlay/GUI/Combo1/HBoxContainer" instance=ExtResource("22_p7whu")]
 layout_mode = 2
 combo = ExtResource("23_6xrl7")
 slot = 1
 
-[node name="ComboActionSlot3" parent="CanvasLayer/GUI/Combo1/HBoxContainer" instance=ExtResource("22_p7whu")]
+[node name="ComboActionSlot3" parent="Game/GameOverlay/GUI/Combo1/HBoxContainer" instance=ExtResource("22_p7whu")]
 layout_mode = 2
 combo = ExtResource("23_6xrl7")
 slot = 2
 
-[node name="Combo2" type="Control" parent="CanvasLayer/GUI"]
+[node name="Combo2" type="Control" parent="Game/GameOverlay/GUI"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -533,7 +522,7 @@ grow_vertical = 0
 script = ExtResource("22_issrv")
 combo_index = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/GUI/Combo2"]
+[node name="ProgressBar" type="ProgressBar" parent="Game/GameOverlay/GUI/Combo2"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -545,7 +534,7 @@ grow_horizontal = 2
 max_value = 1.0
 value = 1.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GUI/Combo2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Game/GameOverlay/GUI/Combo2"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -553,16 +542,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ComboActionSlot" parent="CanvasLayer/GUI/Combo2/HBoxContainer" instance=ExtResource("22_p7whu")]
+[node name="ComboActionSlot" parent="Game/GameOverlay/GUI/Combo2/HBoxContainer" instance=ExtResource("22_p7whu")]
 layout_mode = 2
 combo = ExtResource("24_hwk8y")
 
-[node name="ComboActionSlot2" parent="CanvasLayer/GUI/Combo2/HBoxContainer" instance=ExtResource("22_p7whu")]
+[node name="ComboActionSlot2" parent="Game/GameOverlay/GUI/Combo2/HBoxContainer" instance=ExtResource("22_p7whu")]
 layout_mode = 2
 combo = ExtResource("24_hwk8y")
 slot = 1
 
-[node name="ComboActionSlot3" parent="CanvasLayer/GUI/Combo2/HBoxContainer" instance=ExtResource("22_p7whu")]
+[node name="ComboActionSlot3" parent="Game/GameOverlay/GUI/Combo2/HBoxContainer" instance=ExtResource("22_p7whu")]
 layout_mode = 2
 combo = ExtResource("24_hwk8y")
 slot = 2
@@ -613,7 +602,7 @@ stream = ExtResource("31_q1iwg")
 
 [node name="Node" type="Node" parent="."]
 
-[connection signal="boss_died" from="Boss" to="." method="_on_boss_boss_died"]
-[connection signal="boss_health_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_health_changed"]
-[connection signal="boss_name_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_name_changed"]
-[connection signal="all_players_dead" from="PlayerController" to="." method="_on_player_controller_all_players_dead"]
+[connection signal="boss_died" from="Game/Boss" to="." method="_on_boss_boss_died"]
+[connection signal="boss_health_changed" from="Game/Boss" to="Game/GameOverlay/GUI/MarginContainer/BossUI" method="_on_boss_boss_health_changed"]
+[connection signal="boss_name_changed" from="Game/Boss" to="Game/GameOverlay/GUI/MarginContainer/BossUI" method="_on_boss_boss_name_changed"]
+[connection signal="all_players_dead" from="Game/PlayerController" to="." method="_on_player_controller_all_players_dead"]
