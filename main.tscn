@@ -461,8 +461,10 @@ grow_vertical = 2
 text = "0/0"
 label_settings = SubResource("LabelSettings_l70j4")
 
-[node name="ActionComboScreen" parent="." instance=ExtResource("22_y1okt")]
+[node name="ActionComboScreenCanvasLayer" type="CanvasLayer" parent="."]
 visible = false
+
+[node name="ActionComboScreen" parent="ActionComboScreenCanvasLayer" instance=ExtResource("22_y1okt")]
 
 [node name="DeathScreen" type="CanvasLayer" parent="."]
 visible = false
