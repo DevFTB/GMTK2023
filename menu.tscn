@@ -1,10 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://bq1f61qv4j31k"]
+[gd_scene load_steps=16 format=3 uid="uid://bq1f61qv4j31k"]
 
 [ext_resource type="Texture2D" uid="uid://dyq235tghxi0j" path="res://level/gui/menu/main_menu.png" id="1_7ftw8"]
 [ext_resource type="Theme" uid="uid://pjssvnja6jwk" path="res://level/gui/theme.tres" id="1_biqm1"]
 [ext_resource type="Script" path="res://level/gui/menu/MainMenu.gd" id="2_ahq7p"]
 [ext_resource type="Texture2D" uid="uid://puhu7mmit7ce" path="res://level/gui/menu/main_menu_bg.png" id="4_lo56t"]
 [ext_resource type="Texture2D" uid="uid://c45ytlw6gere8" path="res://entities/boss/boss_spritesheet.png" id="5_eolr6"]
+[ext_resource type="Texture2D" uid="uid://gr6bopyw3q7l" path="res://level/gui/menu/press_img.png" id="6_uirok"]
+[ext_resource type="Texture2D" uid="uid://dxrwuwpx3sthu" path="res://level/gui/menu/hold_img.png" id="7_sufd2"]
+[ext_resource type="Texture2D" uid="uid://drqj8rjeijnux" path="res://level/gui/menu/release_img.png" id="8_spoq8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v7aqq"]
 atlas = ExtResource("5_eolr6")
@@ -144,26 +147,27 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Panel" type="Panel" parent="HowToPlay/Control/Control"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -203.5
-offset_top = -203.5
-offset_right = 203.5
-offset_bottom = 203.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="AnimatedSprite2D" parent="HowToPlay/Control/Control/Panel"]
-position = Vector2(200.5, 202.5)
+[node name="TextureRect" type="AnimatedSprite2D" parent="HowToPlay/Control/Control"]
+position = Vector2(295, 471)
 scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_t0vgk")
 autoplay = "default"
 frame_progress = 0.53841
+
+[node name="Sprite2D" type="Sprite2D" parent="HowToPlay/Control/Control"]
+position = Vector2(297, 118)
+scale = Vector2(0.483654, 0.483654)
+texture = ExtResource("6_uirok")
+
+[node name="Sprite2D2" type="Sprite2D" parent="HowToPlay/Control/Control"]
+position = Vector2(296, 186)
+scale = Vector2(0.540929, 0.540929)
+texture = ExtResource("7_sufd2")
+
+[node name="Sprite2D3" type="Sprite2D" parent="HowToPlay/Control/Control"]
+position = Vector2(295, 260)
+scale = Vector2(0.473022, 0.473022)
+texture = ExtResource("8_spoq8")
 
 [node name="Control2" type="Control" parent="HowToPlay/Control"]
 layout_mode = 2
@@ -187,6 +191,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+text = "Another group of puny human players has come to challenge you, but not to fear, you are Boss – the biggest and baddest of all Bosses. Your goal? To defeat as many of these weakling challengers as possible.
+
+Use WASD to move Boss around. Press Q or E, then left click in a direction to activate Combo 1 or Combo 2 respectively to damage the players. A combo is made up of up to three actions, and to do each action, you must left click or hold and release the left mouse button to the beat. The timings are shown on the rhythm bar at the top, and more accurate hits means more damage! If you fail a hit, you fail the rest of the combo and become exhausted for a period of time. This means you are a crap Beat Boss.
+
+Between rounds, you have the chance to edit your combos. Drag and drop actions from the left shelf into the combo boxes to edit them. You can also buy and upgrade new actions, or upgrade Boss to increase your health, using gold collected during rounds. Different sets of actions do different things and have different hitboxes, along with a different rhythm. In the action description, beats is the amount of beats to do the action, and cooldown is the amount of beats before the next action in the combo.
+
+Happy beat hunting!"
 
 [node name="BackButton" type="Button" parent="HowToPlay"]
 layout_mode = 0
