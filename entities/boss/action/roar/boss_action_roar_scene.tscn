@@ -70,7 +70,7 @@ color = Color(0.933333, 0.466667, 0.462745, 0.286275)
 
 [node name="BossActionRoar" type="Node2D"]
 script = ExtResource("1_na6du")
-stun_duration = 2.0
+stun_duration = 10.0
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 remote_path = NodePath("../Node/GPUParticles2D")

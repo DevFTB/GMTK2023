@@ -24,6 +24,8 @@ var status_sprite_mappings = {
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	health = max_health
+	
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -75,7 +77,7 @@ var _flying = false
 var _gravity = -32
 var _velocity_override = Vector2.ZERO
 var _scale_override = 1
-var _time_per_pixel = 0.002
+var _time_per_pixel = 0.003
 var _knockback_scale_factor = 0.1 / (3 * 32)
 var _deceleration_factor = 0.5
 func apply_knockback(knock_back, direction: Vector2):

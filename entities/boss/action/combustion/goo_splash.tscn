@@ -10,7 +10,7 @@ shader = ExtResource("2_xakgw")
 shader_parameter/goo_texture = ExtResource("3_upuyb")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x308v"]
-radius = 29.0172
+radius = 68.1175
 
 [sub_resource type="Gradient" id="Gradient_o057b"]
 colors = PackedColorArray(0.663972, 0.398824, 0.14163, 1, 0.575082, 0.216724, 0.215566, 0.164706)
@@ -44,7 +44,7 @@ script = ExtResource("1_52fqw")
 texture_filter = 1
 material = SubResource("ShaderMaterial_q78s0")
 position = Vector2(1, 2)
-scale = Vector2(1.028, 1)
+scale = Vector2(2.4672, 2.4)
 texture = ExtResource("4_e1sg6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -101,11 +101,7 @@ func generate_boss_names(n=50):
 func read_file(path):
 	return FileAccess.open(path, FileAccess.READ).get_as_text()
 
-@export var _tiles_per_level = 2
-@export var _max_tiles_knockback = 10
-func teleport(movement_vector: Vector2, duration = 0.3, level = 1):
-	
-	
+func teleport(movement_vector: Vector2, knockback, duration = 0.3):
 	var collision = move_and_collide(movement_vector, true)
 	var tween = get_tree().create_tween()
 	if collision:
@@ -113,15 +109,14 @@ func teleport(movement_vector: Vector2, duration = 0.3, level = 1):
 		print((position - collision.get_position()).length() / movement_vector.length())
 		tween.set_parallel()
 		tween.tween_property(self, "position", collision.get_position(), real_duration)
-		tween.tween_callback(func(): apply_player_knockback(collision)).set_delay(real_duration / 2)
-		
-		
+		tween.tween_callback(func(): apply_player_knockback(collision, movement_vector.length())).set_delay(real_duration / 3)
+	
 	else:
 		tween.tween_property(self, "position", position + movement_vector, duration)
 #	if collider != null and collider.is_in_group("player"):
 #		collider.apply_knockback(20*32, collision.get_travel().normalized())
 
-func apply_player_knockback(collision):
+func apply_player_knockback(collision, distance):
 		var collider = collision.get_collider()
 		var space_state = get_world_2d().direct_space_state
 		
@@ -142,7 +137,8 @@ func apply_player_knockback(collision):
 			
 			if hit_collider.is_in_group("player"):
 				print(hit_collider)
-				hit_collider.apply_knockback(min(_max_tiles_knockback * 32, _tiles_per_level * 32 * boss_stats.level), collision.get_travel().normalized())
+				#min(_max_tiles_knockback * 32, _tiles_per_level * 32 * boss_stats.level)
+				hit_collider.apply_knockback(distance, collision.get_travel().normalized())
 
 func get_combo_cooldown(index: int):
 	return combo_timers[index].time_left / combo_timers[index].wait_time

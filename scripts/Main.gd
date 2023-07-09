@@ -26,6 +26,10 @@ func enter_level(n):
 func setup_level(n):
 	pass
 
+@export var base_gold_per_player = 10
+@export var gold_per_player_scaling = 2
+@export var base_clear_gold = 10
+
 func level_over(winner):
 	if status == "level":
 		status = "death screen"
@@ -34,14 +38,14 @@ func level_over(winner):
 		
 		var timer_gold = floor(level_timer/10)
 		var players_killed = $Game.players_killed
-		var players_killed_gold = (10 + (2 * level)) * players_killed
-		var clear_gold = (level+1) * 10 if winner == "Boss" else 0
+		var players_killed_gold = (base_gold_per_player + (gold_per_player_scaling * level)) * players_killed
+		var clear_gold = (level+1) *base_clear_gold if winner == "Boss" else 0
 		var total_gold_earned = timer_gold + players_killed_gold + clear_gold
 		$Game.boss.boss_stats.add_gold(total_gold_earned)
 		
 		$Game.hide_ui()
 		$DeathScreen.visible = true
-		$DeathScreen.get_node("DeathText").text = boss_win_message % [$Game.boss.boss_name, kill_words.pick_random()] if winner == "Boss" else player_win_message % [$Boss.boss_name, kill_words.pick_random()]
+		$DeathScreen.get_node("DeathText").text = boss_win_message % [$Game.boss.boss_name, kill_words.pick_random()] if winner == "Boss" else player_win_message % [$Game.boss.boss_name, kill_words.pick_random()]
 		$DeathScreen.get_node("DeathText").text += "\n\n%s level %s players killed: %s gold" % [players_killed, level + 1, players_killed_gold]
 		$DeathScreen.get_node("DeathText").text += "\n%s seconds survived: %s gold" % [floor(level_timer), timer_gold]
 		if winner == "Boss":

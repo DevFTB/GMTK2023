@@ -11,7 +11,7 @@ region = Rect2(64, 0, 16, 16)
 
 [resource]
 script = ExtResource("2_d2goo")
-action_name = "Swipe"
+action_name = "Stab"
 action_description = ""
 action_scene = ExtResource("1_sro56")
 action_icon = SubResource("AtlasTexture_c47qb")
@@ -23,9 +23,9 @@ sustain_animation = ""
 hit_animation = ""
 gold_cost = 1
 is_locked = false
-max_level = 3
+max_level = -1
 level = 1
 level_scaling = 2
 base_damage = 3
-upgrade_scaling = 1.5
+upgrade_scaling = 2.5
 hit_sound = ExtResource("3_xd3kt")

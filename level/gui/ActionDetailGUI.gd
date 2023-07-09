@@ -1,5 +1,5 @@
 extends Control
-
+@onready var boss = get_tree().get_first_node_in_group("boss")
 @onready var action_icons = get_tree().get_nodes_in_group("action_icon")
 
 @onready var icon_rect = $MarginContainer/VBoxContainer/Control/TextureRect
@@ -11,12 +11,26 @@ signal bought(action: Action)
 signal upgraded(action: Action)
 
 var current_action = null
-
+var action_override = null
 func _ready():
+	owner.boss_stats.gold_changed.connect(func(): if current_action != null: display_details(current_action))
 	for ai in action_icons:
 		ai.selected.connect(_on_action_icon_selected)
+		ai.hovered.connect(_on_action_icon_hovered )
+		ai.unhovered.connect(_on_action_icon_unhovered)
 	pass
-
+func _on_action_icon_hovered(action : BossAction):
+	action_override = action
+	display_details(action_override)
+	pass
+	
+func _on_action_icon_unhovered(action : BossAction):
+	action_override = null
+	
+	if current_action != null:
+		display_details(current_action)
+	pass
+	
 func _on_action_icon_selected(action : BossAction):
 	current_action = action
 	display_details(action)
@@ -38,11 +52,12 @@ func display_details(action: BossAction):
 	
 	buy_button.visible = action.is_locked
 	buy_button.text = "Buy for " + str(action.gold_cost) + " Gold"
+	upgrade_button.disabled = not owner.boss_stats.can_spend_gold(action.gold_cost)
 	
 	upgrade_button.visible = not action.is_locked and action.can_upgrade()
 	upgrade_button.disabled = not owner.boss_stats.can_spend_gold(action.get_upgrade_cost())
 	upgrade_button.text = "Upgrade for " + str(action.get_upgrade_cost()) + " Gold"
-	
+
 	pass
 
 

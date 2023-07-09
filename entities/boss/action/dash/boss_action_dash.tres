@@ -11,20 +11,21 @@ region = Rect2(48, 0, 16, 16)
 
 [resource]
 script = ExtResource("1_0ro0h")
-teleport_distance = 160
+base_tiles = 3
+tiles_per_level = 2
 action_name = "Dash"
 action_description = "Move quickly in a certain direction"
 action_scene = ExtResource("1_ih847")
 action_icon = SubResource("AtlasTexture_pvf4b")
 amount_of_beats = 1
 amount_of_cooldown_beats = 1
-is_hold_action = false
+is_hold_action = null
 starting_animation = "dash"
 sustain_animation = ""
 hit_animation = ""
-gold_cost = 1
+gold_cost = 10
 is_locked = true
-max_level = 3
+max_level = -1
 level = 1
 level_scaling = 2
 base_damage = 5

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://c462kyojwtkwy"]
+[gd_scene load_steps=42 format=3 uid="uid://c462kyojwtkwy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_y2mx8"]
 [ext_resource type="Script" path="res://Game.gd" id="2_d5dl5"]
@@ -192,6 +192,11 @@ _data = {
 "fail_shake": SubResource("Animation_fmj4h")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_f0lax"]
+line_spacing = 0.0
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_l70j4"]
 line_spacing = 0.0
 outline_color = Color(0, 0, 0, 1)
@@ -205,9 +210,9 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
+base_gold_per_player = 5
 
 [node name="Game" type="Node2D" parent="."]
-visible = false
 script = ExtResource("2_d5dl5")
 
 [node name="BeatManager" type="Node" parent="Game" groups=["beat_manager"]]
@@ -443,7 +448,7 @@ script = ExtResource("17_al4u4")
 [node name="BossName" type="Label" parent="Game/GameOverlay/GUI/MarginContainer/BossUI"]
 layout_mode = 2
 text = "BSUIDFNOSNDCOINIOSDNIOFNIOSDNFIONSIODFFFSDFFECVSDCSDFEFSFSDCC"
-label_settings = ExtResource("16_qa6p5")
+label_settings = SubResource("LabelSettings_f0lax")
 horizontal_alignment = 1
 autowrap_mode = 3
 max_lines_visible = 3

@@ -10,6 +10,7 @@ signal gold_changed()
 @export var base_level_gold_cost = 5.0
 @export var health_per_level = 5
 @export var starting_gold = 10:
+	
 	set(value):
 		starting_gold = value
 		gold = starting_gold
@@ -45,4 +46,4 @@ func spend_gold(amnt: int):
 	gold -= amnt
 
 func get_health():
-	return base_health + health_per_level * level
+	return floor(base_health + health_per_level * pow(level_scaling, level))

@@ -5,6 +5,8 @@ var direction_vector
 func enter():
 	#animator.play("aiming")
 	aimer.visible = true
+	
+	set_aim_direction()
 	boss.movement_dir = Vector2.ZERO
 	pass
 func process_input(event: InputEvent):
@@ -28,3 +30,8 @@ func exit():
 	aimer.visible = false
 	pass
 
+func set_aim_direction():
+	var pos_to_mouse = boss.get_global_mouse_position() -  boss.global_position
+
+	direction_vector =  pos_to_mouse.normalized()
+	aimer.rotation = direction_vector.angle()

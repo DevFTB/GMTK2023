@@ -45,13 +45,13 @@ func get_damage() -> int:
 	return base_damage + (level - 1) * level_scaling
 
 func can_upgrade() -> bool :
-	return level < max_level
+	return level < max_level or max_level < 0
 
 func get_upgrade_cost():
 	return round(pow(upgrade_scaling, level) * gold_cost)
 
 func upgrade() -> void:
-	if level < max_level:
+	if can_upgrade():
 		level += 1
 
 func do_effect(_boss: Boss, _direction: Vector2):
