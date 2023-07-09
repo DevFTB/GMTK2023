@@ -12,7 +12,7 @@ region = Rect2(80, 0, 16, 16)
 [resource]
 script = ExtResource("2_2mcta")
 action_name = "Roar"
-action_description = ""
+action_description = "Unleash a mighty roar, stunning and damaging all players around you in a large radius"
 action_scene = ExtResource("1_mtuas")
 action_icon = SubResource("AtlasTexture_oy8gh")
 amount_of_beats = 4

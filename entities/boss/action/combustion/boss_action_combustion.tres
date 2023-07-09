@@ -12,7 +12,7 @@ region = Rect2(32, 0, 16, 16)
 [resource]
 script = ExtResource("1_n2svb")
 action_name = "Combustion"
-action_description = ""
+action_description = "Eject hot oil in a circle around you, slowing and doing large damage"
 action_scene = ExtResource("1_i5dx0")
 action_icon = SubResource("AtlasTexture_38kle")
 amount_of_beats = 4

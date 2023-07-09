@@ -12,7 +12,7 @@ region = Rect2(16, 0, 16, 16)
 [resource]
 script = ExtResource("1_yttbp")
 action_name = "Slam"
-action_description = ""
+action_description = "Jump and slam on the ground, doing large damage and knocking back players in a large radius around you"
 action_scene = ExtResource("1_1h8y3")
 action_icon = SubResource("AtlasTexture_oywrn")
 amount_of_beats = 4
