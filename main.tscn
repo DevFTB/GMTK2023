@@ -14,9 +14,13 @@
 [ext_resource type="PackedScene" uid="uid://cphxorrjm5k7a" path="res://entities/players/fighter/fighter.tscn" id="12_kagx0"]
 [ext_resource type="Script" path="res://scripts/TimeGradientColourRect.gd" id="12_kp5ht"]
 [ext_resource type="Script" path="res://level/beat/WarnerController.gd" id="12_xjixf"]
-[ext_resource type="PackedScene" uid="uid://b8im58bmxnhcp" path="res://level/beat/warner_scene.tscn" id="13_prhtm"]
+[ext_resource type="PackedScene" path="res://level/beat/warner_scene.tscn" id="13_prhtm"]
 [ext_resource type="PackedScene" uid="uid://cva63yioyjyr3" path="res://entities/players/tank/tank.tscn" id="13_wiqs4"]
 [ext_resource type="Script" path="res://level/beat/HitLabel.gd" id="14_mp6y7"]
+[ext_resource type="LabelSettings" uid="uid://vth2gq1k8myn" path="res://level/gui/boss/adithaslabelsettings.tres" id="16_qa6p5"]
+[ext_resource type="Script" path="res://level/gui/boss/BossUI.gd" id="17_al4u4"]
+[ext_resource type="Texture2D" uid="uid://dg0j6n14sw0ot" path="res://level/gui/boss/healthbar_empty.png" id="18_4uspl"]
+[ext_resource type="Texture2D" uid="uid://cqy8vqr4hmkj6" path="res://level/gui/boss/healthbar_full.png" id="19_opri7"]
 
 [sub_resource type="Gradient" id="Gradient_x35c2"]
 colors = PackedColorArray(0.961374, 0.526552, 0.508241, 0, 0.253906, 0.03125, 0.363281, 1)
@@ -27,11 +31,6 @@ gradient = SubResource("Gradient_x35c2")
 [sub_resource type="Gradient" id="Gradient_6ieoh"]
 offsets = PackedFloat32Array(0, 0.274074, 0.648148, 0.996296)
 colors = PackedColorArray(0.603922, 0.172549, 0.827451, 1, 0.824238, 0.221158, 0.219652, 1, 0.980307, 0.480217, 0.252419, 1, 0.603922, 0.172549, 0.827451, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_qrahe"]
-font_size = 24
-outline_size = 8
-outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_rwrgk"]
 length = 0.001
@@ -182,6 +181,11 @@ _data = {
 "fail_shake": SubResource("Animation_fmj4h")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_l70j4"]
+line_spacing = 0.0
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+
 [node name="Main" type="Node"]
 script = ExtResource("1_y2mx8")
 
@@ -275,6 +279,10 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -12.5
+offset_right = -4.0
+offset_bottom = 12.5
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -353,7 +361,7 @@ offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(20, 17)
-label_settings = SubResource("LabelSettings_qrahe")
+label_settings = ExtResource("16_qa6p5")
 script = ExtResource("14_mp6y7")
 success_colours = Array[Color]([Color(0.101961, 0.337255, 1, 1), Color(0.839216, 0.52549, 0.25098, 1), Color(0.737255, 0.164706, 0.368627, 1)])
 success_text = Array[String](["Nice", "Preposterous", "Maleficent"])
@@ -391,3 +399,56 @@ reset_on_save = false
 libraries = {
 "": SubResource("AnimationLibrary_aabl5")
 }
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/GUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -87.0
+offset_right = 300.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 20
+
+[node name="BossUI" type="VBoxContainer" parent="CanvasLayer/GUI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("17_al4u4")
+
+[node name="BossName" type="Label" parent="CanvasLayer/GUI/MarginContainer/BossUI"]
+layout_mode = 2
+text = "BSUIDFNOSNDCOINIOSDNIOFNIOSDNFIONSIODFFFSDFFECVSDCSDFEFSFSDCC"
+label_settings = ExtResource("16_qa6p5")
+horizontal_alignment = 1
+autowrap_mode = 3
+max_lines_visible = 3
+
+[node name="BossHealthBar" type="TextureProgressBar" parent="CanvasLayer/GUI/MarginContainer/BossUI"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+texture_under = ExtResource("18_4uspl")
+texture_progress = ExtResource("19_opri7")
+
+[node name="BossHealthLabel" type="Label" parent="CanvasLayer/GUI/MarginContainer/BossUI/BossHealthBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0/0"
+label_settings = SubResource("LabelSettings_l70j4")
+
+[connection signal="boss_health_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_health_changed"]
+[connection signal="boss_name_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_name_changed"]

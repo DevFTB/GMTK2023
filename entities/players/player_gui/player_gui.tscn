@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://kbthggvh3r0n"]
+[gd_scene load_steps=8 format=3 uid="uid://kbthggvh3r0n"]
 
 [ext_resource type="Script" path="res://entities/players/player_gui/PlayerGUI.gd" id="1_ycgvh"]
-[ext_resource type="Texture2D" uid="uid://by624p0om6rf4" path="res://entities/players/player_gui/healthbar_empty.png" id="2_noaqh"]
-[ext_resource type="Texture2D" uid="uid://j6ty3wplwt8o" path="res://entities/players/player_gui/healthbar_full.png" id="3_p36wt"]
+[ext_resource type="Texture2D" uid="uid://by624p0om6rf4" path="res://entities/players/player_gui/healthbar_empty.png" id="2_vuvv2"]
+[ext_resource type="Texture2D" uid="uid://j6ty3wplwt8o" path="res://entities/players/player_gui/healthbar_full.png" id="3_rnysl"]
 [ext_resource type="Texture2D" uid="uid://dcvne14fdao10" path="res://entities/players/player_gui/speech_bubble_large.png" id="4_c5njw"]
+[ext_resource type="LabelSettings" uid="uid://bug23hiyituv7" path="res://entities/players/player_gui/damagenumberlabel.tres" id="5_2vhu7"]
+[ext_resource type="LabelSettings" uid="uid://f6251430vki3" path="res://entities/players/player_gui/healnumberlabel.tres" id="6_fjm6p"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xjb4x"]
 line_spacing = 0.0
@@ -23,16 +25,20 @@ scale = Vector2(0.5, 0.5)
 offset_right = 512.0
 offset_bottom = 34.0
 value = 50.0
-texture_under = ExtResource("2_noaqh")
-texture_progress = ExtResource("3_p36wt")
+texture_under = ExtResource("2_vuvv2")
+texture_progress = ExtResource("3_rnysl")
 
 [node name="SpeechBubble" type="Sprite2D" parent="."]
 visible = false
 z_index = 2
-position = Vector2(31, -33)
+position = Vector2(40, -41)
 texture = ExtResource("4_c5njw")
 
 [node name="Speech" type="Label" parent="SpeechBubble"]
+anchors_preset = -1
+anchor_left = 0.03125
+anchor_top = -0.015625
+anchor_right = 0.03125
 offset_left = -22.0
 offset_top = -22.0
 offset_right = 24.0
@@ -44,4 +50,28 @@ metadata/_edit_use_anchors_ = true
 [node name="Timer" type="Timer" parent="SpeechBubble"]
 one_shot = true
 
+[node name="DamageNumber" type="Label" parent="."]
+z_index = 1
+layout_mode = 0
+offset_left = -18.0
+offset_top = -34.0
+offset_right = 20.0
+offset_bottom = -17.0
+label_settings = ExtResource("5_2vhu7")
+horizontal_alignment = 1
+
+[node name="HealNumber" type="Label" parent="."]
+z_index = 1
+layout_mode = 0
+offset_left = -18.0
+offset_top = -34.0
+offset_right = 20.0
+offset_bottom = -17.0
+label_settings = ExtResource("6_fjm6p")
+horizontal_alignment = 1
+
+[node name="DamageNumberTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="SpeechBubble/Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="DamageNumberTimer" to="." method="_on_damage_number_timer_timeout"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://entities/boss/combo/Combo.gd" id="1_ca1f4"]
 [ext_resource type="Resource" uid="uid://ba5jrspjog6gs" path="res://entities/boss/action/swipe/boss_action_swipe.tres" id="1_mymka"]
-[ext_resource type="Resource" uid="uid://c8dyby4o78s43" path="res://entities/boss/action/boss_action_charge_bash.tres" id="2_g5xwo"]
+[ext_resource type="Resource" path="res://entities/boss/action/boss_action_charge_bash.tres" id="2_g5xwo"]
 
 [resource]
 script = ExtResource("1_ca1f4")
