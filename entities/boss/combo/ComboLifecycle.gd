@@ -58,6 +58,7 @@ class ActionLifecycle:
 		
 			action_instance.position = position
 			action_instance.rotation = direction.angle()
+			action_instance.action = action
 		
 			parent.add_child(action_instance)
 			

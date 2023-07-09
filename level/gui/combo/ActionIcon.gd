@@ -9,10 +9,15 @@ func _ready():
 	
 func update_gui():
 	$TextureRect.texture = action.action_icon
+	$LockTextureRect.visible = action.is_locked
 	pass
 	
 func _get_drag_data(at_position):
-	return action
+	var tr = TextureRect.new()
+	tr.texture = action.action_icon
+	tr.size = Vector2.ONE * 32
+	set_drag_preview(tr)
+	return { "action": action, "type": "new" }
 
 
 func _on_gui_input(event):

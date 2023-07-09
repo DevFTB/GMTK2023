@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BossAction" load_steps=5 format=3 uid="uid://b0cxrsu03dl23"]
 
-[ext_resource type="PackedScene" path="res://entities/boss/action/slam/boss_action_slam_scene.tscn" id="1_1h8y3"]
+[ext_resource type="PackedScene" uid="uid://ch4ee4byeyeaq" path="res://entities/boss/action/slam/boss_action_slam_scene.tscn" id="1_1h8y3"]
 [ext_resource type="Texture2D" uid="uid://cp7mgtw21cnum" path="res://entities/boss/action/action_icons.png" id="1_3jvjq"]
 [ext_resource type="Script" path="res://entities/boss/action/BossAction.gd" id="1_yttbp"]
 
@@ -11,6 +11,7 @@ region = Rect2(16, 0, 16, 16)
 [resource]
 script = ExtResource("1_yttbp")
 action_name = "Slam"
+action_description = ""
 action_scene = ExtResource("1_1h8y3")
 action_icon = SubResource("AtlasTexture_oywrn")
 amount_of_beats = 4
@@ -21,3 +22,8 @@ sustain_animation = "slam_sustain"
 hit_animation = "slam_hit"
 gold_cost = 1
 is_locked = true
+max_level = 3
+level = 1
+level_scaling = 2
+base_damage = 5
+upgrade_scaling = 1.5

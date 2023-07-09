@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BossAction" load_steps=5 format=3 uid="uid://c61fkl1ud8j26"]
 
-[ext_resource type="PackedScene" path="res://entities/boss/action/dash/boss_action_dash_scene.tscn" id="1_ih847"]
+[ext_resource type="PackedScene" uid="uid://cet6xiw7xsjp3" path="res://entities/boss/action/dash/boss_action_dash_scene.tscn" id="1_ih847"]
 [ext_resource type="Texture2D" uid="uid://cp7mgtw21cnum" path="res://entities/boss/action/action_icons.png" id="1_kkc1t"]
 [ext_resource type="Script" path="res://entities/boss/action/BossAction.gd" id="2_l5ti2"]
 
@@ -11,6 +11,7 @@ region = Rect2(48, 0, 16, 16)
 [resource]
 script = ExtResource("2_l5ti2")
 action_name = "Dash"
+action_description = ""
 action_scene = ExtResource("1_ih847")
 action_icon = SubResource("AtlasTexture_54mde")
 amount_of_beats = 1
@@ -21,3 +22,8 @@ sustain_animation = ""
 hit_animation = ""
 gold_cost = 1
 is_locked = true
+max_level = 3
+level = 1
+level_scaling = 2
+base_damage = 5
+upgrade_scaling = 1.5

@@ -15,7 +15,7 @@ func start_tween(destination_x: float, time_to_move: float):
 	tween.tween_property(self, "position", Vector2(destination_x, 0), time_to_move).from_current()
 	tween.tween_property(self, "scale", Vector2.ONE * 1, time_to_move).from(Vector2.ONE * 0.5)
 	tween.set_parallel(false)
-	tween.tween_callback(queue_free)
+	#tween.tween_callback(func(x): if self != null: queue_free)
 
 func set_input(beat:int, is_press, is_hold):
 	print("warner set, b", beat, is_press, is_hold)
@@ -25,8 +25,8 @@ func set_input(beat:int, is_press, is_hold):
 	
 func update_gui_for_beat(current_beat: int):
 	$BeatLabel.text = str(beat - current_beat)
-	#if current_beat == beat:
-	#	queue_free()
+	if current_beat == beat:
+		queue_free()
 
 func _process(delta):
 	pass

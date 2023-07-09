@@ -3,18 +3,19 @@
 [ext_resource type="Script" path="res://entities/boss/action/BossActionInstance.gd" id="1_na6du"]
 [ext_resource type="Script" path="res://entities/boss/action/swipe/DamageComponent.gd" id="2_fmj4d"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_x308v"]
-radius = 60.208
+[sub_resource type="CircleShape2D" id="CircleShape2D_1raey"]
+radius = 205.139
 
-[node name="BossActionSwipe" type="Node2D"]
+[node name="BossActionRoar" type="Node2D"]
 script = ExtResource("1_na6du")
+stun_duration = 2.0
 
 [node name="Hitboxes" type="Node2D" parent="."]
 
 [node name="Hitbox" type="Area2D" parent="Hitboxes"]
 script = ExtResource("2_fmj4d")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/Hitbox"]
-shape = SubResource("CircleShape2D_x308v")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitboxes/Hitbox"]
+shape = SubResource("CircleShape2D_1raey")
 
 [connection signal="body_entered" from="Hitboxes/Hitbox" to="Hitboxes/Hitbox" method="_on_body_entered"]

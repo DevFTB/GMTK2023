@@ -3,9 +3,10 @@
 [ext_resource type="Script" path="res://entities/boss/action/BossActionInstance.gd" id="1_cycn1"]
 [ext_resource type="PackedScene" uid="uid://bdytxksyet4m" path="res://entities/boss/action/combustion/goo_splash.tscn" id="2_syjul"]
 
-[node name="BossActionSwipe" type="Node2D"]
+[node name="BossActionCombustion" type="Node2D"]
 script = ExtResource("1_cycn1")
 duration = 4.0
+slow_duration = 3.0
 
 [node name="Hitboxes" type="Node2D" parent="."]
 

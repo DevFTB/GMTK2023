@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bt6wo80lia41b"]
+[gd_scene load_steps=3 format=3 uid="uid://bt6wo80lia41b"]
 
 [ext_resource type="Script" path="res://level/gui/combo/ActionIcon.gd" id="1_qbfpl"]
+[ext_resource type="Texture2D" uid="uid://do70ipe8lnfs8" path="res://level/gui/combo/lock.png" id="2_b4xjj"]
 
 [node name="ActionIcon" type="Control" groups=["action_icon"]]
 layout_mode = 3
@@ -12,3 +13,12 @@ script = ExtResource("1_qbfpl")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="LockTextureRect" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_b4xjj")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

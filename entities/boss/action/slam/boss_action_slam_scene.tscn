@@ -4,10 +4,11 @@
 [ext_resource type="Script" path="res://entities/boss/action/swipe/DamageComponent.gd" id="2_svrmq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x308v"]
-radius = 60.208
+radius = 205.139
 
-[node name="BossActionSwipe" type="Node2D"]
+[node name="BossActionSlam" type="Node2D"]
 script = ExtResource("1_wgehk")
+knockback = 150.0
 
 [node name="Hitboxes" type="Node2D" parent="."]
 
