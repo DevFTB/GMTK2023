@@ -11,7 +11,11 @@ var level_damage = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	enter_level(level)
+	$PlayerController.clear_players()
+	$Boss.set_process(false)
+	#enter_level(level)
+	enter_shop()
+	pass
 	
 
 func enter_level(n):

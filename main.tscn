@@ -16,7 +16,7 @@
 [ext_resource type="Script" path="res://scripts/TimeGradientColourRect.gd" id="12_kp5ht"]
 [ext_resource type="Script" path="res://level/beat/WarnerController.gd" id="12_xjixf"]
 [ext_resource type="Resource" uid="uid://dvb2c750qbiv1" path="res://entities/players/healer/healer_stats.tres" id="13_e0yce"]
-[ext_resource type="PackedScene" path="res://level/beat/warner_scene.tscn" id="13_prhtm"]
+[ext_resource type="PackedScene" uid="uid://b8im58bmxnhcp" path="res://level/beat/warner_scene.tscn" id="13_prhtm"]
 [ext_resource type="PackedScene" uid="uid://cva63yioyjyr3" path="res://entities/players/tank/tank.tscn" id="13_wiqs4"]
 [ext_resource type="Resource" uid="uid://maocwxgwcrnt" path="res://entities/players/archer/archer_stats.tres" id="14_3ihno"]
 [ext_resource type="Script" path="res://level/beat/HitLabel.gd" id="14_mp6y7"]
@@ -568,6 +568,7 @@ combo = ExtResource("24_hwk8y")
 slot = 2
 
 [node name="ActionComboScreenCanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ActionComboScreen" parent="ActionComboScreenCanvasLayer" instance=ExtResource("22_y1okt")]
 
@@ -609,6 +610,8 @@ text = "Continue"
 
 [node name="IdleMusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("31_q1iwg")
+
+[node name="Node" type="Node" parent="."]
 
 [connection signal="boss_died" from="Boss" to="." method="_on_boss_boss_died"]
 [connection signal="boss_health_changed" from="Boss" to="CanvasLayer/GUI/MarginContainer/BossUI" method="_on_boss_boss_health_changed"]

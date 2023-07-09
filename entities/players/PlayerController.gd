@@ -316,7 +316,7 @@ func set_player_attrs(player, level):
 	
 	
 func get_random_spot_on_world():
-	return Vector2(rng.randf_range(100, 600), rng.randf_range(100, 600))
+	return Vector2(rng.randf_range(200, 600), rng.randf_range(200, 600))
 	
 
 func reset(n):

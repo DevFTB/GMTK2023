@@ -152,20 +152,26 @@ func _ready():
 	
 	print(rotation)
 	var offset = beat_manager.beat_number + (1 if beat_manager.get_beat_progress() < 0.5 else 2)
-	if combo.actions[0].is_hold_action:
-		offset += 1
 	
+	var first = true
 	for slot in range(combo.amount_of_slots):
-		var action = combo.actions[slot]
-		var lc
-		if action.is_hold_action:
-			lc = HoldActionLifecycle.new(get_parent(), action, offset)
+		if combo.actions.has(slot):
+			var action = combo.actions[slot]
 			
-		else:
-			lc = ActionLifecycle.new(get_parent(), action, offset)
+			if first:
+				if action.is_hold_action:
+					offset += 1
+					first =  false
 			
-		action_queue.append(lc)
-		offset = lc.end_beat
+			var lc
+			if action.is_hold_action:
+				lc = HoldActionLifecycle.new(get_parent(), action, offset)
+				
+			else:
+				lc = ActionLifecycle.new(get_parent(), action, offset)
+				
+			action_queue.append(lc)
+			offset = lc.end_beat
 	
 	active_action = action_queue.pop_front()
 	pass # Replace with function body.	

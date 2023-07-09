@@ -4,10 +4,10 @@ extends Control
 @export var slot : int
 
 func _ready():
+	combo.actions_updated.connect(update_gui)
 	update_gui()
 
 func _can_drop_data(at_position, data):
-	
 	return data["type"] == "new"
 
 func _drop_data(at_position, data):
