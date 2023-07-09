@@ -12,7 +12,7 @@ region = Rect2(64, 0, 16, 16)
 [resource]
 script = ExtResource("2_d2goo")
 action_name = "Swipe"
-action_description = ""
+action_description = "Stab your claws in a direction, dealing large damage in a line"
 action_scene = ExtResource("1_sro56")
 action_icon = SubResource("AtlasTexture_c47qb")
 amount_of_beats = 1
