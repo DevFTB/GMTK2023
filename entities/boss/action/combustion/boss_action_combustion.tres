@@ -11,6 +11,7 @@ region = Rect2(32, 0, 16, 16)
 [resource]
 script = ExtResource("1_n2svb")
 action_name = "Combustion"
+action_description = ""
 action_scene = ExtResource("1_i5dx0")
 action_icon = SubResource("AtlasTexture_38kle")
 amount_of_beats = 8
@@ -21,3 +22,8 @@ sustain_animation = "combustion_sustain"
 hit_animation = "combustion_hit"
 gold_cost = 1
 is_locked = true
+max_level = 3
+level = 1
+level_scaling = 2
+base_damage = 5
+upgrade_scaling = 1.5

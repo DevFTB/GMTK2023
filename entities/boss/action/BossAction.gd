@@ -22,10 +22,12 @@ class_name BossAction
 @export var gold_cost = 1
 @export var is_locked = true
 
+@export var max_level = 3
 @export var level = 1
 @export var level_scaling = 2
 @export var base_damage = 5
 
+@export var upgrade_scaling = 1.5
 
 func _init(p_action_name = "New Action", p_action_scene = null, p_action_icon = null, p_amount_of_beats = 1, p_amount_of_cooldown_beats = 0, p_hold_action = false):
 	action_name  = p_action_name
@@ -38,3 +40,13 @@ func _init(p_action_name = "New Action", p_action_scene = null, p_action_icon = 
 
 func get_damage() -> int:
 	return base_damage + (level - 1) * level_scaling
+
+func can_upgrade() -> bool :
+	return level < max_level
+
+func get_upgrade_cost():
+	return round(pow(upgrade_scaling, level) * gold_cost)
+
+func upgrade() -> void:
+	if level < max_level:
+		level += 1

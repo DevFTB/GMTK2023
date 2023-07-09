@@ -9,6 +9,7 @@ func _ready():
 	
 func update_gui():
 	$TextureRect.texture = action.action_icon
+	$LockTextureRect.visible = action.is_locked
 	pass
 	
 func _get_drag_data(at_position):

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BossStats" load_steps=2 format=3 uid="uid://bp42206cq1np4"]
+
+[ext_resource type="Script" path="res://entities/boss/BossStats.gd" id="1_govjl"]
+
+[resource]
+script = ExtResource("1_govjl")
+level = 1
+level_scaling = 1.3
+base_level_gold_cost = 5.0
+health_per_level = 5
+starting_gold = 10

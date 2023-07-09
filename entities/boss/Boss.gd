@@ -10,10 +10,14 @@ signal started_combo(lc: ComboLifecycle)
 @export var prefix_path = "res://entities/boss/boss_name/prefixes.txt"
 @export var suffix_path = "res://entities/boss/boss_name/suffixes.txt"
 
+@export var boss_stats: BossStats
+
 var health
 var movement_dir = Vector2.ZERO
 var active_combo : Node2D
 var names
+
+
 
 func _ready():
 	health = max_health

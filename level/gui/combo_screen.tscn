@@ -1,8 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://dbmmaoubp84nk"]
+[gd_scene load_steps=21 format=3 uid="uid://dbmmaoubp84nk"]
 
 [ext_resource type="Theme" uid="uid://pjssvnja6jwk" path="res://level/gui/theme.tres" id="1_vjwwo"]
 [ext_resource type="Texture2D" uid="uid://de2pmqri8aphu" path="res://level/gui/combo/combo-gui.png" id="2_nf7cs"]
+[ext_resource type="Script" path="res://level/gui/ActionComboScreen.gd" id="2_qx7gi"]
 [ext_resource type="Script" path="res://level/gui/ActionDetailGUI.gd" id="3_iujw7"]
+[ext_resource type="Resource" uid="uid://bp42206cq1np4" path="res://entities/boss/boss_stats.tres" id="3_kghw0"]
 [ext_resource type="PackedScene" uid="uid://bt6wo80lia41b" path="res://level/gui/combo/action_icon.tscn" id="4_a2wte"]
 [ext_resource type="Resource" uid="uid://c8dyby4o78s43" path="res://entities/boss/action/boss_action_charge_bash.tres" id="5_1d81f"]
 [ext_resource type="Resource" uid="uid://da1nvew4jbd0v" path="res://entities/boss/action/combustion/boss_action_combustion.tres" id="6_rov48"]
@@ -13,6 +15,7 @@
 [ext_resource type="Script" path="res://level/gui/ComboSelectGUI.gd" id="11_d5vuo"]
 [ext_resource type="Script" path="res://level/gui/DragVisibleControl.gd" id="12_3xump"]
 [ext_resource type="PackedScene" uid="uid://bwmaqrqk5phnk" path="res://level/gui/combo/combo_action_slot.tscn" id="13_64gvp"]
+[ext_resource type="Script" path="res://level/gui/BossLevelGUI.gd" id="13_vof31"]
 [ext_resource type="Resource" uid="uid://ddhkk175dkckf" path="res://entities/boss/combo/combo_1.tres" id="14_x6njt"]
 [ext_resource type="Resource" uid="uid://by12hxe7vrgxt" path="res://entities/boss/combo/combo_2.tres" id="15_6bjcn"]
 [ext_resource type="Script" path="res://level/gui/DragBin.gd" id="16_oqdqu"]
@@ -30,6 +33,8 @@ offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_vjwwo")
+script = ExtResource("2_qx7gi")
+boss_stats = ExtResource("3_kghw0")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -112,9 +117,15 @@ stretch_mode = 4
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Button" type="Button" parent="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail/MarginContainer/VBoxContainer"]
+[node name="BuyButton" type="Button" parent="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Buy"
+
+[node name="UpgradeButton" type="Button" parent="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Upgrade for Cost"
 
 [node name="Control2" type="Control" parent="HBoxContainer/ActionSelect/VBoxContainer"]
 layout_mode = 2
@@ -158,12 +169,49 @@ action = ExtResource("9_3y5af")
 layout_mode = 2
 action = ExtResource("10_s2uvw")
 
-[node name="ComboSelect" type="Control" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="BossLevel" type="Control" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("13_vof31")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/BossLevel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 85.0
+offset_top = -13.0
+offset_right = -118.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/BossLevel/HBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 2.0
+text = "Current Boss Health: 1"
+
+[node name="Control" type="Control" parent="HBoxContainer/VBoxContainer/BossLevel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer/BossLevel/HBoxContainer"]
+layout_mode = 2
+text = "Upgrade for 1 Gold"
+
+[node name="ComboSelect" type="Control" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
 script = ExtResource("11_d5vuo")
 
-[node name="Control2" type="Control" parent="HBoxContainer/ComboSelect"]
+[node name="Control2" type="Control" parent="HBoxContainer/VBoxContainer/ComboSelect"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -173,7 +221,7 @@ offset_right = 202.5
 offset_bottom = 169.0
 grow_horizontal = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/ComboSelect/Control2"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/ComboSelect/Control2"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -188,7 +236,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 script = ExtResource("12_3xump")
 
-[node name="Control" type="VBoxContainer" parent="HBoxContainer/ComboSelect"]
+[node name="Control" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/ComboSelect"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -201,22 +249,22 @@ offset_bottom = 103.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/ComboSelect/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/ComboSelect/Control"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="HBoxContainer/ComboSelect/Control/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer"]
 layout_mode = 2
 text = "Combo 1"
 
-[node name="Control" type="PanelContainer" parent="HBoxContainer/ComboSelect/Control/VBoxContainer"]
+[node name="Control" type="PanelContainer" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Control" type="Control" parent="HBoxContainer/ComboSelect/Control/VBoxContainer/Control"]
+[node name="Control" type="Control" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer/Control"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ComboSelect/Control/VBoxContainer/Control/Control"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer/Control/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -228,36 +276,36 @@ offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ComboActionSlot" parent="HBoxContainer/ComboSelect/Control/VBoxContainer/Control/Control/HBoxContainer" instance=ExtResource("13_64gvp")]
+[node name="ComboActionSlot" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer/Control/Control/HBoxContainer" instance=ExtResource("13_64gvp")]
 layout_mode = 2
 combo = ExtResource("14_x6njt")
 
-[node name="ComboActionSlot2" parent="HBoxContainer/ComboSelect/Control/VBoxContainer/Control/Control/HBoxContainer" instance=ExtResource("13_64gvp")]
+[node name="ComboActionSlot2" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer/Control/Control/HBoxContainer" instance=ExtResource("13_64gvp")]
 layout_mode = 2
 combo = ExtResource("14_x6njt")
 slot = 1
 
-[node name="ComboActionSlot3" parent="HBoxContainer/ComboSelect/Control/VBoxContainer/Control/Control/HBoxContainer" instance=ExtResource("13_64gvp")]
+[node name="ComboActionSlot3" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer/Control/Control/HBoxContainer" instance=ExtResource("13_64gvp")]
 layout_mode = 2
 combo = ExtResource("14_x6njt")
 slot = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/ComboSelect/Control"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/ComboSelect/Control"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer2"]
 layout_mode = 2
 text = "Combo 2"
 
-[node name="Control" type="PanelContainer" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2"]
+[node name="Control" type="PanelContainer" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Control" type="Control" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2/Control"]
+[node name="Control" type="Control" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer2/Control"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2/Control/Control"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer2/Control/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -269,21 +317,21 @@ offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ComboActionSlot" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2/Control/Control/HBoxContainer" instance=ExtResource("13_64gvp")]
+[node name="ComboActionSlot" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer2/Control/Control/HBoxContainer" instance=ExtResource("13_64gvp")]
 layout_mode = 2
 combo = ExtResource("15_6bjcn")
 
-[node name="ComboActionSlot2" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2/Control/Control/HBoxContainer" instance=ExtResource("13_64gvp")]
+[node name="ComboActionSlot2" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer2/Control/Control/HBoxContainer" instance=ExtResource("13_64gvp")]
 layout_mode = 2
 combo = ExtResource("15_6bjcn")
 slot = 1
 
-[node name="ComboActionSlot3" parent="HBoxContainer/ComboSelect/Control/VBoxContainer2/Control/Control/HBoxContainer" instance=ExtResource("13_64gvp")]
+[node name="ComboActionSlot3" parent="HBoxContainer/VBoxContainer/ComboSelect/Control/VBoxContainer2/Control/Control/HBoxContainer" instance=ExtResource("13_64gvp")]
 layout_mode = 2
 combo = ExtResource("15_6bjcn")
 slot = 2
 
-[node name="Control3" type="Control" parent="HBoxContainer/ComboSelect"]
+[node name="Control3" type="Control" parent="HBoxContainer/VBoxContainer/ComboSelect"]
 visible = false
 layout_mode = 1
 anchors_preset = 7
@@ -298,7 +346,7 @@ grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("16_oqdqu")
 
-[node name="Label" type="Label" parent="HBoxContainer/ComboSelect/Control3"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/ComboSelect/Control3"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -311,4 +359,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[connection signal="binned" from="HBoxContainer/ComboSelect/Control3" to="HBoxContainer/ComboSelect" method="_on_control_3_binned"]
+[connection signal="bought" from="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail" to="." method="_on_action_detail_bought"]
+[connection signal="upgraded" from="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail" to="." method="_on_action_detail_upgraded"]
+[connection signal="pressed" from="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail/MarginContainer/VBoxContainer/BuyButton" to="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail" method="_on_buy_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail/MarginContainer/VBoxContainer/UpgradeButton" to="HBoxContainer/ActionSelect/VBoxContainer/Control/ActionDetail" method="_on_upgrade_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/BossLevel/HBoxContainer/Button" to="HBoxContainer/VBoxContainer/BossLevel" method="_on_button_pressed"]
+[connection signal="binned" from="HBoxContainer/VBoxContainer/ComboSelect/Control3" to="HBoxContainer/VBoxContainer/ComboSelect" method="_on_control_3_binned"]
