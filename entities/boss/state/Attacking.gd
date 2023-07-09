@@ -17,7 +17,8 @@ func play_started_animation(action :BossAction):
 	
 	if action.is_hold_action:
 		await animator.animation_finished
-		animator.play(action.sustain_animation)
+		if boss.active_combo != null and boss.active_combo.active_action == action:
+			animator.play(action.sustain_animation)
 	pass
 
 func play_hit_animation(action : BossAction):

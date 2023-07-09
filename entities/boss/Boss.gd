@@ -50,7 +50,7 @@ func activate_combo(index: int) -> void:
 func take_damage(damage: int):
 	health -= damage
 	boss_health_changed.emit(health, max_health, -damage)
-	print("Boss took %s damage. Now at %s HP" % [damage, health])
+	#print("Boss took %s damage. Now at %s HP" % [damage, health])
 	
 func generate_boss_names(n=50):
 	var prefixes = read_file(prefix_path).split("\n")

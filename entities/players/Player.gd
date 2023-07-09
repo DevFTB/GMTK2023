@@ -33,7 +33,7 @@ func heal(heal: int):
 	health = min(max_health, heal + health)
 #	health = heal + health
 	$PlayerGUI.health_changed(health, heal)
-	print(name + " healed for  " + str(heal))
+	#(name + " healed for  " + str(heal))
 
 func update_status_sprite():
 	$StatusEffect.visible = true
@@ -69,7 +69,6 @@ func apply_knockback(knock_back, direction: Vector2):
 	_velocity_override = direction.normalized() / _time_per_pixel
 	
 	var time = knock_back * _time_per_pixel
-	print(time)
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "scale", Vector2(1.5,1.5), time / 3).from_current()
 	tween.tween_property(self, "scale", Vector2(1,1), 2*time / 3).set_delay( time/3)

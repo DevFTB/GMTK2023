@@ -155,7 +155,6 @@ func _ready():
 		action_queue.append(lc)
 		offset = lc.end_beat
 	
-	print (action_queue)
 	active_action = action_queue.pop_front()
 	pass # Replace with function body.	
 

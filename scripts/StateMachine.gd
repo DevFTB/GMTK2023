@@ -5,6 +5,9 @@ signal state_changed
 
 @onready var active_state = get_child(0) as State
 
+func _ready():
+	active_state.enter()
+
 func _process(delta):
 	active_state.update(delta)
 	pass
