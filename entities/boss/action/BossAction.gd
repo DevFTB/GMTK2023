@@ -51,5 +51,5 @@ func upgrade() -> void:
 	if level < max_level:
 		level += 1
 
-func do_effect(boss: Boss, direction: Vector2):
+func do_effect(_boss: Boss, _direction: Vector2):
 	pass

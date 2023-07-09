@@ -33,6 +33,6 @@ func _on_player_damaged(player: Node2D):
 
 func disable_hitboxes():
 	for c in $Hitboxes.get_children():
-		c.monitoring = false
+		c.disable()
 
 	pass # Replace with function body.

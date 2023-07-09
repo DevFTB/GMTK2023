@@ -11,4 +11,13 @@ func _on_body_entered(body: Node2D):
 	pass # Replace with function body.
 
 func disable():
-	$CollisionShape2D.set_deferred("disabled", true)
+	monitoring = false
+	
+	var hv = get_node_or_null("HitboxVisual")
+	if hv != null:
+		hv.visible = false
+
+	
+
+
+	

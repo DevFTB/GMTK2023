@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://74nnccfg2ajn"]
+[gd_scene load_steps=11 format=3 uid="uid://74nnccfg2ajn"]
 
 [ext_resource type="Script" path="res://entities/boss/action/BossActionInstance.gd" id="1_na6du"]
 [ext_resource type="Script" path="res://entities/boss/action/swipe/DamageComponent.gd" id="2_fmj4d"]
+[ext_resource type="Script" path="res://entities/boss/action/roar/CirclePolygon2D.gd" id="3_gp174"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1raey"]
-radius = 205.139
+radius = 200.0
 
 [sub_resource type="Animation" id="Animation_imdl6"]
 length = 0.001
@@ -85,6 +86,12 @@ script = ExtResource("2_fmj4d")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitboxes/Hitbox"]
 shape = SubResource("CircleShape2D_1raey")
+
+[node name="HitboxVisual" type="Polygon2D" parent="Hitboxes/Hitbox/CollisionShape2D2"]
+z_index = -1
+color = Color(0.819608, 0.360784, 0.239216, 0.462745)
+script = ExtResource("3_gp174")
+radius = 200.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -95,6 +95,7 @@ _data = {
 }
 
 [node name="BossActionSwipe" type="Node2D"]
+z_index = -1
 script = ExtResource("1_vb7fg")
 knockback = 16.0
 
@@ -108,6 +109,10 @@ script = ExtResource("1_n5lwg")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitboxes/Hitbox"]
 position = Vector2(2, 4)
 polygon = PackedVector2Array(44, -52, 24, -75, 81, -67, 108, -50, 123, -12, 112, 13, 87, 30, 25, 51, 55, 17, 59, -15)
+
+[node name="HitboxVisual" type="Polygon2D" parent="Hitboxes/Hitbox"]
+color = Color(0.819608, 0.360784, 0.239216, 0.462745)
+polygon = PackedVector2Array(44, -52, 24, -75, 81, -67, 108, -50, 125, -8, 114, 17, 88, 35, 27, 55, 55, 17, 59, -15)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(54, -56)

@@ -7,7 +7,7 @@ class ActionLifecycle:
 	signal hit(strength: float)
 	signal failed
 	
-	var parent: Node2D
+	var boss: Node2D
 	var action : BossAction
 	# when the animations start playing, for charge attacks, the play must start holding now.
 	var start_beat : int
@@ -18,11 +18,11 @@ class ActionLifecycle:
 	
 	var success_hit = false
 
-	func _init(parent: Node2D, action: BossAction, offset = 0):
-		self.parent  = parent
-		self.action = action
-		start_beat = offset
-		hit_beat = offset + action.amount_of_beats
+	func _init(p_boss: Node2D, p_action: BossAction, p_offset = 0):
+		boss  = p_boss
+		action = p_action
+		start_beat = p_offset
+		hit_beat = p_offset + action.amount_of_beats
 		end_beat = hit_beat + action.amount_of_cooldown_beats
 		
 		print("start ", start_beat, " hit: ", hit_beat, " end: ", end_beat)
@@ -57,15 +57,15 @@ class ActionLifecycle:
 			action_instance.strength = strength
 		
 			action_instance.position = position
-			action_instance.rotation = parent.attack_direction.angle()
+			action_instance.rotation = boss.attack_direction.angle()
 			action_instance.action = action
 		
-			parent.add_child(action_instance)
+			boss.add_child(action_instance)
 			
 		else:
 			print("action ", action.action_name, " with strength ", strength)
 			
-		action.do_effect(parent, Vector2.from_angle(parent.attack_direction.angle()))
+		action.do_effect(boss, Vector2.from_angle(boss.attack_direction.angle()))
 		pass
 
 class HoldActionLifecycle:
@@ -114,7 +114,7 @@ class HoldActionLifecycle:
 			return start_beat
 		else:
 			return hit_beat
-		pass
+		
 
 signal failed
 signal completed

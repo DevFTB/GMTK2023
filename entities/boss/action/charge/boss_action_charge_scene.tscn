@@ -31,6 +31,11 @@ script = ExtResource("2_vnpdx")
 position = Vector2(45, -1)
 shape = SubResource("CapsuleShape2D_ye3yq")
 
+[node name="HitboxVisual" type="Polygon2D" parent="Hitboxes/Hitbox"]
+z_index = -1
+color = Color(0.819608, 0.360784, 0.239216, 0.462745)
+polygon = PackedVector2Array(42, -89, 19, -80, 3, -65, -5, -45, -2, 39, 2, 59, 12, 74, 29, 81, 40, 86, 67, 81, 80, 68, 91, 48, 91, -50, 77, -80, 58, -87)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ltvjg")

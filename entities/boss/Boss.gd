@@ -35,7 +35,7 @@ func _ready():
 	boss_name_changed.emit(boss_name)
 	boss_health_changed.emit(health, max_health, 0)
 
-func _process(delta):
+func _process(_delta):
 	velocity = movement_dir * movement_speed
 	move_and_slide()
 
@@ -101,10 +101,15 @@ func read_file(path):
 	
 
 func teleport(movement_vector: Vector2, duration = 0.3):
-	#var tween = get_tree().create_tween()
-	#tween.tween_property(self, "position", position + movement_vector, duration)
-	var collision = move_and_collide(movement_vector)
+	
+	
+	var collision = move_and_collide(movement_vector, true)
+	var tween = get_tree().create_tween()
 	if collision:
+
+		tween.tween_property(self, "position", collision.get_position(), duration)
+		
+		
 		var collider = collision.get_collider()
 		var space_state = get_world_2d().direct_space_state
 		
@@ -126,7 +131,8 @@ func teleport(movement_vector: Vector2, duration = 0.3):
 			if hit_collider.is_in_group("player"):
 				print(hit_collider)
 				collider.apply_knockback(20*32, collision.get_travel().normalized())
-	
+	else:
+		tween.tween_property(self, "position", position + movement_vector, duration)
 #	if collider != null and collider.is_in_group("player"):
 #		collider.apply_knockback(20*32, collision.get_travel().normalized())
 

@@ -51,13 +51,6 @@ func level_over(winner):
 func enter_shop():
 	pass
 
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 func _on_boss_boss_died():
 	level_over("Players")
 
